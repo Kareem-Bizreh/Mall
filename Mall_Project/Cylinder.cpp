@@ -1,18 +1,38 @@
 ﻿#include <gl/glut.h>
 #include "Cylinder.h"
 
-void Cylinder::draw(Point center, float radius, float height, int slices) {
+void Cylinder::drawWithTexture(Point center, float baseRadius,float topRadius, float height, int slices,int stacks,GLint textureId) {
 	GLUquadric* quad = gluNewQuadric();
 
 	glPushMatrix();
 	glTranslated(center.x, center.y, center.z);
 	glRotatef(90, 1.0f, 0.0f, 0.0f);
-
-	gluCylinder(quad, radius, radius, height, slices, slices);
-	gluDisk(quad, 0, radius, slices, slices); // قاعدة الأسطوانة السفلى
+	gluQuadricTexture(quad, GL_TRUE);
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, textureId);
+	gluCylinder(quad, baseRadius, topRadius, height, slices,stacks);
+	gluDisk(quad, 0, baseRadius, slices, slices); // قاعدة الأسطوانة السفلى
 	glPushMatrix();
 	glTranslatef(0, 0, center.z + height);
-	gluDisk(quad, 0, radius, slices, slices); // قاعدة الأسطوانة العليا
+	gluDisk(quad, 0, topRadius, slices, slices); // قاعدة الأسطوانة العليا
+	glPopMatrix();
+	glDisable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glPopMatrix();
+	gluDeleteQuadric(quad);
+}
+
+void Cylinder::draw(Point center, float baseRadius, float topRadius, float height, int slices, int stacks) {
+	GLUquadric* quad = gluNewQuadric();
+
+	glPushMatrix();
+	glTranslated(center.x, center.y, center.z);
+	glRotatef(90, 1.0f, 0.0f, 0.0f);
+	gluCylinder(quad, baseRadius, topRadius, height, slices, stacks);
+	gluDisk(quad, 0, baseRadius, slices, slices); // قاعدة الأسطوانة السفلى
+	glPushMatrix();
+	glTranslatef(0, 0, height);
+	gluDisk(quad, 0, topRadius, slices, slices); // قاعدة الأسطوانة العليا
 	glPopMatrix();
 	glPopMatrix();
 	gluDeleteQuadric(quad);
