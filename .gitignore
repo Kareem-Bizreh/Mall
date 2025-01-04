@@ -1,0 +1,15 @@
+*.suo
+*.user
+*.ipch
+*.pdb
+*.obj
+*.exe
+*.log
+*.ilk
+*.idb
+*.tlog
+*.tmp
+*.cache
+*.vs/
+Debug/
+Release/
