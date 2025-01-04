@@ -21,12 +21,9 @@ struct color3f
 
 //==================================================================================================================
 // Global variables
-FurnitureStore market;
 Point center = Point(0, -3, 0);
-Cafe cafe = Cafe(center);
 Texture texture;
 Outside outside(texture);
-SuperMarket superMarket;
 GLUquadric* quadric = gluNewQuadric();
 int g_iWidth = 800;
 int g_iHeight = 600;
@@ -43,7 +40,7 @@ bool g_mouse_left_down = false;
 bool g_mouse_right_down = false;
 
 // Movement settings
-const float g_translation_speed = 0.5;
+const float g_translation_speed = 2;
 const float g_rotation_speed = M_PI / 180 * 0.1;
 
 // light settings
@@ -162,8 +159,8 @@ void display()
 
 	//setupLighting();
 	//setupShadow();
+
 	outside.draw();
-	cafe.draw();
 	//
 
 	glutSwapBuffers();
@@ -267,9 +264,8 @@ void init()
 	menucreate();
 
 	//load textures here 
-	cafe.cafeTextures();
-	market.loadTextures();
 	outside.OutsideTextures();
+
 	glClearColor(g_background.r, g_background.g, g_background.b, 1.0);
 	glClearDepth(1.0f);
 	glEnable(GL_DEPTH_TEST);

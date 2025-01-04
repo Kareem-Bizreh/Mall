@@ -127,7 +127,7 @@ void SuperMarket::draw()
 
 	// draw wall
 	Cuboid left(Point(0, 0, -25), 50, 49.8, 0.2), right(Point(200, 0, -25), 50, 49.8, 0.2);
-	Cuboid down(Point(100, 0, -25), 0.2, 49.8, 199.8), up(Point(100, 50, -25), 2, 49.8, 199.8);
+	Cuboid down(Point(100, 0, -25), 0.2, 49.8, 199.8), up(Point(100, 50, -25), 0.8, 49.8, 199.8);
 	Cuboid back(Point(100, 0, -50), 50, 0.2, 199.8);
 
 	glColor3ub(255, 255, 255);
