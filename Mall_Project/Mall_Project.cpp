@@ -22,6 +22,8 @@ struct color3f
 //==================================================================================================================
 // Global variables
 Point center = Point(0, -3, 0);
+Cafe cafe = Cafe(center);
+FurnitureStore furnitureStore;
 Texture texture;
 Outside outside(texture);
 GLUquadric* quadric = gluNewQuadric();
@@ -159,9 +161,9 @@ void display()
 
 	//setupLighting();
 	//setupShadow();
-
+	//outside.draw();
+	//cafe.draw();
 	outside.draw();
-	//
 
 	glutSwapBuffers();
 }
@@ -264,6 +266,9 @@ void init()
 	menucreate();
 
 	//load textures here 
+	//cafe.cafeTextures();
+	furnitureStore.loadTextures();
+	//outside.OutsideTextures();
 	outside.OutsideTextures();
 
 	glClearColor(g_background.r, g_background.g, g_background.b, 1.0);
