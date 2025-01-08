@@ -35,21 +35,33 @@ void FurnitureStore::loadTextures() {
 	rightWall.loadTexture("textures\\FurnitureStore\\rightWall.jpg");
 	leftWall.loadTexture("textures\\FurnitureStore\\leftWall.jpg");
 	furniture.loadTexture("textures\\FurnitureStore\\furnitureStore.jpg");
+	woodChair2.loadTexture("textures\\FurnitureStore\\wood4.jpg");
+	woodTable2.loadTexture("textures\\FurnitureStore\\wood5.jpg");
 }
 void FurnitureStore::drawStore(Point center) {
-	glColor3ub(111, 111, 111);
+	//glColor3ub(111, 111, 111);
 	this->drawGround(center);
-	
+
 	//darw shelves 
-	this->drawShelves(Point(center.x - 40, center.y + 10, center.z - 20));
+	glPushMatrix();
+	//glRotated(180, 0, 1, 0);
+	this->drawShelves(Point(center.x + 67, center.y + 20, center.z - 23));
+	glPopMatrix();
 
 	//draw dining table
 	glPushMatrix();
-	glTranslated(center.x + 80, center.y + 7.1, center.z - 10);
+	glTranslated(center.x - 10, center.y + 7.1, center.z - 10);
 	glScaled(1, 0.8, 1);
 	glRotated(90, 0, 1, 0);
 	this->drawDiningTable(Point(0,0,0));
 	glPopMatrix();
+
+	glPushMatrix();
+	this->drawDiningTable2(Point(center.x - 45, center.y + 6.8, center.z - 8));
+	glPopMatrix();
+	
+	//seats
+	this->drawSeats2(center);
 
 	//seats
 	this->drawSeats(center);
@@ -63,34 +75,43 @@ void FurnitureStore::drawStore(Point center) {
 	glPopMatrix();
 	
 	glPushMatrix();
-    glTranslated(center.x + 52, center.y + 1.5, center.z - 25);
-    glScaled(1.5, 2, 1);
+	glTranslated(center.x + 99.5, center.y + 1.5, center.z - 10);
+	glRotated(-90, 0, 1, 0);
+	glScaled(1.5, 2, 1);
     closet2.draw(Point(0, 0, 0));
     glPopMatrix();
 
 	//beds
 	glPushMatrix();
-	glTranslated(center.x + 38, center.y + 4.1, center.z - 14);
+	glTranslated(center.x + 75, center.y + 4.1, center.z - 14);
 	glRotated(90, 0, 1, 0);
 	this->drawBed(Point(0,0,0),bed.textureID,wood.textureID);
 	glPopMatrix();
 
 	glPushMatrix();
-	glTranslated(center.x + 18, center.y + 4.1, center.z - 14);
+	glTranslated(center.x + 54.5, center.y + 4.1, center.z - 14);
 	glRotated(90, 0, 1, 0);
 	this->drawBed(Point(0, 0, 0),bed2.textureID,bedwood.textureID);
 	glPopMatrix();
 
 	//drawer
 	glPushMatrix();
+	glTranslated(center.x + 65, center.y + 1.2, center.z - 22.5);
 	glScaled(0.8, 0.8, 0.8);
-	this->drawDrawers(Point(center.x + 35,center.y + 1.5,center.z - 28));
+	this->drawDrawers(Point(0,0,0));
 	glPopMatrix();
 
 	//double bed
 	glPushMatrix();
-	glTranslated(center.x , center.y + 4, center.z - 14);
-	glRotated(270, 0, 1, 0);
+	glTranslated(center.x + 67, center.y + 4.1, center.z + 18);
+	glRotated(180, 0, 1, 0);
+	this->drawDoubleBed(Point(0, 0, 0));
+	glPopMatrix();
+
+	//double bed
+	glPushMatrix();
+	glTranslated(center.x + 30, center.y + 4.1, center.z + 18);
+	glRotated(180, 0, 1, 0);
 	this->drawDoubleBed(Point(0, 0, 0));
 	glPopMatrix();
 
@@ -102,21 +123,21 @@ void FurnitureStore::drawStore(Point center) {
 
 	//sofa
 	glPushMatrix();
-	glTranslated(center.x - 15, center.y + 3.1, center.z - 8);
+	glTranslated(center.x + 40, center.y + 3.1, center.z - 8);
 	glRotated(-90, 0, 1, 0);
 	glScaled(1.5, 1, 1);
 	sofa1.draw(Point(0, 0, 0));
 	glPopMatrix();
 	
 	glPushMatrix();
-	glTranslated(center.x - 30, center.y + 3.1, center.z - 20);
+	glTranslated(center.x + 25, center.y + 3.1, center.z - 20);
 	//glRotated(270, 0, 1, 0);
 	glScaled(1.5, 1, 1);
 	sofa2.draw(Point(0, 0, 0));
 	glPopMatrix();
 	 
 	glPushMatrix();
-	glTranslated(center.x - 45, center.y + 3.1, center.z - 6);
+	glTranslated(center.x + 10, center.y + 3.1, center.z - 6);
 	//glScaled(1, 1, 1.5);
 	glRotated(90, 0, 1, 0);
 	sofa3.drawTriple(Point(0, 0, 0));
@@ -124,7 +145,7 @@ void FurnitureStore::drawStore(Point center) {
 
 
 	glPushMatrix();
-	this->drawCircularTable(Point(center.x - 32, center.y + 1.5, center.z - 10));
+	this->drawCircularTable(Point(center.x + 24, center.y + 1.5, center.z - 8.5));
 	glPopMatrix();
 
 	//this->drawCarpet(Point(center.x, center.y + 4, center.z));
@@ -159,12 +180,15 @@ void FurnitureStore::drawStore(Point center) {
 	this->drawChair(Point(0, 0, 0));
 	glPopMatrix();
 
+
+	//draw mirror
+	this->drawMirror(Point(center.x, center.y, center.z));
 }
 
 void FurnitureStore::drawSeats(Point center) {
 	//first seat
 	glPushMatrix();
-	glTranslated(center.x + 90, center.y + 3, center.z - 20);
+	glTranslated(center.x , center.y + 3, center.z - 20);
 	glRotated(-60, 0, 1, 0);
 	glScaled(0.7, 1, 1.2);
 	this->drawSeat(Point(0, 0, 0));
@@ -172,7 +196,7 @@ void FurnitureStore::drawSeats(Point center) {
 
 	//second seat
 	glPushMatrix();
-	glTranslated(center.x + 92, center.y + 3, center.z - 10);
+	glTranslated(center.x + 2, center.y + 3, center.z - 10);
 	glRotated(-90, 0, 1, 0);
 	glScaled(0.7, 1, 1.2);
 	this->drawSeat(Point(0, 0, 0));
@@ -180,7 +204,7 @@ void FurnitureStore::drawSeats(Point center) {
 
 	//third seat
 	glPushMatrix();
-	glTranslated(center.x + 90, center.y + 3, center.z );
+	glTranslated(center.x , center.y + 3, center.z );
 	glRotated(-120, 0, 1, 0);
 	glScaled(0.7, 1, 1.2);
 	this->drawSeat(Point(0, 0, 0));
@@ -188,7 +212,7 @@ void FurnitureStore::drawSeats(Point center) {
 
 	//fourth seat 
 	glPushMatrix();
-	glTranslated(center.x + 70, center.y + 3, center.z - 20);
+	glTranslated(center.x - 20, center.y + 3, center.z - 20);
 	glRotated(+ 60, 0, 1, 0);
 	glScaled(0.7, 1, 1.2);
 	this->drawSeat(Point(0, 0, 0));
@@ -196,7 +220,7 @@ void FurnitureStore::drawSeats(Point center) {
 
 	//fifth seat
 	glPushMatrix();
-	glTranslated(center.x + 68, center.y + 3, center.z - 10);
+	glTranslated(center.x - 22, center.y + 3, center.z - 10);
 	glRotated(90, 0, 1, 0);
 	glScaled(0.7, 1, 1.2);
 	this->drawSeat(Point(0, 0, 0));
@@ -204,14 +228,137 @@ void FurnitureStore::drawSeats(Point center) {
 
 	//sixth seat
 	glPushMatrix();
-	glTranslated(center.x + 70, center.y + 3, center.z);
+	glTranslated(center.x - 20, center.y + 3, center.z);
 	glRotated(+120, 0, 1, 0);
 	glScaled(0.7, 1, 1.2);
 	this->drawSeat(Point(0, 0, 0));
 	glPopMatrix();
 
 }
+void FurnitureStore::drawSeats2(Point center) {
+	//first seat
+	glPushMatrix();
+	glTranslated(center.x - 45, center.y + 4.5, center.z - 21.5);
+	glScaled(0.7, 1, 1.2);
+	this->drawSeat2(Point(0, 0, 0));
+	glPopMatrix();
 
+	//second seat
+	glPushMatrix();
+	glTranslated(center.x - 35, center.y + 4.5, center.z - 17);
+	glRotated(-70, 0, 1, 0);
+	glScaled(0.7, 1, 1.2);
+	this->drawSeat2(Point(0, 0, 0));
+	glPopMatrix();
+
+	//third seat
+	glPushMatrix();
+	glTranslated(center.x - 55, center.y + 4.5, center.z - 17);
+	glRotated(70, 0, 1, 0);
+	glScaled(0.7, 1, 1.2);
+	this->drawSeat2(Point(0, 0, 0));
+	glPopMatrix();
+
+	//fourth seat
+	glPushMatrix();
+	glTranslated(center.x - 58, center.y + 4.5, center.z - 9);
+	glRotated(90, 0, 1, 0);
+	glScaled(0.7, 1, 1.2);
+	this->drawSeat2(Point(0, 0, 0));
+	glPopMatrix();
+
+	//fifth seat
+	glPushMatrix();
+	glTranslated(center.x - 32, center.y + 4.5, center.z - 9);
+	glRotated(-90, 0, 1, 0);
+	glScaled(0.7, 1, 1.2);
+	this->drawSeat2(Point(0, 0, 0));
+	glPopMatrix();
+
+	//fifth seat
+	glPushMatrix();
+	glTranslated(center.x - 45, center.y + 4.5, center.z + 6);
+	glRotated(180, 0, 1, 0);
+	glScaled(0.7, 1, 1.2);
+	this->drawSeat2(Point(0, 0, 0));
+	glPopMatrix();
+
+	//seventh seat
+	glPushMatrix();
+	glTranslated(center.x - 34, center.y + 4.5, center.z + 2);
+	glRotated(220, 0, 1, 0);
+	glScaled(0.7, 1, 1.2);
+	this->drawSeat2(Point(0, 0, 0));
+	glPopMatrix();
+
+	//eighth seat
+	glPushMatrix();
+	glTranslated(center.x - 56.5, center.y + 4.5, center.z + 2);
+	glRotated(-220, 0, 1, 0);
+	glScaled(0.7, 1, 1.2);
+	this->drawSeat2(Point(0, 0, 0));
+	glPopMatrix();
+}
+
+void FurnitureStore::drawSeat2(Point center) {
+	glColor3ub(255, 255, 255);
+	Cuboid(Point(center.x, center.y, center.z), 0.5, 4, 7).drawWithTexture(woodChair2.textureID, 1, 1);
+
+	Cuboid(Point(center.x - 3.25, center.y + 0.5, center.z - 1.75), 6, 0.5, 0.5).drawWithTexture(woodChair2.textureID,1,1);
+
+	Cuboid(Point(center.x - 3.25, center.y + 0.5, center.z + 1.75), 2, 0.5, 0.5).drawWithTexture(woodChair2.textureID, 1, 1);
+	
+	Cuboid(Point(center.x + 3.25, center.y + 0.5, center.z + 1.75), 2, 0.5, 0.5).drawWithTexture(woodChair2.textureID, 1, 1);
+	
+	Cuboid(Point(center.x + 3.25, center.y + 0.5, center.z - 1.75), 6, 0.5, 0.5).drawWithTexture(woodChair2.textureID, 1, 1);
+
+	Cuboid(Point(center.x - 3.25, center.y + 2.5, center.z + 0.25),0.5,3.5,0.5).drawWithTexture(woodChair2.textureID, 1, 1);
+
+	Cuboid(Point(center.x + 3.25, center.y + 2.5, center.z + 0.25), 0.5, 3.5, 0.5).drawWithTexture(woodChair2.textureID, 1, 1);
+
+	//backs
+	Cuboid(Point(center.x, center.y + 4.5, center.z - 1.75), 2, 0.5, 6).drawWithTexture(woodChair2.textureID, 1, 1);
+	
+	Cuboid(Point(center.x - 2, center.y + 0.5, center.z - 1.75), 4, 0.5, 0.5).drawWithTexture(woodChair2.textureID, 1, 1);
+
+	Cuboid(Point(center.x - 1, center.y + 0.5, center.z - 1.75), 4, 0.5, 0.5).drawWithTexture(woodChair2.textureID, 1, 1);
+
+	Cuboid(Point(center.x - 0, center.y + 0.5, center.z - 1.75), 4, 0.5, 0.5).drawWithTexture(woodChair2.textureID, 1, 1);
+
+	Cuboid(Point(center.x + 1, center.y + 0.5, center.z - 1.75), 4, 0.5, 0.5).drawWithTexture(woodChair2.textureID, 1, 1);
+
+	Cuboid(Point(center.x + 2, center.y + 0.5, center.z - 1.75), 4, 0.5, 0.5).drawWithTexture(woodChair2.textureID, 1, 1);
+
+	//Cuboid(Point(center.x + 2.75, center.y, center.z - 1.75), 4.5, 0.5, 0.5).draw();
+
+
+	//legs
+	Cuboid(Point(center.x + 3.25, center.y - 3.5, center.z + 1.75), 3.5, 0.5, 0.5).drawWithTexture(woodChair2.textureID, 1, 1);
+
+	Cuboid(Point(center.x - 3.25, center.y - 3.5, center.z + 1.75), 3.5, 0.5, 0.5).drawWithTexture(woodChair2.textureID, 1, 1);
+
+	Cuboid(Point(center.x + 3.25, center.y - 3.5, center.z - 1.75), 3.5, 0.5, 0.5).drawWithTexture(woodChair2.textureID, 1, 1);
+
+	Cuboid(Point(center.x - 3.25, center.y - 3.5, center.z - 1.75), 3.5, 0.5, 0.5).drawWithTexture(woodChair2.textureID, 1, 1);
+}
+
+void FurnitureStore::drawMirror(Point center) {
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable(GL_BLEND);
+	glColor4ub(70, 169, 247, 50);
+	//Cuboid(Point(center.x + 16.7, center.y , center.z + 25.5), 20, 1, 168.6).draw();
+	Cuboid(Point(center.x + 86, center.y + 7, center.z + 25.5), 43, 1, 30).draw();
+
+	Cuboid(Point(center.x + 46, center.y + 7, center.z + 25.5), 43, 1, 30).draw();
+
+	Cuboid(Point(center.x + 6, center.y + 7, center.z + 25.5), 43, 1, 30).draw();
+
+	Cuboid(Point(center.x - 34, center.y + 7, center.z + 25.5), 43, 1, 30).draw();
+
+	Cuboid(Point(center.x - 63.25, center.y + 7, center.z + 25.5), 43, 1, 8.5).draw();
+
+	glDisable(GL_BLEND);
+}
 void FurnitureStore::drawGround(Point center) {
 	glColor3ub(255, 255, 255);
 
@@ -223,11 +370,20 @@ void FurnitureStore::drawGround(Point center) {
 
 	Cuboid(Point(center.x - 100.5, center.y + 0.1, center.z), 50, 50, 1).drawWithTexture(wall.textureID, 3, 3);
 
-    Cuboid(Point(center.x + 16.7, center.y + 0.1, center.z + 25.5), 50, 1, 168.5).drawWithTexture(wall.textureID, 10, 3);
-
 	Cuboid(Point(center.x - 84.2, center.y + 20, center.z + 25.5),30,1,33.5).drawWithTexture(wall.textureID,2,2);
 
-	Cuboid(Point(center.x - 84.2, center.y + 20, center.z + 26), 10, 0.5, 33.2).drawWithTexture(furniture.textureID, 1, 1);
+	Cuboid(Point(center.x + 16.7, center.y , center.z + 25.5),7,1,168.5).drawWithTexture(wall.textureID, 11, 1);
+
+	Cuboid(Point(center.x + 66, center.y + 7, center.z + 25.5),43,1,10).drawWithTexture(wall.textureID, 1, 3);
+
+	Cuboid(Point(center.x + 26, center.y + 7, center.z + 25.5), 43, 1, 10).drawWithTexture(wall.textureID, 1, 3);
+
+	Cuboid(Point(center.x - 14, center.y + 7, center.z + 25.5), 43, 1, 10).drawWithTexture(wall.textureID, 1, 3);
+
+	Cuboid(Point(center.x - 54, center.y + 7, center.z + 25.5), 43, 1, 10).drawWithTexture(wall.textureID, 1, 3);
+
+	Cuboid(Point(center.x - 84.2, center.y + 20, center.z + 26), 10, 0.2, 33.5).drawWithTexture(furniture.textureID, 1, 1);
+	//Cuboid().drawWithTexture(wall.textureID, 1, 5);
 	
 	Cuboid(Point(center.x, center.y + 50.1, center.z), 1, 52, 202).drawWithTexture(wall.textureID, 12, 3);
 	//doors
@@ -250,13 +406,11 @@ void FurnitureStore::drawGround(Point center) {
 	Cuboid(Point(center.x - 71, center.y + 0.1, center.z + 25.5), 20, 1, 7).drawWithTexture(rightWall.textureID, 1, 1);
 }
 void FurnitureStore::drawShelves(Point center) {
-	glColor3ub(55, 55, 55);
-
+	glColor3ub(70, 70, 70);
 	Cuboid(Point(center.x, center.y, center.z), 0.5, 4, 20).draw();
 
-	glColor3ub(123, 123, 123);
 	Cuboid(Point(center.x, center.y + 12, center.z), 0.5, 4, 20.75).draw();
-	glColor3ub(55, 55, 55);
+
 	Cuboid(Point(center.x + 10.1, center.y, center.z), 12, 4, 0.5).draw();
 	Cuboid(Point(center.x - 10.1, center.y, center.z), 12, 4, 0.5).draw();
 
@@ -264,15 +418,13 @@ void FurnitureStore::drawShelves(Point center) {
 	Cuboid(Point(center.x + 7.8, center.y + 6, center.z), 0.5, 4, 4).draw();
 	Cuboid(Point(center.x - 7.8, center.y + 6, center.z), 0.5, 4, 4).draw();
 
-	glColor3ub(69, 69, 69);
 	Cuboid(Point(center.x + 5.6, center.y + 4, center.z), 4, 4, 0.5).draw();
 	Cuboid(Point(center.x - 5.6, center.y + 4, center.z), 4, 4, 0.5).draw();
 
-	glColor3ub(41, 41, 41);
 	Cuboid(Point(center.x , center.y + 8, center.z), 0.5, 4, 11.75).draw();
 	Cuboid(Point(center.x , center.y + 3.5, center.z), 0.5, 4, 11.75).draw();
 
-	glColor3ub(156, 156, 156);
+
 	Cuboid(Point(center.x - 1.5, center.y + 8.5, center.z), 3.5, 4, 0.5).draw();
 	Cuboid(Point(center.x + 2.5, center.y + 8.5, center.z), 3.5, 4, 0.5).draw();
 	
@@ -512,6 +664,16 @@ void FurnitureStore::drawDiningTable(Point center) {
 	cylinder.drawWithTexture(Point(center.x, center.y, center.z), 1.1, 0.5, 7, 36, 36,wood.textureID);
 
 	cylinder.drawWithTexture(Point(center.x, center.y - 7, center.z), 3, 3, 0.5, 36, 36,wood.textureID);
+}
+
+void FurnitureStore::drawDiningTable2(Point center) {
+	glColor3ub(255, 255, 255);
+	cylinder.drawWithTexture(Point(center.x,center.y + 0.6,center.z), 9, 9, 0.5, 36, 36,woodTable2.textureID);
+
+	cylinder.drawWithTexture(Point(center.x, center.y + 0.5, center.z),1,1.5,6,36,36, woodTable2.textureID);
+
+	cylinder.drawWithTexture(Point(center.x, center.y - 5.2, center.z), 3, 3, 0.5, 36, 36, woodTable2.textureID);
+
 }
 void FurnitureStore::drawBed(Point center,GLint textureId,GLint woodTexture) {
 

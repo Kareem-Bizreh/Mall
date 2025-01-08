@@ -21,9 +21,9 @@ struct color3f
 
 //==================================================================================================================
 // Global variables
-FurnitureStore market;
 Point center = Point(0, -3, 0);
 Cafe cafe = Cafe(center);
+FurnitureStore furnitureStore;
 Texture texture;
 Outside outside(texture);
 SuperMarket superMarket;
@@ -162,9 +162,9 @@ void display()
 
 	//setupLighting();
 	//setupShadow();
-	outside.draw();
-	cafe.draw();
-	//
+	//outside.draw();
+	//cafe.draw();
+	furnitureStore.drawStore(Point(center.x + 90 , center.y + 10, center.z));
 
 	glutSwapBuffers();
 }
@@ -267,9 +267,9 @@ void init()
 	menucreate();
 
 	//load textures here 
-	cafe.cafeTextures();
-	market.loadTextures();
-	outside.OutsideTextures();
+	//cafe.cafeTextures();
+	furnitureStore.loadTextures();
+	//outside.OutsideTextures();
 	glClearColor(g_background.r, g_background.g, g_background.b, 1.0);
 	glClearDepth(1.0f);
 	glEnable(GL_DEPTH_TEST);
