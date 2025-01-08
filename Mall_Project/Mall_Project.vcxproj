@@ -143,6 +143,7 @@
     <ClCompile Include="Outside.cpp" />
     <ClCompile Include="Point.cpp" />
     <ClCompile Include="Pyramid.cpp" />
+    <ClCompile Include="Restaurant.cpp" />
     <ClCompile Include="SkyBox.cpp" />
     <ClCompile Include="Sofa.cpp" />
     <ClCompile Include="stb_image.c" />
@@ -162,6 +163,7 @@
     <ClInclude Include="Outside.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="Pyramid.h" />
+    <ClInclude Include="Restaurant.h" />
     <ClInclude Include="SkyBox.h" />
     <ClInclude Include="Sofa.h" />
     <ClInclude Include="stb_image.h" />
