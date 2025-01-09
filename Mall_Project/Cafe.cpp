@@ -31,7 +31,7 @@ void Cafe::draw()
 	Cuboid(Point(center.x + 6.5, center.y + 0.05, center.z + 13.5), 15, 22.99, 3).drawWithTexture(sideTable.textureID, 10, 10);
 	Cuboid(Point(center.x - 9, center.y + 0.05, center.z + 3.5), 15, 3, 28).drawWithTexture(sideTable.textureID, 10, 10);
 	glPushMatrix();
-	glTranslated(0, -0.5, 3);
+	glTranslated(center.x, center.y + 2.5, center.z + 3);
 	drawCup(true);
 	glPopMatrix();
 	Cuboid(Point(center.x - 5, center.y + 0.1, center.z + 22.5), 25, 4.9, 17).drawWithTextureOnOneFace(fridge.textureID, "back", 1, 1);
@@ -42,6 +42,8 @@ void Cafe::drawSideTable()
 	Cuboid(Point(center.x, center.y + 15, center.z - 21.49), 0.5, 7, 85 - 0.1).drawWithTexture(sideTable.textureID, 10, 10);
 	Cuboid(Point(center.x - 38.99, center.y + 15, center.z), 0.5, 50 - 0.1, 7).drawWithTexture(sideTable.textureID, 10, 10);
 	Cuboid(Point(center.x + 38.99, center.y + 15, center.z - 10), 0.5, 30 - 0.1, 7).drawWithTexture(sideTable.textureID, 10, 10);
+	glPushMatrix();
+	glTranslated(center.x, center.y + 3, center.z + 3);
 	for (int i = 30; i > -35; i -= 12)
 	{
 		glPushMatrix();
@@ -92,6 +94,7 @@ void Cafe::drawSideTable()
 		drawCup();
 		glPopMatrix();
 	}
+	glPopMatrix();
 }
 
 void Cafe::drawChair()

@@ -2,6 +2,7 @@
 #include <bits/stdc++.h>
 #include "stb_image.h"
 #include "math3d.h"
+#include "stairsMall.h"
 #include "Texture.h"
 #include "Cuboid.h"
 #include "FurnitureStore.h"
@@ -21,12 +22,11 @@ struct color3f
 
 //==================================================================================================================
 // Global variables
-FurnitureStore market;
 Point center = Point(0, -3, 0);
 Cafe cafe = Cafe(center);
+FurnitureStore furnitureStore;
 Texture texture;
 Outside outside(texture);
-SuperMarket superMarket;
 GLUquadric* quadric = gluNewQuadric();
 int g_iWidth = 800;
 int g_iHeight = 600;
@@ -43,7 +43,7 @@ bool g_mouse_left_down = false;
 bool g_mouse_right_down = false;
 
 // Movement settings
-const float g_translation_speed = 0.5;
+const float g_translation_speed = 2;
 const float g_rotation_speed = M_PI / 180 * 0.1;
 
 // light settings
@@ -162,9 +162,10 @@ void display()
 
 	//setupLighting();
 	//setupShadow();
+	//outside.draw();
+	//cafe.draw();
 	outside.draw();
-	cafe.draw();
-	//
+	
 
 	glutSwapBuffers();
 }
@@ -195,6 +196,20 @@ void keyboard(unsigned char key, int x, int y)
 	else {
 		g_shift_down = false;
 	}
+	if (key == 'f' || key == 'F')
+	{
+		float x, y, z;
+		g_camera.GetPos(x, y, z);
+		Point playerPos = Point(x, y, z);
+		for (Door* door : outside.Doors) {
+			Point doorCenter = door->center;
+			double dist = sqrt((playerPos.x - doorCenter.x) * (playerPos.x - doorCenter.x) +
+				(playerPos.y - doorCenter.y) * (playerPos.y - doorCenter.y) +
+				(playerPos.z - doorCenter.z) * (playerPos.z - doorCenter.z));
+			if (dist <= 15)
+				door->state = !door->state;
+		}
+	}
 
 	g_key[key] = true;
 }
@@ -221,6 +236,13 @@ void timer(int value)
 		else if (g_mouse_right_down) {
 			g_camera.Fly(g_translation_speed);
 		}
+	}
+
+	for (Door* door : outside.Doors) {
+		if (door->state && door->OpenRate < 1)
+			door->OpenRate += 0.04;
+		if (!door->state && door->OpenRate > 0)
+			door->OpenRate -= 0.04;
 	}
 
 	glutTimerFunc(1, timer, 0);	//call the timer again each 1 millisecond
@@ -268,8 +290,10 @@ void init()
 
 	//load textures here 
 	cafe.cafeTextures();
-	market.loadTextures();
+	//furnitureStore.loadTextures();
+	//outside.OutsideTextures();
 	outside.OutsideTextures();
+
 	glClearColor(g_background.r, g_background.g, g_background.b, 1.0);
 	glClearDepth(1.0f);
 	glEnable(GL_DEPTH_TEST);
