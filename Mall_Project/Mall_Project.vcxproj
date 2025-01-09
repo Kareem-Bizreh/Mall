@@ -166,6 +166,7 @@
     <ClInclude Include="Closet.h" />
     <ClInclude Include="Cuboid.h" />
     <ClInclude Include="Cylinder.h" />
+    <ClInclude Include="Door.h" />
     <ClInclude Include="Flag.h" />
     <ClInclude Include="FurnitureStore.h" />
     <ClInclude Include="Garage.h" />
