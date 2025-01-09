@@ -196,6 +196,20 @@ void keyboard(unsigned char key, int x, int y)
 	else {
 		g_shift_down = false;
 	}
+	if (key == 'f' || key == 'F')
+	{
+		float x, y, z;
+		g_camera.GetPos(x, y, z);
+		Point playerPos = Point(x, y, z);
+		for (Door* door : outside.Doors) {
+			Point doorCenter = door->center;
+			double dist = sqrt((playerPos.x - doorCenter.x) * (playerPos.x - doorCenter.x) +
+				(playerPos.y - doorCenter.y) * (playerPos.y - doorCenter.y) +
+				(playerPos.z - doorCenter.z) * (playerPos.z - doorCenter.z));
+			if (dist <= 15)
+				door->state = !door->state;
+		}
+	}
 
 	g_key[key] = true;
 }
@@ -222,6 +236,13 @@ void timer(int value)
 		else if (g_mouse_right_down) {
 			g_camera.Fly(g_translation_speed);
 		}
+	}
+
+	for (Door* door : outside.Doors) {
+		if (door->state && door->OpenRate < 1)
+			door->OpenRate += 0.04;
+		if (!door->state && door->OpenRate > 0)
+			door->OpenRate -= 0.04;
 	}
 
 	glutTimerFunc(1, timer, 0);	//call the timer again each 1 millisecond

@@ -32,6 +32,117 @@ void Outside::drawMarkets()
 	glPopMatrix();
 }
 
+void Outside::drawElevator(double height)
+{
+	elevatorDoor->center.y = height + 24.5;
+	glColor3f(0.8, 0.8, 0.8);
+	glPushMatrix();
+	glTranslated(0, height, 0);
+	Cuboid(Point(0, 0, -12), 25, 0, 30).drawWithTexture(elevator.textureID, 1, 1);
+	glColor3f(1, 1, 1);
+	Cuboid(Point(-15, 0, 0), 25, 24, 0).drawWithTexture(elevator.textureID, 1, 1);
+	Cuboid(Point(15, 0, 0), 25, 24, 0).drawWithTexture(elevator.textureID, 1, 1);
+	Cuboid(Point(0, 0, 0), 0, 24, 30).drawWithTexture(elevatorGround.textureID, 1, 1);
+	Cuboid(Point(0, 25, 0), 0, 24, 30).drawWithTexture(elevator.textureID, 1, 1);
+
+	GLUquadric* quad = gluNewQuadric();
+	gluQuadricTexture(quad, GL_TRUE);
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, elevatorHandle.textureID);
+
+	glPushMatrix();
+
+	glTranslated(12, 12.5, -8);
+	gluCylinder(quad, 0.5, 0.5, 16, 32, 32);
+
+	glPushMatrix();
+	glColor3f(0.7, 0.7, 0.7);
+	gluSphere(quad, 0.7, 32, 32);
+	glTranslated(0, 0, 16);
+	gluSphere(quad, 0.7, 32, 32);
+	glColor3f(1, 1, 1);
+	glPopMatrix();
+
+	glTranslated(-24, 0, 0);
+	gluCylinder(quad, 0.5, 0.5, 16, 32, 32);
+
+	glPushMatrix();
+	glColor3f(0.7, 0.7, 0.7);
+	gluSphere(quad, 0.7, 32, 32);
+	glTranslated(0, 0, 16);
+	gluSphere(quad, 0.7, 32, 32);
+	glColor3f(1, 1, 1);
+	glPopMatrix();
+
+	glPopMatrix();
+
+	glPushMatrix();
+	glRotated(90, 0, 1, 0);
+	glTranslated(6, 12.5, 12);
+	gluCylinder(quad, 0.5, 0.5, 3, 32, 32);
+	glTranslated(-12, 0, 0);
+	gluCylinder(quad, 0.5, 0.5, 3, 32, 32);
+
+	glTranslated(0, 0, -27);
+	gluCylinder(quad, 0.5, 0.5, 3, 32, 32);
+	glTranslated(12, 0, 0);
+	gluCylinder(quad, 0.5, 0.5, 3, 32, 32);
+	glPopMatrix();
+
+	glDisable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	Cuboid(Point(12, 0, 12), 25, 0, 6).drawWithTexture(elevator.textureID, 1, 1);
+	Cuboid(Point(-12, 0, 12), 25, 0, 6).drawWithTexture(elevator.textureID, 1, 1);
+	Cuboid(Point(-11, 12, 11.98), 3, 0, 1.5).drawWithTexture(elevatorDoorControl.textureID, 1, 1);
+
+	Cuboid(Point(-4.5 - elevatorDoor->OpenRate * 6, 0, 12.1), 25, 0, 9).drawWithTexture(elevatorDoorL.textureID, 1, 1);
+	Cuboid(Point(4.5 + elevatorDoor->OpenRate * 6, 0, 12.1), 25, 0, 9).drawWithTexture(elevatorDoorR.textureID, 1, 1);
+	glPopMatrix();
+
+	Cuboid(Point(-15.1, 0, 0), 75, 24, 0).drawWithTexture(elevator.textureID, 1, 1);
+	Cuboid(Point(15.1, 0, 0), 75, 24, 0).drawWithTexture(elevator.textureID, 1, 1);
+	Cuboid(Point(0, 25, 12), 25, 0, 30).drawWithTexture(elevator.textureID, 1, 1);
+
+	Cuboid(Point(12, 0, 12.1), 25, 0, 6).drawWithTexture(elevator.textureID, 1, 1);
+	Cuboid(Point(-12, 0, 12.1), 25, 0, 6).drawWithTexture(elevator.textureID, 1, 1);
+	Cuboid(Point(11, 12, 12.11), 3, 0, 1.5).drawWithTexture(elevatorDoorControl.textureID, 1, 1);
+
+	Cuboid(Point(-4.5 - elevatorDoorDown->OpenRate * 6, 0, 12.2), 25, 0, 9).drawWithTexture(elevatorDoorL.textureID, 1, 1);
+	Cuboid(Point(4.5 + elevatorDoorDown->OpenRate * 6, 0, 12.2), 25, 0, 9).drawWithTexture(elevatorDoorR.textureID, 1, 1);
+
+	Cuboid(Point(12, 50, 12.1), 25, 0, 6).drawWithTexture(elevator.textureID, 1, 1);
+	Cuboid(Point(-12, 50, 12.1), 25, 0, 6).drawWithTexture(elevator.textureID, 1, 1);
+	Cuboid(Point(11, 62, 12.11), 3, 0, 1.5).drawWithTexture(elevatorDoorControl.textureID, 1, 1);
+
+	Cuboid(Point(-4.5 - elevatorDoorUp->OpenRate * 6, 50, 12.2), 25, 0, 9).drawWithTexture(elevatorDoorL.textureID, 1, 1);
+	Cuboid(Point(4.5 + elevatorDoorUp->OpenRate * 6, 50, 12.2), 25, 0, 9).drawWithTexture(elevatorDoorR.textureID, 1, 1);
+
+	glColor3f(0.3, 0.3, 0.3);
+	glPushMatrix();
+	glTranslated(-15, 0, -12);
+	glRotated(-90, 1, 0, 0);
+	gluCylinder(quad, 1, 1, 100, 32, 32);
+	glPopMatrix();
+	glPushMatrix();
+	glTranslated(15, 0, -12);
+	glRotated(-90, 1, 0, 0);
+	gluCylinder(quad, 1, 1, 100, 32, 32);
+	glPopMatrix();
+	glPushMatrix();
+	glTranslated(-15, 0, 12);
+	glRotated(-90, 1, 0, 0);
+	gluCylinder(quad, 1, 1, 100, 32, 32);
+	glPopMatrix();
+	glPushMatrix();
+	glTranslated(15, 0, 12);
+	glRotated(-90, 1, 0, 0);
+	gluCylinder(quad, 1, 1, 100, 32, 32);
+	glPopMatrix();
+	glColor3f(1, 1, 1);
+	gluDeleteQuadric(quad);
+}
+
 Outside::Outside(Texture texture)
 	: wavingFlag(Point(105, 135, -155), 200, 100, 0, 20, 30, flag, stick) {
 };
@@ -53,6 +164,12 @@ void Outside::OutsideTextures() {
 	street.loadTexture("textures/Outside/street.jpg");
 	entry.loadTexture("textures/Outside/entry.jpg");
 	frontSide.loadTexture("textures/Outside/frontSide.jpg");
+	elevator.loadTexture("textures/Outside/elevator.jpg");
+	elevatorGround.loadTexture("textures/Outside/elevatorGround.jpg");
+	elevatorHandle.loadTexture("textures/Outside/elevatorHandle.jpg");
+	elevatorDoorR.loadTexture("textures/Outside/elevatorDoorR.jpg");
+	elevatorDoorL.loadTexture("textures/Outside/elevatorDoorL.jpg");
+	elevatorDoorControl.loadTexture("textures/Outside/elevatorDoorControl.jpg");
 }
 
 
@@ -83,7 +200,7 @@ void Outside::draw() {
 	Cuboid Street(Point(105, 1, -495), 0.5, 50, 200);
 	Street.drawWithTexture(street.textureID, 1, 1);
 	glPushMatrix();
-	glColor3f(0.5f, 0.5f, 0.5f); 
+	glColor3f(0.5f, 0.5f, 0.5f);
 	Cuboid Top(Point(105, 113, -155), 0, 300, 200);
 	Top.drawWithTexture(mall_ground.textureID, 0, 0);
 	glColor3ub(255, 255, 255);
@@ -100,13 +217,13 @@ void Outside::draw() {
 
 
 	Cuboid Bottom(Point(105, 10.1, -155), 0, 300, 200);
-	Bottom.drawWithTexture(mall_ground.textureID, 2, 2);
+	Bottom.drawWithTexture(mall_ground.textureID, 20, 20);
 
 	Cuboid Entry(Point(105, 10.1, 0), 0, 10, 68);
 	Entry.drawWithTexture(entry.textureID, 1, 1);
 
-	Cuboid Floor_bottom(Point(105, 61.2, - 106), 0, 201, 200);
-	Floor_bottom.drawWithTexture(mall_ground.textureID, 2, 2);
+	Cuboid Floor_bottom(Point(105, 61.2, -106), 0, 201, 200);
+	Floor_bottom.drawWithTexture(mall_ground.textureID, 20, 20);
 	Cuboid Floor_up(Point(105, 61.1, -106), 0, 201, 200);
 	Floor_up.drawWithTexture(mall_ground.textureID, 0, 0);
 
@@ -118,7 +235,7 @@ void Outside::draw() {
 
 	Cuboid Back(Point(105, 10, -305), 103, 0, 200);
 	Back.drawWithTexture(side.textureID, 1, 1);
-	
+
 	Cuboid Mall_Name(Point(110, 67, -4.9), 46.1, 0, 68);
 	Mall_Name.drawWithTexture(mall_name.textureID, 1, 1);
 
@@ -156,7 +273,7 @@ void Outside::draw() {
 
 	glPushMatrix();
 	glColor3ub(180, 180, 180);
-	Cylinder().draw(Point(165, 112.5, - 262), 12, 12, 112.5, 36, 36);
+	Cylinder().draw(Point(165, 112.5, -262), 12, 12, 112.5, 36, 36);
 	glPopMatrix();
 
 
@@ -168,4 +285,20 @@ void Outside::draw() {
 
 	render3DModel(105, 0, 150, 3.0, tank);
 
+	glPushMatrix();
+	glTranslated(22, 12, -290);
+	Cuboid(Point(0, -2.1, 0), 2, 28, 34).drawWithTexture(mall_ground.textureID, 1, 1);
+	glPushMatrix();
+	drawElevator(0);//max 50 , min 0
+	glPopMatrix();
+	glTranslated(0, 47.75, 50);
+	Cuboid(Point(0, 0.1, -1), 1.5, 72, 28).drawWithTexture(mall_ground.textureID, 2, 8);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable(GL_BLEND);
+	glColor4ub(163, 163, 163, 182);
+	Cuboid(Point(13, 0.2, -1), 15, 72, 1).draw();
+	Cuboid(Point(-13, 0.2, -1), 15, 72, 1).draw();
+	glColor3f(1, 1, 1);
+	glDisable(GL_BLEND);
+	glPopMatrix();
 }
