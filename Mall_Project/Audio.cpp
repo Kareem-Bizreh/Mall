@@ -15,13 +15,13 @@ Audio::~Audio() {
 }
 
 void Audio::initializeOpenAL() {
-    device = alcOpenDevice(nullptr);  // Open default device
+    device = alcOpenDevice(nullptr);  
     if (!device) {
         logError("Failed to open OpenAL device.");
         return;
     }
 
-    context = alcCreateContext(device, nullptr);  // Create context
+    context = alcCreateContext(device, nullptr);  
     if (!context) {
         logError("Failed to create OpenAL context.");
         alcCloseDevice(device);
@@ -111,7 +111,7 @@ bool Audio::isPlaying() {
 }
 
 void Audio::setVolume(float volume) {
-    volume = clamp(volume, 0.0f, 1.0f); // Clamp volume between 0 and 1
+    volume = clamp(volume, 0.0f, 1.0f); 
 
     if (source) {
         alSourcef(source, AL_GAIN, volume);
@@ -160,7 +160,7 @@ void Audio::loadWavFile(const std::string& filename, ALuint& buffer) {
         return;
     }
 
-    // Read WAV header
+
     char header[44];
     file.read(header, 44);
     if (file.gcount() != 44) {
@@ -168,7 +168,6 @@ void Audio::loadWavFile(const std::string& filename, ALuint& buffer) {
         return;
     }
 
-    // Parse WAV header
     int16_t audioFormat = *reinterpret_cast<int16_t*>(&header[20]);
     int16_t numChannels = *reinterpret_cast<int16_t*>(&header[22]);
     int32_t sampleRate = *reinterpret_cast<int32_t*>(&header[24]);
@@ -196,7 +195,6 @@ void Audio::loadWavFile(const std::string& filename, ALuint& buffer) {
         return;
     }
 
-    // Read WAV data
     std::vector<char> audioData(std::istreambuf_iterator<char>(file), {});
     std::cout << "Audio Data Size: " << audioData.size() << " bytes\n";
 
@@ -205,7 +203,7 @@ void Audio::loadWavFile(const std::string& filename, ALuint& buffer) {
         return;
     }
 
-    size_t maxDataSize = 5 * 48000 * numChannels * (bitsPerSample / 8); // 5 minutes max
+    size_t maxDataSize = 5 * 48000 * numChannels * (bitsPerSample / 8); 
     if (audioData.size() > maxDataSize) {
         std::cout << "Audio exceeds 5 minutes. Truncating data.\n";
         audioData.resize(maxDataSize);

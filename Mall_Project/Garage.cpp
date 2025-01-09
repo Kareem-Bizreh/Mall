@@ -4,7 +4,7 @@ void Garage::loadTexturesAndModels() {
     t.loadTexture("textures/garage/floor.png");
     a.loadTexture("textures/garage/roof.jpg");
     tank = new Model_3DS();
-    tank->Load((char*)"models/Outside/tank.3DS");
+    tank->Load((char*)"models/garage/Tank/tank.3DS");
     train = new Model_3DS();
     train->Load((char*)"models/garage/3d model of maglev train/3/AVEENG_L.3DS");
     motor = new Model_3DS();

@@ -163,13 +163,17 @@ void Outside::OutsideTextures() {
 	stick.loadTexture("textures/Outside/stick.jpg");
 	street.loadTexture("textures/Outside/street.jpg");
 	entry.loadTexture("textures/Outside/entry.jpg");
-	frontSide.loadTexture("textures/Outside/frontSide.jpg");
 	elevator.loadTexture("textures/Outside/elevator.jpg");
 	elevatorGround.loadTexture("textures/Outside/elevatorGround.jpg");
 	elevatorHandle.loadTexture("textures/Outside/elevatorHandle.jpg");
 	elevatorDoorR.loadTexture("textures/Outside/elevatorDoorR.jpg");
 	elevatorDoorL.loadTexture("textures/Outside/elevatorDoorL.jpg");
 	elevatorDoorControl.loadTexture("textures/Outside/elevatorDoorControl.jpg");
+	platform.loadTexture("textures/Outside/platform.jpeg");
+	cafe_ad.loadTexture("textures/Outside/cafe_ad.jpeg");
+	market_ad.loadTexture("textures/Outside/market_ad.jpeg");
+	tree = new Model_3DS();
+	tree->Load((char*)"models/Outside/tree1_3ds/Tree1.3ds");
 }
 
 
@@ -196,7 +200,8 @@ void Outside::draw() {
 	glPopMatrix();
 	Cuboid Ground(Point(105, 0, -155), 10, 320, 220);
 	Ground.drawWithTexture(ground.textureID, 2, 2);
-
+	Cuboid Platform(Point(105, -1, -155), 2, 630, 400);
+	Platform.drawWithTexture(platform.textureID, 2, 2);
 	Cuboid Street(Point(105, 1, -495), 0.5, 50, 200);
 	Street.drawWithTexture(street.textureID, 1, 1);
 	glPushMatrix();
@@ -243,15 +248,15 @@ void Outside::draw() {
 	Front_Top.drawWithTexture(side.textureID, 1, 1);
 
 	Cuboid Front_BR(Point(46, 10, -5), 31, 0, 82);
-	Front_BR.drawWithTexture(frontSide.textureID, 1, 1);
+	Front_BR.drawWithTexture(market_ad.textureID, 1, 1);
 
 	Cuboid Front_BL(Point(165, 10, -5), 31, 0, 80);
-	Front_BL.drawWithTexture(frontSide.textureID, 1, 1);
+	Front_BL.drawWithTexture(cafe_ad.textureID, 1, 1);
 
-	Cuboid Right_Door(Point(97, 10.1, -4.9), 31, 1, 20);
+	Cuboid Right_Door(Point(97, 10.2, -4.9), 31, 1, 20);
 	Right_Door.drawWithTexture(right_door.textureID, 1, 1);
 
-	Cuboid Left_Door(Point(117, 10.1, -4.9), 31, 1, 20);
+	Cuboid Left_Door(Point(117, 10.2, -4.9), 31, 1, 20);
 	Left_Door.drawWithTexture(left_door.textureID, 1, 1);
 
 
@@ -283,7 +288,35 @@ void Outside::draw() {
 	stairsMall().draw(Point(0, 0, 0));
 	glPopMatrix();
 
-	render3DModel(105, 0, 150, 3.0, tank);
+	drawStreetLight(Point(Platform.center.x - 130, Platform.center.y, Platform.center.z), 15.0f, 0.5f, 10.0f, 20.0f, 2.0f, true);
+	render3DModel(Platform.center.x - 130, Platform.center.y, Platform.center.z + 25, 4, tree);
+
+	drawStreetLight(Point(Platform.center.x - 130, Platform.center.y, Platform.center.z + 100), 15.0f, 0.5f, 10.0f, 20.0f, 2.0f, true);
+	render3DModel(Platform.center.x - 130, Platform.center.y, Platform.center.z + 75, 4, tree);
+
+	drawStreetLight(Point(Platform.center.x - 130, Platform.center.y, Platform.center.z + 50), 15.0f, 0.5f, 10.0f, 20.0f, 2.0f, true);
+	render3DModel(Platform.center.x - 130, Platform.center.y, Platform.center.z - 25, 4, tree);
+
+
+	drawStreetLight(Point(Platform.center.x - 130, Platform.center.y, Platform.center.z - 100), 15.0f, 0.5f, 10.0f, 20.0f, 2.0f, true);
+	render3DModel(Platform.center.x - 130, Platform.center.y, Platform.center.z - 75, 4, tree);
+
+	drawStreetLight(Point(Platform.center.x - 130, Platform.center.y, Platform.center.z - 50), 15.0f, 0.5f, 10.0f, 20.0f, 2.0f, true);
+
+	drawStreetLight(Point(Platform.center.x + 130, Platform.center.y, Platform.center.z), 15.0f, 0.5f, 10.0f, 20.0f, 2.0f, false);
+	render3DModel(Platform.center.x + 130, Platform.center.y, Platform.center.z + 25, 4, tree);
+
+	drawStreetLight(Point(Platform.center.x + 130, Platform.center.y, Platform.center.z + 100), 15.0f, 0.5f, 10.0f, 20.0f, 2.0f, false);
+	render3DModel(Platform.center.x + 130, Platform.center.y, Platform.center.z + 75, 4, tree);
+
+	drawStreetLight(Point(Platform.center.x + 130, Platform.center.y, Platform.center.z + 50), 15.0f, 0.5f, 10.0f, 20.0f, 2.0f, false);
+	render3DModel(Platform.center.x + 130, Platform.center.y, Platform.center.z - 25, 4, tree);
+
+
+	drawStreetLight(Point(Platform.center.x + 130, Platform.center.y, Platform.center.z - 100), 15.0f, 0.5f, 10.0f, 20.0f, 2.0f, false);
+	render3DModel(Platform.center.x + 130, Platform.center.y, Platform.center.z - 75, 4, tree);
+
+	drawStreetLight(Point(Platform.center.x + 130, Platform.center.y, Platform.center.z - 50), 15.0f, 0.5f, 10.0f, 20.0f, 2.0f, false);
 
 	glPushMatrix();
 	glTranslated(22, 12, -290);
@@ -301,4 +334,27 @@ void Outside::draw() {
 	glColor3f(1, 1, 1);
 	glDisable(GL_BLEND);
 	glPopMatrix();
+}
+void Outside::drawStreetLight(Point baseCenter, double poleHeight, double poleRadius, double armLength, double verticalArmLength, double lampSize, bool isLeftSide)
+{
+	glColor3ub(101, 67, 33);
+	Cuboid pole(baseCenter, poleHeight, poleRadius, poleRadius);
+	pole.draw();
+
+	Point verticalArmStart(baseCenter.x, baseCenter.y + poleHeight, baseCenter.z);
+	Cuboid verticalArm(verticalArmStart, verticalArmLength, poleRadius, poleRadius);
+	verticalArm.draw();
+
+	double horizontalOffset = (isLeftSide ? -armLength : armLength);
+	Point horizontalArmStart(verticalArmStart.x, verticalArmStart.y + verticalArmLength, verticalArmStart.z);
+	Point horizontalArmCenter(horizontalArmStart.x + horizontalOffset / 2, horizontalArmStart.y, horizontalArmStart.z);
+	Cuboid horizontalArm(horizontalArmCenter, poleRadius, 0, poleRadius + 10);
+	horizontalArm.draw();
+
+	glPushMatrix();
+	glColor3ub(255, 255, 0);
+	glTranslated(horizontalArmStart.x + horizontalOffset, horizontalArmStart.y - lampSize * 2 + 2, horizontalArmStart.z); // Move downward
+	glutSolidSphere(lampSize, 20, 20);
+	glPopMatrix();
+	glColor3ub(255, 255, 255);
 }
