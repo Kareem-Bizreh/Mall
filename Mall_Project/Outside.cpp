@@ -156,7 +156,7 @@ void Outside::draw() {
 
 	glPushMatrix();
 	glColor3ub(180, 180, 180);
-	Cylinder().draw(Point(165, 110, - 262), 12, 12, 100, 36, 36);
+	Cylinder().draw(Point(165, 112.5, - 262), 12, 12, 112.5, 36, 36);
 	glPopMatrix();
 
 
