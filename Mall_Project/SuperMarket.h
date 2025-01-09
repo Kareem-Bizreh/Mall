@@ -10,6 +10,7 @@
 class SuperMarket
 {
 public:
+	float waveAmplitude, waveFrequency, waveSpeed;
 	void loadTextures();
 	void drawTable(Point center);
 	void drawMonitor(Point center);
@@ -18,8 +19,9 @@ public:
 	void drawLake();
 	void draw();
 	void drawParties();
+
 	FurnitureStore chiar;
 	Texture roof, backWall, floor, products, products2, products3, products4, products5, logo, friends, keyBoard
-		, woodTable, laptopScreen, discounts, marketImage, welcome,lakeWall,floorLake , partie;
+		, woodTable, laptopScreen, discounts, marketImage, welcome,lakeWall,floorLake , partie, Water, Cylinder;
 };
 

@@ -10,7 +10,7 @@
 
 void SuperMarket::loadTextures()
 {
-	/*roof.loadTexture("textures\\SuperMarket\\roof.jpg");
+	roof.loadTexture("textures\\SuperMarket\\roof.jpg");
 	backWall.loadTexture("textures\\SuperMarket\\all.jpg");
 	floor.loadTexture("textures\\SuperMarket\\floor3.jpg");
 	products.loadTexture("textures\\SuperMarket\\products.jpg");
@@ -24,10 +24,13 @@ void SuperMarket::loadTextures()
 	friends.loadTexture("textures\\SuperMarket\\HelloWorld.jpg");
 	discounts.loadTexture("textures\\SuperMarket\\discounts.jpg");
 	marketImage.loadTexture("textures\\SuperMarket\\MarketLogo.jpg");
-	welcome.loadTexture("textures\\SuperMarket\\welcome.png");*/
+	welcome.loadTexture("textures\\SuperMarket\\welcome.png");
 	floorLake.loadTexture("textures\\SuperMarket\\floorLake2.jpg");
 	lakeWall.loadTexture("textures\\SuperMarket\\lakeWall5.jpg");
 	partie.loadTexture("textures\\SuperMarket\\parties.jpg");
+	Water.loadTexture("textures\\SuperMarket\\water.jpg");
+	Cylinder.loadTexture("textures\\SuperMarket\\lakeWall2.jpg");
+
 
 }
 
@@ -129,13 +132,14 @@ void SuperMarket::drawParties()
 	Cuboid parties(Point(0, 0, 0), 11, 5, 5), upParties(Point(0, 11, 0), 2, 7, 7);
 
 	glColor3ub(255, 255, 255);
-	parties.drawWithTexture(lakeWall.textureID, 1, 1);
+	parties.drawWithTexture(partie.textureID, 1, 1);
 	upParties.drawWithTexture(partie.textureID,1,1);
 }
 
 void SuperMarket::drawLake()
 {
 	GLUquadric* quad = gluNewQuadric();
+	
 	glPushMatrix();
 	glTranslated(0, 0, 0);
 	this->drawParties();
@@ -175,33 +179,75 @@ void SuperMarket::drawLake()
 	glColor3f(0.5, 0.5, 0.5);
 	topOfCenter.draw();
 
-	glColor3f(0, 0, 0);
-	glPushMatrix();
-	glTranslatef(25,12.2,-25);
-	glRotated(-90, 1, 0, 0);
-	gluCylinder(quad, 3, 3, 2, 32, 32);
-	glPopMatrix();
-
-	glColor3f(0, 0, 0);
-	glPushMatrix();
-	glTranslatef(25, 12.3, -25);
-	glRotated(-90, 1, 0, 0);
-	gluCylinder(quad, 3, 4, 2, 32, 32);
-	glPopMatrix();
-
-	glColor3f(0, 0, 0);
-	glPushMatrix();
-	glTranslatef(25, 14.2, -25);
-	glRotated(-90, 1, 0, 0);
-	gluCylinder(quad, 1.5, 2.5, 1, 32, 32);
-	glPopMatrix();
-
-	glColor3f(0, 0, 0);
+	glColor3f(1, 1, 1);
+	
 	glPushMatrix();
 	glTranslatef(25, 12.2, -25);
 	glRotated(-90, 1, 0, 0);
-	gluCylinder(quad, 0.1, 0.1, 5, 32, 32);
+	gluQuadricTexture(quad, GL_TRUE);
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, Cylinder.textureID);
+	gluCylinder(quad, 3, 3, 2, 32, 32);
+	glDisable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, 0);
 	glPopMatrix();
+
+	glPushMatrix();
+	gluQuadricTexture(quad, GL_TRUE);
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, Cylinder.textureID);
+	glTranslatef(25, 12.3, -25);
+	glRotated(-90, 1, 0, 0);
+	gluCylinder(quad, 3, 4, 2, 32, 32);
+	glDisable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glPopMatrix();
+
+	glPushMatrix();
+	gluQuadricTexture(quad, GL_TRUE);
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, Cylinder.textureID);
+	glTranslatef(25, 14.2, -25);
+	glRotated(-90, 1, 0, 0);
+	gluCylinder(quad, 1.5, 2.5, 1, 32, 32);
+	glDisable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glPopMatrix();
+
+	glPushMatrix();
+	gluQuadricTexture(quad, GL_TRUE);
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, Cylinder.textureID);
+	glTranslatef(25, 12.2, -25);
+	glRotated(-90, 1, 0, 0);
+	gluCylinder(quad, 0.1, 0.1, 5, 32, 32);
+	glDisable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glPopMatrix();
+
+	Cuboid water(Point(25, 0.2, -12.5), 5, 19, 44);
+	Cuboid water2(Point(25, 0.2, -37.5), 5, 19, 44);
+	Cuboid water3(Point(12.5, 0.2, -25), 5, 5.4, 19);
+	Cuboid water4(Point(37.5, 0.2, -25), 5, 5.4, 19);
+
+	glColor3ub(84, 64, 63);
+	
+
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	glDepthMask(GL_FALSE);
+
+	glColor4f(1.0f, 1.0f, 1.0f, 0.5f);
+
+	water.drawWithTexture(Water.textureID, 10, 2);
+	water2.drawWithTexture(Water.textureID, 10, 2);
+	water3.drawWithTexture(Water.textureID, 6, 2);
+	water4.drawWithTexture(Water.textureID, 6, 2);
+
+	glDepthMask(GL_TRUE);
+
+	glDisable(GL_BLEND);
 }
 
 
@@ -229,6 +275,7 @@ void SuperMarket::draw()
 	Cuboid sheleves_6(Point(138, 0.2, -19), 30, 6, 40);
 	Cuboid sheleves_7(Point(88, 0.2, -1.7), 30, 2, 140);
 	Cuboid backOfSheleves_7(Point(88, 0.2, -0.5), 49.5, 0.2, 140);
+	Cuboid backOfSheleves_7_2(Point(88, 0.2, -0.2), 49.5, 0.1, 140);
 	Cuboid logoCuboid(Point(9, 30, -1), 10, 0.1, 14);
 
 	glColor3ub(255, 255, 255);
@@ -285,6 +332,17 @@ void SuperMarket::draw()
 	gluCylinder(quad, 0.1, 0.1, 10, 32, 32);
 	glPopMatrix();
 
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	glDepthMask(GL_FALSE);
+
+	glColor4f(1.0f, 1.0f, 1.0f, 0.5f);
+
+	backOfSheleves_7_2.draw();
+
+	glDepthMask(GL_TRUE);
+	glDisable(GL_BLEND);
 }
 
 
