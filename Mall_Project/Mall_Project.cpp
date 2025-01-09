@@ -167,8 +167,6 @@ void display()
 	outside.draw();
 	
 
-
-
 	glutSwapBuffers();
 }
 

@@ -9,16 +9,19 @@
 #include "FurnitureStore.h"
 #include "Cafe.h"
 #include "Restaurant.h"
-
+#include "Audio.h"
+#include "Garage.h"
 class Outside {
 private:
-	Texture ground, mall_ground, side, right_door, left_door, mall_name, flag, stick, street, entry;
+	Texture ground, mall_ground, side, right_door, left_door, mall_name, flag, stick, street, entry,frontSide;
 	Flag wavingFlag;
-	Model_3DS* tank;
 	SuperMarket superMarket;
 	FurnitureStore furnitureStore;
+	Garage garage;
 	Cafe cafe = Cafe(Point(0, 0, 0));
 	Restaurant restaurant = Restaurant(Point(0, 0, 0));
+	Audio mallMusic;
+	Model_3DS* tank;
 
 	bool isInsideMall = false;
 	void drawMarkets();

@@ -30,10 +30,6 @@ void Outside::drawMarkets()
 	glRotated(-90, 0, 1, 0);
 	furnitureStore.drawStore(Point(0, 0, 0));
 	glPopMatrix();
-
-	glPushMatrix();
-	stairsMall().draw(Point(200, 200, -50));;
-	glPopMatrix();
 }
 
 Outside::Outside(Texture texture)
@@ -45,6 +41,7 @@ void Outside::OutsideTextures() {
 	cafe.cafeTextures();
 	superMarket.loadTextures();
 	restaurant.restaurantTextures();
+	garage.loadTexturesAndModels();
 	ground.loadTexture("textures/Outside/ground.jpg");
 	mall_ground.loadTexture("textures/Outside/mall_ground.jpg");
 	side.loadTexture("textures/Outside/side.jpg");
@@ -55,8 +52,7 @@ void Outside::OutsideTextures() {
 	stick.loadTexture("textures/Outside/stick.jpg");
 	street.loadTexture("textures/Outside/street.jpg");
 	entry.loadTexture("textures/Outside/entry.jpg");
-	tank = new Model_3DS();
-	tank->Load((char*)"models/Outside/tank.3DS");
+	frontSide.loadTexture("textures/Outside/frontSide.jpg");
 }
 
 
@@ -78,28 +74,30 @@ void Outside::render3DModel(float x, float y, float z, float scale, Model_3DS* m
 
 
 void Outside::draw() {
-
-	glColor3ub(255, 255, 255);
+	glPushMatrix();
+	garage.draw();
+	glPopMatrix();
 	Cuboid Ground(Point(105, 0, -155), 10, 320, 220);
 	Ground.drawWithTexture(ground.textureID, 2, 2);
 
-
-	Cuboid Street(Point(105, -10, -200), 10.1, 800, 400);
+	Cuboid Street(Point(105, 1, -495), 0.5, 50, 200);
 	Street.drawWithTexture(street.textureID, 1, 1);
-	glColor3ub(75, 75, 75);
-	Cuboid Top(Point(105, 130, -155), 0, 300, 200);
+	glPushMatrix();
+	glColor3f(0.5f, 0.5f, 0.5f); 
+	Cuboid Top(Point(105, 113, -155), 0, 300, 200);
 	Top.drawWithTexture(mall_ground.textureID, 0, 0);
-
 	glColor3ub(255, 255, 255);
-	Flag wavingFlag(Point(105, 180, -20.0), 20, 50, 40, 10, 30, flag, stick);
+	glPopMatrix();
+	Flag wavingFlag(Point(105, 163, -20.0), 20, 50, 40, 10, 30, flag, stick);
 	wavingFlag.setWaveProperties(0.1f, 2.0f, 1.0f);
+	glColor3ub(255, 255, 255);
 	glPushMatrix();
 	wavingFlag.drawWavingFlag();
 	glPopMatrix();
 
-
-	Cuboid stick(Point(85, 130.1, -20.0), 60, 5, 5);
+	Cuboid stick(Point(85, 113.1, -20.0), 60, 5, 5);
 	stick.drawWithTexture(mall_ground.textureID, 1, 1);
+
 
 	Cuboid Bottom(Point(105, 10.1, -155), 0, 300, 200);
 	Bottom.drawWithTexture(mall_ground.textureID, 2, 2);
@@ -112,26 +110,33 @@ void Outside::draw() {
 	Cuboid Floor_up(Point(105, 61.1, -106), 0, 201, 200);
 	Floor_up.drawWithTexture(mall_ground.textureID, 0, 0);
 
-	Cuboid Right(Point(205, 10, -155), 120, 300, 0);
+	Cuboid Right(Point(205, 10, -155), 103, 300, 0);
 	Right.drawWithTexture(side.textureID, 1, 1);
 
-	Cuboid Left(Point(5, 10, -155), 120, 300, 0);
+	Cuboid Left(Point(5, 10, -155), 103, 300, 0);
 	Left.drawWithTexture(side.textureID, 1, 1);
 
-	Cuboid Front(Point(105, 10, -5), 120, 0, 200);
-	Front.drawWithTexture(side.textureID, 1, 1);
-
-	Cuboid Back(Point(105, 10, -305), 120, 0, 200);
+	Cuboid Back(Point(105, 10, -305), 103, 0, 200);
 	Back.drawWithTexture(side.textureID, 1, 1);
+	
+	Cuboid Mall_Name(Point(110, 67, -4.9), 46.1, 0, 68);
+	Mall_Name.drawWithTexture(mall_name.textureID, 1, 1);
 
-	Cuboid Front_Middle(Point(105, 80, -4.9), 50, 0, 68);
-	Front_Middle.drawWithTexture(mall_name.textureID, 1, 1);
+	Cuboid Front_Top(Point(105, 41, -5), 72, 0, 200);
+	Front_Top.drawWithTexture(side.textureID, 1, 1);
 
-	Cuboid Right_Door(Point(88, 10, -4.9), 30, 1, 34);
+	Cuboid Front_BR(Point(46, 10, -5), 31, 0, 82);
+	Front_BR.drawWithTexture(frontSide.textureID, 1, 1);
+
+	Cuboid Front_BL(Point(165, 10, -5), 31, 0, 80);
+	Front_BL.drawWithTexture(frontSide.textureID, 1, 1);
+
+	Cuboid Right_Door(Point(97, 10.1, -4.9), 31, 1, 20);
 	Right_Door.drawWithTexture(right_door.textureID, 1, 1);
 
-	Cuboid Left_Door(Point(122, 10, -4.9), 30, 1, 34);
+	Cuboid Left_Door(Point(117, 10.1, -4.9), 31, 1, 20);
 	Left_Door.drawWithTexture(left_door.textureID, 1, 1);
+
 
 	Cuboid Stairs1(Point(105, 3, 10.1), -2.4, 10.1, 68);
 	Stairs1.drawWithTexture(mall_ground.textureID, 2, 2);
@@ -163,5 +168,4 @@ void Outside::draw() {
 
 	render3DModel(105, 0, 150, 3.0, tank);
 
-	
 }
