@@ -10,23 +10,22 @@
 #include "Restaurant.h"
 #include "Audio.h"
 #include "Garage.h"
+
 class Outside {
 private:
-	Texture ground, mall_ground, side, right_door, left_door, mall_name, flag, stick, street, entry,frontSide;
+	Texture ground, mall_ground, side, right_door, left_door, mall_name, flag, stick, street, entry,platform,cafe_ad,market_ad;
 	Flag wavingFlag;
 	SuperMarket superMarket;
 	FurnitureStore furnitureStore;
 	Garage garage;
 	Cafe cafe = Cafe(Point(0, 0, 0));
 	Restaurant restaurant = Restaurant(Point(0, 0, 0));
-	Audio mallMusic;
-
-	bool isInsideMall = false;
+	Model_3DS* tree;
 	void drawMarkets();
 public:
 	Outside(Texture flagTexture);
 	void OutsideTextures();
-
+	void drawStreetLight(Point baseCenter, double poleHeight, double poleRadius, double armLength, double verticalArmLength, double lampSize, bool isLeftSide);
 	void draw();
 	void render3DModel(float x, float y, float z, float scale, Model_3DS* model);
 };

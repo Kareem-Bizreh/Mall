@@ -29,13 +29,12 @@ private:
     ALuint buffer;
     ALCdevice* device;
     ALCcontext* context;
-    std::mutex audioMutex; // Protects audio access in multithreading
-    std::string currentFile; // Tracks the currently loaded file
+    std::mutex audioMutex; 
+    std::string currentFile; 
 
     void logError(const std::string& message);
     void checkOpenALError(const std::string& context);
     void loadWavFile(const std::string& filename, ALuint& buffer);
-    void preloadAudio(const std::string& filePath);
 };
 template <typename T>
 T clamp(const T& value, const T& min, const T& max) {
