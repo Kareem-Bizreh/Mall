@@ -147,8 +147,6 @@ void Outside::draw() {
 	Cuboid Stairs3(Point(105, 10, 7.6), -3.51, 5.1, 68);
 	Stairs3.drawWithTexture(mall_ground.textureID, 2, 2);
 
-	drawMarkets();
-
 	glPushMatrix();
 	glColor3ub(88, 88, 88);
 	Cuboid(Point(179, 10, -211), 102.5, 9, 51).draw();
@@ -165,6 +163,8 @@ void Outside::draw() {
 	glRotated(-90, 0, 1, 0);
 	stairsMall().draw(Point(0, 0, 0));
 	glPopMatrix();
+
+	drawMarkets();
 
 	render3DModel(105, 0, 150, 3.0, tank);
 
