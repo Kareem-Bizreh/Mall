@@ -30,6 +30,10 @@ void Outside::drawMarkets()
 	glRotated(-90, 0, 1, 0);
 	furnitureStore.drawStore(Point(0, 0, 0));
 	glPopMatrix();
+
+	glPushMatrix();
+	stairsMall().draw(Point(200, 200, -50));;
+	glPopMatrix();
 }
 
 Outside::Outside(Texture texture)
@@ -103,9 +107,9 @@ void Outside::draw() {
 	Cuboid Entry(Point(105, 10.1, 0), 0, 10, 68);
 	Entry.drawWithTexture(entry.textureID, 1, 1);
 
-	Cuboid Floor_bottom(Point(105, 61.2, -155), 0, 300, 200);
+	Cuboid Floor_bottom(Point(105, 61.2, - 106), 0, 201, 200);
 	Floor_bottom.drawWithTexture(mall_ground.textureID, 2, 2);
-	Cuboid Floor_up(Point(105, 61.1, -155), 0, 300, 200);
+	Cuboid Floor_up(Point(105, 61.1, -106), 0, 201, 200);
 	Floor_up.drawWithTexture(mall_ground.textureID, 0, 0);
 
 	Cuboid Right(Point(205, 10, -155), 120, 300, 0);
@@ -138,7 +142,26 @@ void Outside::draw() {
 	Cuboid Stairs3(Point(105, 10, 7.6), -3.51, 5.1, 68);
 	Stairs3.drawWithTexture(mall_ground.textureID, 2, 2);
 
+	drawMarkets();
+
+	glPushMatrix();
+	glColor3ub(88, 88, 88);
+	Cuboid(Point(179, 10, -211), 102.5, 9, 51).draw();
+	glPopMatrix();
+
+	glPushMatrix();
+	glColor3ub(180, 180, 180);
+	Cylinder().draw(Point(165, 110, - 262), 12, 12, 100, 36, 36);
+	glPopMatrix();
+
+
+	glPushMatrix();
+	glTranslated(149, 10, -227);
+	glRotated(-90, 0, 1, 0);
+	stairsMall().draw(Point(0, 0, 0));
+	glPopMatrix();
+
 	render3DModel(105, 0, 150, 3.0, tank);
 
-	drawMarkets();
+	
 }

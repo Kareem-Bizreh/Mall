@@ -2,6 +2,7 @@
 #include "Cuboid.h"
 #include "Texture.h"
 #include "flag.h"
+#include "stairsMall.h"
 #include "Model_3DS.h"
 #include "Point.h"
 #include "SuperMarket.h"

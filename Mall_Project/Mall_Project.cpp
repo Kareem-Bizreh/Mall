@@ -2,6 +2,7 @@
 #include <bits/stdc++.h>
 #include "stb_image.h"
 #include "math3d.h"
+#include "stairsMall.h"
 #include "Texture.h"
 #include "Cuboid.h"
 #include "FurnitureStore.h"
@@ -164,6 +165,9 @@ void display()
 	//outside.draw();
 	//cafe.draw();
 	outside.draw();
+	
+
+
 
 	glutSwapBuffers();
 }
@@ -266,8 +270,8 @@ void init()
 	menucreate();
 
 	//load textures here 
-	//cafe.cafeTextures();
-	furnitureStore.loadTextures();
+	cafe.cafeTextures();
+	//furnitureStore.loadTextures();
 	//outside.OutsideTextures();
 	outside.OutsideTextures();
 

@@ -146,6 +146,7 @@
     <ClCompile Include="Restaurant.cpp" />
     <ClCompile Include="SkyBox.cpp" />
     <ClCompile Include="Sofa.cpp" />
+    <ClCompile Include="stairsMall.cpp" />
     <ClCompile Include="stb_image.c" />
     <ClCompile Include="SuperMarket.cpp" />
     <ClCompile Include="Texture.cpp" />
@@ -166,6 +167,7 @@
     <ClInclude Include="Restaurant.h" />
     <ClInclude Include="SkyBox.h" />
     <ClInclude Include="Sofa.h" />
+    <ClInclude Include="stairsMall.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="SuperMarket.h" />
     <ClInclude Include="Texture.h" />
