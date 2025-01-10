@@ -81,6 +81,9 @@
     <ClCompile Include="stairsMall.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Lake.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cafe.h">
@@ -147,6 +150,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Door.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Lake.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

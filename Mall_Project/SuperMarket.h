@@ -16,12 +16,10 @@ public:
 	void drawMonitor(Point center);
 	void drawChair(Point center);
 	void drawLight();
-	void drawLake();
 	void draw();
-	void drawParties();
 
 	FurnitureStore chiar;
 	Texture roof, backWall, floor, products, products2, products3, products4, products5, logo, friends, keyBoard
-		, woodTable, laptopScreen, discounts, marketImage, welcome,lakeWall,floorLake , partie, Water, Cylinder;
+		, woodTable, laptopScreen, discounts, marketImage, welcome;
 };
 

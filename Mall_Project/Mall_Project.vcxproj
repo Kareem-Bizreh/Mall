@@ -145,6 +145,7 @@
     <ClCompile Include="Flag.cpp" />
     <ClCompile Include="FurnitureStore.cpp" />
     <ClCompile Include="Garage.cpp" />
+    <ClCompile Include="Lake.cpp" />
     <ClCompile Include="Mall_Project.cpp" />
     <ClCompile Include="math3d.cpp" />
     <ClCompile Include="Model_3DS.cpp" />
@@ -170,6 +171,7 @@
     <ClInclude Include="Flag.h" />
     <ClInclude Include="FurnitureStore.h" />
     <ClInclude Include="Garage.h" />
+    <ClInclude Include="Lake.h" />
     <ClInclude Include="math3d.h" />
     <ClInclude Include="Model_3DS.h" />
     <ClInclude Include="Outside.h" />
