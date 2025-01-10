@@ -201,7 +201,7 @@ void Outside::draw() {
 	Cuboid Ground(Point(105, 0, -155), 10, 320, 220);
 	Ground.drawWithTexture(ground.textureID, 2, 2);
 	Cuboid Platform(Point(105, -1, -155), 2, 630, 400);
-	Platform.drawWithTexture(platform.textureID, 4, 4);
+	Platform.drawWithTexture(platform.textureID, 9, 9);
 	Cuboid Street(Point(105, 1, -495), 0.5, 50, 200);
 	Street.drawWithTexture(street.textureID, 1, 1);
 	glPushMatrix();
