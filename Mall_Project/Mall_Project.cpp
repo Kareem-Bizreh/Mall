@@ -19,7 +19,6 @@ struct color3f
 	color3f() { r = 0; g = 0; b = 0; }
 	color3f(float r, float g, float b) { this->r = r; this->g = g; this->b = b; }
 };
-
 //==================================================================================================================
 // Global variables
 Point center = Point(0, -3, 0);
@@ -43,7 +42,7 @@ bool g_mouse_left_down = false;
 bool g_mouse_right_down = false;
 
 // Movement settings
-const float g_translation_speed = 2;
+const float g_translation_speed = 2.5;
 const float g_rotation_speed = M_PI / 180 * 0.1;
 
 // light settings

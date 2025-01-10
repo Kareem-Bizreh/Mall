@@ -23,6 +23,7 @@ private:
 	Restaurant restaurant = Restaurant(Point(0, 0, 0));
 	Audio mallMusic;
 	Model_3DS* tree;
+	Model_3DS* tank;
 	Door* elevatorDoor = new Door{ Point(22, 24.5, -288), 0.0, false };
 	Door* elevatorDoorDown = new Door{ Point(22, 24.5, -288), 0.0, false };
 	Door* elevatorDoorUp = new Door{ Point(22, 74.5, -287.9), 0.0, false };

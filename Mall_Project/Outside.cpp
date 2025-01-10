@@ -201,7 +201,7 @@ void Outside::draw() {
 	Cuboid Ground(Point(105, 0, -155), 10, 320, 220);
 	Ground.drawWithTexture(ground.textureID, 2, 2);
 	Cuboid Platform(Point(105, -1, -155), 2, 630, 400);
-	Platform.drawWithTexture(platform.textureID, 2, 2);
+	Platform.drawWithTexture(platform.textureID, 4, 4);
 	Cuboid Street(Point(105, 1, -495), 0.5, 50, 200);
 	Street.drawWithTexture(street.textureID, 1, 1);
 	glPushMatrix();
@@ -269,8 +269,6 @@ void Outside::draw() {
 	Cuboid Stairs3(Point(105, 10, 7.6), -3.51, 5.1, 68);
 	Stairs3.drawWithTexture(mall_ground.textureID, 2, 2);
 
-	drawMarkets();
-
 	glPushMatrix();
 	glColor3ub(88, 88, 88);
 	Cuboid(Point(179, 10, -211), 102.5, 9, 51).draw();
@@ -288,6 +286,7 @@ void Outside::draw() {
 	stairsMall().draw(Point(0, 0, 0));
 	glPopMatrix();
 
+	render3DModel(105, 0, 150, 3.0, tank);
 	drawStreetLight(Point(Platform.center.x - 130, Platform.center.y, Platform.center.z), 15.0f, 0.5f, 10.0f, 20.0f, 2.0f, true);
 	render3DModel(Platform.center.x - 130, Platform.center.y, Platform.center.z + 25, 4, tree);
 
@@ -334,6 +333,9 @@ void Outside::draw() {
 	glColor3f(1, 1, 1);
 	glDisable(GL_BLEND);
 	glPopMatrix();
+
+	drawMarkets();
+
 }
 void Outside::drawStreetLight(Point baseCenter, double poleHeight, double poleRadius, double armLength, double verticalArmLength, double lampSize, bool isLeftSide)
 {
