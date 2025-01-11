@@ -9,7 +9,9 @@
 #include "Camera.h"
 #include "Cafe.h"
 #include "SuperMarket.h"
+#include "ElectronicDepartment.h"
 #include "Outside.h"
+
 using namespace std;
 
 struct color3f

@@ -29,7 +29,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -111,6 +111,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>glut32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -135,6 +136,7 @@
     <ClCompile Include="Closet.cpp" />
     <ClCompile Include="Cuboid.cpp" />
     <ClCompile Include="Cylinder.cpp" />
+    <ClCompile Include="ElectronicDepartment.cpp" />
     <ClCompile Include="Flag.cpp" />
     <ClCompile Include="FurnitureStore.cpp" />
     <ClCompile Include="Mall_Project.cpp" />
@@ -156,6 +158,7 @@
     <ClInclude Include="Closet.h" />
     <ClInclude Include="Cuboid.h" />
     <ClInclude Include="Cylinder.h" />
+    <ClInclude Include="ElectronicDepartment.h" />
     <ClInclude Include="Flag.h" />
     <ClInclude Include="FurnitureStore.h" />
     <ClInclude Include="math3d.h" />

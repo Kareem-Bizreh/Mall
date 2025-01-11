@@ -13,7 +13,7 @@ void Cylinder::drawWithTexture(Point center, float baseRadius,float topRadius, f
 	gluCylinder(quad, baseRadius, topRadius, height, slices,stacks);
 	gluDisk(quad, 0, baseRadius, slices, slices); // قاعدة الأسطوانة السفلى
 	glPushMatrix();
-	glTranslatef(0, 0, center.z + height);
+	glTranslatef(0, 0, height);
 	gluDisk(quad, 0, topRadius, slices, slices); // قاعدة الأسطوانة العليا
 	glPopMatrix();
 	glDisable(GL_TEXTURE_2D);
@@ -37,3 +37,5 @@ void Cylinder::draw(Point center, float baseRadius, float topRadius, float heigh
 	glPopMatrix();
 	gluDeleteQuadric(quad);
 }
+
+
