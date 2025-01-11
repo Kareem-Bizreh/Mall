@@ -132,7 +132,7 @@ int main(int argc, char** argv)
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
 	glutInitWindowSize(g_iWidth, g_iHeight);
-	glutCreateWindow("study");
+	glutCreateWindow("ALO Mall");
 	init();
 	glutDisplayFunc(display);
 	glutIdleFunc(idle);
@@ -206,11 +206,47 @@ void keyboard(unsigned char key, int x, int y)
 				(playerPos.y - doorCenter.y) * (playerPos.y - doorCenter.y) +
 				(playerPos.z - doorCenter.z) * (playerPos.z - doorCenter.z));
 			if (dist <= 15)
-				door->state = !door->state;
+				door->open = !door->open;
+		}
+		if (outside.elevator.elevatorDoor->OpenRate >= 1) {
+			double dist;
+			dist = sqrt((playerPos.x - outside.elevator.elevatorDoorDown->center.x) * (playerPos.x - outside.elevator.elevatorDoorDown->center.x) +
+				(playerPos.y - outside.elevator.elevatorDoorDown->center.y) * (playerPos.y - outside.elevator.elevatorDoorDown->center.y) +
+				(playerPos.z - outside.elevator.elevatorDoorDown->center.z) * (playerPos.z - outside.elevator.elevatorDoorDown->center.z));
+			if (dist <= 15 && outside.elevator.height >= 50) {
+				outside.elevator.up = false;
+				outside.elevator.elevatorDoor->open = false;
+				outside.elevator.elevatorDoorUp->open = false;
+			}
+			dist = sqrt((playerPos.x - outside.elevator.elevatorDoorUp->center.x) * (playerPos.x - outside.elevator.elevatorDoorUp->center.x) +
+				(playerPos.y - outside.elevator.elevatorDoorUp->center.y) * (playerPos.y - outside.elevator.elevatorDoorUp->center.y) +
+				(playerPos.z - outside.elevator.elevatorDoorUp->center.z) * (playerPos.z - outside.elevator.elevatorDoorUp->center.z));
+			if (dist <= 15 && outside.elevator.height <= 0) {
+				outside.elevator.up = true;
+				outside.elevator.elevatorDoor->open = false;
+				outside.elevator.elevatorDoorDown->open = false;
+			}
+			dist = sqrt((playerPos.x - outside.elevator.elevatorDoor->center.x) * (playerPos.x - outside.elevator.elevatorDoor->center.x) +
+				(playerPos.y - outside.elevator.elevatorDoor->center.y) * (playerPos.y - outside.elevator.elevatorDoor->center.y) +
+				(playerPos.z - outside.elevator.elevatorDoor->center.z) * (playerPos.z - outside.elevator.elevatorDoor->center.z));
+			if (dist < 10) {
+				outside.elevator.up = !outside.elevator.up;
+				outside.elevator.elevatorDoor->open = false;
+				outside.elevator.elevatorDoorDown->open = false;
+				outside.elevator.elevatorDoorUp->open = false;
+				outside.elevator.in = true;
+			}
 		}
 	}
 
 	g_key[key] = true;
+	if (outside.elevator.in)
+	{
+		g_key['w'] = false;
+		g_key['a'] = false;
+		g_key['s'] = false;
+		g_key['d'] = false;
+	}
 }
 
 //camera related function: timer, mouse and mouse motion
@@ -237,12 +273,43 @@ void timer(int value)
 		}
 	}
 
+	if (outside.elevator.elevatorDoor->OpenRate <= 0)
+	{
+		if (!outside.elevator.up)
+		{
+			if (outside.elevator.height > 0)
+				outside.elevator.height -= 0.2, g_camera.Fly(outside.elevator.in ? -0.2 : 0.0);
+			else
+			{
+				outside.elevator.elevatorDoor->open = true;
+				outside.elevator.elevatorDoorDown->open = true;
+			}
+		}
+		if (outside.elevator.up)
+		{
+			if (outside.elevator.height < 50)
+				outside.elevator.height += 0.2, g_camera.Fly(outside.elevator.in ? 0.2 : 0.0);
+			else
+			{
+				outside.elevator.elevatorDoor->open = true;
+				outside.elevator.elevatorDoorUp->open = true;
+			}
+		}
+	}
 	for (Door* door : outside.Doors) {
-		if (door->state && door->OpenRate < 1)
+		if (door->open && door->OpenRate < 1)
 			door->OpenRate += 0.04;
-		if (!door->state && door->OpenRate > 0)
+		if (!door->open && door->OpenRate > 0)
 			door->OpenRate -= 0.04;
 	}
+	for (Door* door : outside.elevatorDoors) {
+		if (door->open && door->OpenRate < 1)
+			door->OpenRate += 0.02;
+		if (!door->open && door->OpenRate > 0)
+			door->OpenRate -= 0.02;
+	}
+	if (outside.elevator.elevatorDoor->OpenRate >= 1)
+		outside.elevator.in = false;
 
 	glutTimerFunc(1, timer, 0);	//call the timer again each 1 millisecond
 }

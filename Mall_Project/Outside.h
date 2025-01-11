@@ -14,9 +14,10 @@
 #include "Door.h"
 #include "Lake.h"
 #include "Cylinder.h"
+#include "Elevator.h"
 class Outside {
 private:
-	Texture ground, mall_ground, side, right_door, left_door, mall_name, flag, stick, street, entry, elevator, elevatorGround, elevatorHandle, elevatorDoorR, elevatorDoorL, elevatorDoorControl,platform, cafe_ad, market_ad,garage_street,sarot;
+	Texture ground, mall_ground, side, right_door, left_door, mall_name, flag, stick, street, entry, platform, cafe_ad, market_ad, garage_street, sarot;
 	Flag wavingFlag;
 	Lake lake;
 	SuperMarket superMarket;
@@ -27,19 +28,20 @@ private:
 	Audio mallMusic;
 	Model_3DS* tree;
 	Model_3DS* tank;
-	Door* elevatorDoor = new Door{ Point(22, 24.5, -288), 0.0, false };
-	Door* elevatorDoorDown = new Door{ Point(22, 24.5, -288), 0.0, false };
-	Door* elevatorDoorUp = new Door{ Point(22, 74.5, -287.9), 0.0, false };
-
 	void drawMarkets();
 	void drawLake();
-	void drawElevator(double height);
 public:
+	Elevator elevator;
 	std::vector <Door*> Doors{
-		elevatorDoor,
-		elevatorDoorDown,
-		elevatorDoorUp
+		//
 	};
+
+	std::vector<Door*> elevatorDoors{
+		elevator.elevatorDoor,
+		elevator.elevatorDoorUp,
+		elevator.elevatorDoorDown
+	};
+
 	Outside(Texture flagTexture);
 	void OutsideTextures();
 	void drawStreetLight(Point baseCenter, double poleHeight, double poleRadius, double armLength, double verticalArmLength, double lampSize, bool isLeftSide);
