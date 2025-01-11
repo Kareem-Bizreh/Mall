@@ -113,6 +113,8 @@ void Garage::render3DModel(float x, float y, float z, float scale, Model_3DS* mo
     glScalef(scale, scale, scale);
     glEnable(GL_TEXTURE_2D); 
     glEnable(GL_DEPTH_TEST);  
+    if(model!=tank)
+        glColor3ub(70, 70,70);
     model->Draw();
     glPopMatrix();
 }
