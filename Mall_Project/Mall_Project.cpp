@@ -164,7 +164,7 @@ void display()
 	//outside.draw();
 	//cafe.draw();
 	outside.draw();
-	
+
 
 	glutSwapBuffers();
 }
@@ -278,7 +278,7 @@ void timer(int value)
 		if (!outside.elevator.up)
 		{
 			if (outside.elevator.height > 0)
-				outside.elevator.height -= 0.2, g_camera.Fly(outside.elevator.in ? -0.2 : 0.0);
+				outside.elevator.height -= 0.4, g_camera.Fly(outside.elevator.in ? -0.4 : 0.0);
 			else
 			{
 				outside.elevator.elevatorDoor->open = true;
@@ -288,7 +288,7 @@ void timer(int value)
 		if (outside.elevator.up)
 		{
 			if (outside.elevator.height < 50)
-				outside.elevator.height += 0.2, g_camera.Fly(outside.elevator.in ? 0.2 : 0.0);
+				outside.elevator.height += 0.4, g_camera.Fly(outside.elevator.in ? 0.4 : 0.0);
 			else
 			{
 				outside.elevator.elevatorDoor->open = true;
@@ -304,13 +304,27 @@ void timer(int value)
 	}
 	for (Door* door : outside.elevatorDoors) {
 		if (door->open && door->OpenRate < 1)
-			door->OpenRate += 0.02;
+			door->OpenRate += 0.04;
 		if (!door->open && door->OpenRate > 0)
-			door->OpenRate -= 0.02;
+			door->OpenRate -= 0.04;
 	}
 	if (outside.elevator.elevatorDoor->OpenRate >= 1)
 		outside.elevator.in = false;
 
+	float x, y, z;
+	g_camera.GetPos(x, y, z);
+	Point playerPos = Point(x, y, z);
+	Point doorCenter = outside.doorMov->center;
+	double dist = sqrt((playerPos.x - doorCenter.x) * (playerPos.x - doorCenter.x) +
+		(playerPos.y - doorCenter.y) * (playerPos.y - doorCenter.y) +
+		(playerPos.z - doorCenter.z) * (playerPos.z - doorCenter.z));
+	if (dist <= 20 && outside.doorMov->OpenRate < 1)
+		outside.doorMov->OpenRate += 0.1;
+	if (dist > 20 && outside.doorMov->OpenRate > 0)
+		outside.doorMov->OpenRate -= 0.1;
+
+	outside.doorMov->OpenRate = max((double)0, outside.doorMov->OpenRate);
+	outside.doorMov->OpenRate = min((double)1, outside.doorMov->OpenRate);
 	glutTimerFunc(1, timer, 0);	//call the timer again each 1 millisecond
 }
 

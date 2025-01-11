@@ -17,7 +17,7 @@ void Restaurant::draw()
 	Cuboid(Point(center.x - 42, center.y + 30, center.z + 26), 10, 2, 11).drawWithTextureOnOneFace(logo.textureID, "front", 1, 1);
 	glPushMatrix();
 	glTranslated(center.x - 34, center.y, center.z + 25);
-	glRotated(30, 0, 1, 0);
+	glRotated(180 - 150 * doorMov->OpenRate, 0, 1, 0);
 	Cuboid(Point(8, 0.05, 0), 25, 1, 16).drawWithTexture(door.textureID, 1, 1);
 	glPopMatrix();
 	Cuboid(Point(center.x + 15, center.y + 0.1, center.z + 7), 15, 36, 3).drawWithTexture(table.textureID, 8, 8);

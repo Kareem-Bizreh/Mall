@@ -90,16 +90,17 @@ void Outside::render3DModel(float x, float y, float z, float scale, Model_3DS* m
 
 
 void Outside::draw() {
+	drawLake();
 	glPushMatrix();
 	garage.draw();
 	glPopMatrix();
 	Cuboid Ground(Point(105, 0, -155), 10, 320, 220);
 	Ground.drawWithTexture(ground.textureID, 2, 2);
 
-//	Cuboid Platform(Point(105, -1, -155), 2, 630, 400);
-//	Platform.drawWithTexture(platform.textureID, 9, 9);
-//	Cuboid Street(Point(105, 1, -495), 0.5, 50, 200);
-//	Street.drawWithTexture(street.textureID, 1, 1);
+	//	Cuboid Platform(Point(105, -1, -155), 2, 630, 400);
+	//	Platform.drawWithTexture(platform.textureID, 9, 9);
+	//	Cuboid Street(Point(105, 1, -495), 0.5, 50, 200);
+	//	Street.drawWithTexture(street.textureID, 1, 1);
 
 	Cuboid Platform(Point(105, -1, -155), 2, 630, 370);
 	Platform.drawWithTexture(platform.textureID, 6, 6);
@@ -131,7 +132,7 @@ void Outside::draw() {
 	Cuboid FloorB_right(Point(165, 61.22, -106), 0, 200, 80);
 	Cuboid FloorB_front(Point(105, 61.23, -40), 0, 70, 200);
 	Cuboid FloorB_back(Point(105, 61.24, -165), 0, 80, 200);
-	
+
 	FloorB_left.drawWithTexture(mall_ground.textureID, 0, 0);
 	FloorB_right.drawWithTexture(mall_ground.textureID, 0, 0);
 	FloorB_front.drawWithTexture(mall_ground.textureID, 0, 0);
@@ -169,10 +170,10 @@ void Outside::draw() {
 	Cuboid Front_BL(Point(165, 10, -5), 31, 0, 80);
 	Front_BL.drawWithTexture(cafe_ad.textureID, 1, 1);
 
-	Cuboid Right_Door(Point(97, 10.2, -4.9), 31, 1, 20);
+	Cuboid Right_Door(Point(97 - doorMov->OpenRate * 15, 10.2, -4.9), 31, 1, 20);
 	Right_Door.drawWithTexture(right_door.textureID, 1, 1);
 
-	Cuboid Left_Door(Point(117, 10.2, -4.9), 31, 1, 20);
+	Cuboid Left_Door(Point(117 + doorMov->OpenRate * 15, 10.2, -4.9), 31, 1, 20);
 	Left_Door.drawWithTexture(left_door.textureID, 1, 1);
 
 
@@ -193,13 +194,6 @@ void Outside::draw() {
 	glPushMatrix();
 	glColor3ub(180, 180, 180);
 	Cylinder().draw(Point(165, 112.5, -262), 12, 12, 112.5, 36, 36);
-	glPopMatrix();
-
-
-	glPushMatrix();
-	glTranslated(149, 10, -227);
-	glRotated(-90, 0, 1, 0);
-	stairsMall().draw(Point(0, 0, 0));
 	glPopMatrix();
 
 	render3DModel(105, 0, 150, 3.0, tank);
@@ -240,6 +234,22 @@ void Outside::draw() {
 	elevator.draw();
 	glTranslated(0, 47.75, 50);
 	Cuboid(Point(0, 0.1, -1), 1.5, 72, 28).drawWithTexture(mall_ground.textureID, 2, 8);
+	glColor3f(1, 1, 1);
+	glPopMatrix();
+
+	drawMarkets();
+
+	// draw stairs
+	glPushMatrix();
+	glTranslated(149, 10, -227);
+	glRotated(-90, 0, 1, 0);
+	stairsMall().draw(Point(0, 0, 0));
+	glPopMatrix();
+
+	// draw glass for elevator
+	glPushMatrix();
+	glTranslated(22, 12, -290);
+	glTranslated(0, 47.75, 50);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_BLEND);
 	glColor4ub(163, 163, 163, 182);
@@ -248,9 +258,6 @@ void Outside::draw() {
 	glColor3f(1, 1, 1);
 	glDisable(GL_BLEND);
 	glPopMatrix();
-	drawLake();
-	drawMarkets();
-
 }
 void Outside::drawStreetLight(Point baseCenter, double poleHeight, double poleRadius, double armLength, double verticalArmLength, double lampSize, bool isLeftSide)
 {

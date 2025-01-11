@@ -32,8 +32,15 @@ private:
 	void drawLake();
 public:
 	Elevator elevator;
+	Door* doorMov = new Door{ Point(108 ,26 ,-15), 0.0, false };
 	std::vector <Door*> Doors{
-		//
+		cafe.doorMov,
+		restaurant.doorMov,
+		furnitureStore.doorMov,
+		furnitureStore.drawerMov1,
+		furnitureStore.drawerMov2,
+		furnitureStore.closetMov1,
+		furnitureStore.closetMov2
 	};
 
 	std::vector<Door*> elevatorDoors{
