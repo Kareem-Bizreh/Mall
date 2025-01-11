@@ -25,6 +25,7 @@ void SuperMarket::loadTextures()
 	discounts.loadTexture("textures\\SuperMarket\\discounts.jpg");
 	marketImage.loadTexture("textures\\SuperMarket\\MarketLogo.jpg");
 	welcome.loadTexture("textures\\SuperMarket\\welcome.png");
+
 }
 
 void SuperMarket::drawTable(Point center) {
@@ -145,6 +146,7 @@ void SuperMarket::draw()
 	Cuboid sheleves_6(Point(138, 0.2, -19), 30, 6, 40);
 	Cuboid sheleves_7(Point(88, 0.2, -1.7), 30, 2, 140);
 	Cuboid backOfSheleves_7(Point(88, 0.2, -0.5), 49.5, 0.2, 140);
+	Cuboid backOfSheleves_7_2(Point(88, 0.2, -0.2), 49.5, 0.1, 140);
 	Cuboid logoCuboid(Point(9, 30, -1), 10, 0.1, 14);
 
 	glColor3ub(255, 255, 255);
@@ -201,4 +203,17 @@ void SuperMarket::draw()
 	gluCylinder(quad, 0.1, 0.1, 10, 32, 32);
 	glPopMatrix();
 
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	glDepthMask(GL_FALSE);
+
+	glColor4f(1.0f, 1.0f, 1.0f, 0.5f);
+
+	backOfSheleves_7_2.draw();
+
+	glDepthMask(GL_TRUE);
+	glDisable(GL_BLEND);
 }
+
+

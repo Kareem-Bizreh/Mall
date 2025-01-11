@@ -12,10 +12,13 @@
 #include "Audio.h"
 #include "Garage.h"
 #include "Door.h"
+#include "Lake.h"
+#include "Cylinder.h"
 class Outside {
 private:
-	Texture ground, mall_ground, side, right_door, left_door, mall_name, flag, stick, street, entry, elevator, elevatorGround, elevatorHandle, elevatorDoorR, elevatorDoorL, elevatorDoorControl,platform, cafe_ad, market_ad;
+	Texture ground, mall_ground, side, right_door, left_door, mall_name, flag, stick, street, entry, elevator, elevatorGround, elevatorHandle, elevatorDoorR, elevatorDoorL, elevatorDoorControl,platform, cafe_ad, market_ad,garage_street,sarot;
 	Flag wavingFlag;
+	Lake lake;
 	SuperMarket superMarket;
 	FurnitureStore furnitureStore;
 	Garage garage;
@@ -29,6 +32,7 @@ private:
 	Door* elevatorDoorUp = new Door{ Point(22, 74.5, -287.9), 0.0, false };
 
 	void drawMarkets();
+	void drawLake();
 	void drawElevator(double height);
 public:
 	std::vector <Door*> Doors{
@@ -41,4 +45,5 @@ public:
 	void drawStreetLight(Point baseCenter, double poleHeight, double poleRadius, double armLength, double verticalArmLength, double lampSize, bool isLeftSide);
 	void draw();
 	void render3DModel(float x, float y, float z, float scale, Model_3DS* model);
+	void drawFence();
 };

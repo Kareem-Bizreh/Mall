@@ -143,6 +143,14 @@ void Outside::drawElevator(double height)
 	gluDeleteQuadric(quad);
 }
 
+void Outside::drawLake()
+{
+	glPushMatrix();
+	glTranslated(80, 10, -75);
+	lake.drawParties();
+	lake.drawLake();
+	glPopMatrix();
+}
 Outside::Outside(Texture texture)
 	: wavingFlag(Point(105, 135, -155), 200, 100, 0, 20, 30, flag, stick) {
 };
@@ -174,6 +182,9 @@ void Outside::OutsideTextures() {
 	market_ad.loadTexture("textures/Outside/market_ad.jpeg");
 	tree = new Model_3DS();
 	tree->Load((char*)"models/Outside/tree1_3ds/Tree1.3ds");
+	garage_street.loadTexture("textures/Outside/street2.jpg");
+	sarot.loadTexture("textures/Outside/sarot.jpeg");
+	lake.loadTextures();
 }
 
 
@@ -200,10 +211,18 @@ void Outside::draw() {
 	glPopMatrix();
 	Cuboid Ground(Point(105, 0, -155), 10, 320, 220);
 	Ground.drawWithTexture(ground.textureID, 2, 2);
-	Cuboid Platform(Point(105, -1, -155), 2, 630, 400);
-	Platform.drawWithTexture(platform.textureID, 9, 9);
-	Cuboid Street(Point(105, 1, -495), 0.5, 50, 200);
-	Street.drawWithTexture(street.textureID, 1, 1);
+
+//	Cuboid Platform(Point(105, -1, -155), 2, 630, 400);
+//	Platform.drawWithTexture(platform.textureID, 9, 9);
+//	Cuboid Street(Point(105, 1, -495), 0.5, 50, 200);
+//	Street.drawWithTexture(street.textureID, 1, 1);
+
+	Cuboid Platform(Point(105, -1, -155), 2, 630, 370);
+	Platform.drawWithTexture(platform.textureID, 6, 6);
+	Cuboid Street(Point(62.5, 1, -495), 0.5, 50, 285);
+	Street.drawWithTexture(garage_street.textureID, 1, 1);
+	Cuboid Main_Street(Point(-105, 1, -180), 0.5, 680, 50);
+	Main_Street.drawWithTexture(street.textureID, 1, 1);
 	glPushMatrix();
 	glColor3f(0.5f, 0.5f, 0.5f);
 	Cuboid Top(Point(105, 113, -155), 0, 300, 200);
@@ -216,22 +235,34 @@ void Outside::draw() {
 	glPushMatrix();
 	wavingFlag.drawWavingFlag();
 	glPopMatrix();
-
 	Cuboid stick(Point(85, 113.1, -20.0), 60, 5, 5);
 	stick.drawWithTexture(mall_ground.textureID, 1, 1);
-
-
 	Cuboid Bottom(Point(105, 10.1, -155), 0, 300, 200);
 	Bottom.drawWithTexture(mall_ground.textureID, 20, 20);
 
 	Cuboid Entry(Point(105, 10.1, 0), 0, 10, 68);
 	Entry.drawWithTexture(entry.textureID, 1, 1);
 
-	Cuboid Floor_bottom(Point(105, 61.2, -106), 0, 201, 200);
-	Floor_bottom.drawWithTexture(mall_ground.textureID, 20, 20);
-	Cuboid Floor_up(Point(105, 61.1, -106), 0, 201, 200);
-	Floor_up.drawWithTexture(mall_ground.textureID, 0, 0);
+	Cuboid FloorB_left(Point(40, 61.21, -106), 0, 200, 70);
+	Cuboid FloorB_right(Point(165, 61.22, -106), 0, 200, 80);
+	Cuboid FloorB_front(Point(105, 61.23, -40), 0, 70, 200);
+	Cuboid FloorB_back(Point(105, 61.24, -165), 0, 80, 200);
+	
+	FloorB_left.drawWithTexture(mall_ground.textureID, 0, 0);
+	FloorB_right.drawWithTexture(mall_ground.textureID, 0, 0);
+	FloorB_front.drawWithTexture(mall_ground.textureID, 0, 0);
+	FloorB_back.drawWithTexture(mall_ground.textureID, 0, 0);
 
+	Cuboid FloorU_left(Point(40, 61.51, -106), 0, 200, 70);
+	Cuboid FloorU_right(Point(165, 61.52, -106), 0, 200, 80);
+	Cuboid FloorU_front(Point(105, 61.53, -40), 0, 70, 200);
+	Cuboid FloorU_back(Point(105, 61.54, -165), 0, 80, 200);
+
+	FloorU_left.drawWithTexture(mall_ground.textureID, 20, 20);
+	FloorU_right.drawWithTexture(mall_ground.textureID, 20, 20);
+	FloorU_front.drawWithTexture(mall_ground.textureID, 20, 20);
+	FloorU_back.drawWithTexture(mall_ground.textureID, 20, 20);
+	drawFence();
 	Cuboid Right(Point(205, 10, -155), 103, 300, 0);
 	Right.drawWithTexture(side.textureID, 1, 1);
 
@@ -240,7 +271,8 @@ void Outside::draw() {
 
 	Cuboid Back(Point(105, 10, -305), 103, 0, 200);
 	Back.drawWithTexture(side.textureID, 1, 1);
-
+	Cuboid Sarot(Point(95, 20, -304.9), 50, 0, 50);
+	Sarot.drawWithTexture(sarot.textureID, 1, 1);
 	Cuboid Mall_Name(Point(110, 67, -4.9), 46.1, 0, 68);
 	Mall_Name.drawWithTexture(mall_name.textureID, 1, 1);
 
@@ -321,7 +353,7 @@ void Outside::draw() {
 	glTranslated(22, 12, -290);
 	Cuboid(Point(0, -2.1, 0), 2, 28, 34).drawWithTexture(mall_ground.textureID, 1, 1);
 	glPushMatrix();
-	drawElevator(0);//max 50 , min 0
+	drawElevator(0);
 	glPopMatrix();
 	glTranslated(0, 47.75, 50);
 	Cuboid(Point(0, 0.1, -1), 1.5, 72, 28).drawWithTexture(mall_ground.textureID, 2, 8);
@@ -333,7 +365,7 @@ void Outside::draw() {
 	glColor3f(1, 1, 1);
 	glDisable(GL_BLEND);
 	glPopMatrix();
-
+	drawLake();
 	drawMarkets();
 
 }
@@ -350,7 +382,7 @@ void Outside::drawStreetLight(Point baseCenter, double poleHeight, double poleRa
 	double horizontalOffset = (isLeftSide ? -armLength : armLength);
 	Point horizontalArmStart(verticalArmStart.x, verticalArmStart.y + verticalArmLength, verticalArmStart.z);
 	Point horizontalArmCenter(horizontalArmStart.x + horizontalOffset / 2, horizontalArmStart.y, horizontalArmStart.z);
-	Cuboid horizontalArm(horizontalArmCenter, poleRadius, 0, poleRadius + 10);
+	Cuboid horizontalArm(horizontalArmCenter, poleRadius, poleRadius, poleRadius + 10);
 	horizontalArm.draw();
 
 	glPushMatrix();
@@ -358,5 +390,116 @@ void Outside::drawStreetLight(Point baseCenter, double poleHeight, double poleRa
 	glTranslated(horizontalArmStart.x + horizontalOffset, horizontalArmStart.y - lampSize * 2 + 2, horizontalArmStart.z); // Move downward
 	glutSolidSphere(lampSize, 20, 20);
 	glPopMatrix();
+	glColor3ub(255, 255, 255);
+}
+void drawSphere(Point center, float radius) {
+	glPushMatrix();
+	glTranslated(center.x, center.y, center.z);
+	glutSolidSphere(radius, 20, 20);
+	glPopMatrix();
+}
+
+void Outside::drawFence() {
+	Point cylinderPositions[5] = {
+		{74, 72, -126},
+		{74, 72, -74},
+		{125, 72, -74},
+		{125, 72, -126},
+
+	};
+
+	float cylinderRadius = 1.0f;
+	float cylinderHeight = 10.0f;
+
+	for (int i = 0; i < 5; i++) {
+		glColor3ub(128, 128, 128);
+		Cylinder().draw(cylinderPositions[i], cylinderRadius, cylinderRadius, cylinderHeight, 20, 20);
+
+		glColor3ub(70, 70, 70);
+		Point sphereCenter = { cylinderPositions[i].x, cylinderPositions[i].y, cylinderPositions[i].z };
+		drawSphere(sphereCenter, 2.0f);
+	}
+
+
+	float cuboidWidth = 2.0f;
+	float cuboidHeight = 2.0f;
+
+
+	{
+		double cuboidLength = fabs(cylinderPositions[1].z - cylinderPositions[0].z);
+		Point midpoint = {
+			cylinderPositions[0].x,
+			cylinderPositions[0].y + cylinderHeight / 2 - 10,
+			(cylinderPositions[0].z + cylinderPositions[1].z) / 2
+		};
+		glColor3ub(98, 98, 98);
+		Cuboid horizontalCuboid(midpoint, cuboidHeight, cuboidLength, cuboidWidth);
+		horizontalCuboid.draw();
+	}
+
+	{
+		double cuboidLength = fabs(cylinderPositions[3].z - cylinderPositions[2].z);
+		Point midpoint = {
+			cylinderPositions[2].x,
+			cylinderPositions[2].y + cylinderHeight / 2 - 10,
+			(cylinderPositions[2].z + cylinderPositions[3].z) / 2
+		};
+		glColor3ub(98, 98, 98);
+		Cuboid horizontalCuboid(midpoint, cuboidHeight, cuboidLength, cuboidWidth);
+		horizontalCuboid.draw();
+	}
+
+	{
+		double cuboidLength = fabs(cylinderPositions[2].x - cylinderPositions[1].x);
+		Point midpoint = {
+			(cylinderPositions[1].x + cylinderPositions[2].x) / 2,
+			cylinderPositions[1].y + cylinderHeight / 2 - 10,
+			cylinderPositions[1].z
+		};
+		glColor3ub(98, 98, 98);
+		Cuboid verticalCuboid(midpoint, cuboidHeight, cuboidWidth, cuboidLength);
+		verticalCuboid.draw();
+	}
+
+	{
+		double cuboidLength = fabs(cylinderPositions[3].x - cylinderPositions[0].x);
+		Point midpoint = {
+			(cylinderPositions[0].x + cylinderPositions[3].x) / 2,
+			cylinderPositions[0].y + cylinderHeight / 2 - 10,
+			cylinderPositions[0].z
+		};
+
+		glColor3ub(98, 98, 98);
+		Cuboid verticalCuboid(midpoint, cuboidHeight, cuboidWidth, cuboidLength);
+		verticalCuboid.draw();
+	}
+
+	Point cylinderPosition[2] = {
+		 {35.5 ,77,-203},
+		 {125.5 ,77,-203}
+	};
+
+	cylinderRadius = 1.0f;
+	cylinderHeight = 15.0f;
+
+	for (int i = 0; i < 2; i++) {
+		glColor3ub(128, 128, 128);
+		Cylinder().draw(cylinderPosition[i], cylinderRadius, cylinderRadius, cylinderHeight, 20, 20);
+
+		glColor3ub(70, 70, 70);
+		Point sphereCenter = { cylinderPosition[i].x, cylinderPosition[i].y, cylinderPosition[i].z };
+		drawSphere(sphereCenter, 2.0f);
+	}
+	{
+		double cuboidLength = fabs(cylinderPosition[0].x - cylinderPosition[1].x);
+		Point midpoint = {
+			(cylinderPosition[1].x + cylinderPosition[0].x) / 2,
+			cylinderPosition[1].y + cylinderHeight / 2 - 15,
+			cylinderPosition[1].z
+		};
+		glColor3ub(98, 98, 98);
+		Cuboid verticalCuboid(midpoint, cuboidHeight, cuboidWidth, cuboidLength);
+		verticalCuboid.draw();
+	}
 	glColor3ub(255, 255, 255);
 }
