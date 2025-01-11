@@ -1,6 +1,7 @@
-#include "Camera.h"
+﻿#include "Camera.h"
 #include <bits/stdc++.h>
 #include "GL/glut.h"
+#include "Point.h"
 #include "Camera.h"
 
 //init values
@@ -28,6 +29,17 @@ void Camera::Refresh()
 	gluLookAt(m_x, m_y, m_z, m_x + m_lx, m_y + m_ly, m_z + m_lz, 0.0, 1.0, 0.0);
 
 	//printf("Camera: %f %f %f Direction vector: %f %f %f\n", m_x, m_y, m_z, m_lx, m_ly, m_lz);
+}
+
+bool Camera::CheckCollision(const Point& newPos) {
+	for (const auto& wall : walls) {
+		if (newPos.x > wall.min.x && newPos.x < wall.max.x &&
+			newPos.y > wall.min.y && newPos.y < wall.max.y &&
+			newPos.z > wall.min.z && newPos.z < wall.max.z) {
+			return true; // تصادم مع جدار
+		}
+	}
+	return false; // لا يوجد تصادم
 }
 
 //to place a position of the camera
@@ -63,25 +75,41 @@ void Camera::Move(float incr)
 	float ly = sin(m_pitch);
 	float lz = sin(m_yaw) * cos(m_pitch);
 
-	m_x = m_x + incr * lx;
-	m_y = m_y + incr * ly;
-	m_z = m_z + incr * lz;
+	Point newPos(m_x + incr * lx, m_y + incr * ly, m_z + incr * lz);
 
+	if (!CheckCollision(newPos)) {
+		m_x = newPos.x;
+		m_y = newPos.y;
+		m_z = newPos.z;
+	}
+
+	std::cout << "x = " << m_x << " , " << " y = " << m_y << " , " << " z = " << m_z << std::endl;
 	Refresh();
 }
 
 //"strafe" the camera position
 void Camera::Strafe(float incr)
 {
-	m_x = m_x + incr * m_strafe_lx;
-	m_z = m_z + incr * m_strafe_lz;
+	float newX = m_x + incr * m_strafe_lx;
+	float newZ = m_z + incr * m_strafe_lz;
 
-	Refresh();
+	// إنشاء كائن Point للموقع الجديد
+	Point newPos(newX, m_y, newZ);
+
+	// التحقق من التصادم قبل التحرك
+	if (!CheckCollision(newPos)) {
+		m_x = newX;
+		m_z = newZ;
+	}
 }
 
 void Camera::Fly(float incr)
 {
-	m_y = m_y + incr;
+	Point newPos(m_x, m_y + incr, m_z);
+
+	if (!CheckCollision(newPos)) {
+		m_y = newPos.y;
+	}
 
 	Refresh();
 }

@@ -7,8 +7,9 @@
 void Closet::draw(Point center) {
 
 	//back side
-	glColor3ub(255, 255, 255);
+	glColor3ub(200, 200, 200);
 	Cuboid(Point(center.x, center.y, center.z), 10, 0.2, 10).drawWithTexture(wood.textureID, 2, 2);
+	glColor3ub(255, 255, 255);
 
 	//down side
 	Cuboid(Point(center.x, center.y - 0.2, center.z + 3.4), 0.2, 7, 10.2).drawWithTexture(wood.textureID,2,2);
@@ -29,7 +30,7 @@ void Closet::draw(Point center) {
 	//right door
 	glPushMatrix();
 	glTranslatef(center.x + 5, center.y, center.z + 6.8);
-	glRotatef(rightDoorAngle, 0, 1, 0);
+	glRotatef(rightDoorAngle * closetMov->OpenRate, 0, 1, 0);
 	glTranslatef(-5, 0, -6.8);
 	Cuboid(Point(center.x + 2.4, center.y, center.z + 6.8), 10, 0.2, 5).drawWithTexture(rightDoor.textureID, 1, 1);
 	glPopMatrix();
@@ -37,7 +38,7 @@ void Closet::draw(Point center) {
 	//left door
 	glPushMatrix();
 	glTranslatef(center.x - 5, center.y, center.z + 6.8);
-	glRotatef(-leftDoorAngle, 0, 1, 0);
+	glRotatef(-leftDoorAngle * closetMov->OpenRate, 0, 1, 0);
 	glTranslatef(5, 0, -6.8);
 	Cuboid(Point(center.x - 2.5, center.y, center.z + 6.8), 10, 0.2, 4.8).drawWithTexture(leftDoor.textureID, 1, 1);
 	glPopMatrix();

@@ -17,7 +17,7 @@ void Restaurant::draw()
 	Cuboid(Point(center.x - 42, center.y + 30, center.z + 26), 10, 2, 11).drawWithTextureOnOneFace(logo.textureID, "front", 1, 1);
 	glPushMatrix();
 	glTranslated(center.x - 34, center.y, center.z + 25);
-	glRotated(30, 0, 1, 0);
+	glRotated(180 - 150 * doorMov->OpenRate, 0, 1, 0);
 	Cuboid(Point(8, 0.05, 0), 25, 1, 16).drawWithTexture(door.textureID, 1, 1);
 	glPopMatrix();
 	Cuboid(Point(center.x + 15, center.y + 0.1, center.z + 7), 15, 36, 3).drawWithTexture(table.textureID, 8, 8);
@@ -108,6 +108,8 @@ void Restaurant::drawLight()
 
 void Restaurant::drawLights()
 {
+	glPushMatrix();
+	glTranslated(center.x, center.y + 3, center.z);
 	for (int i = -30; i < 50; i += 30)
 	{
 		glPushMatrix();
@@ -117,6 +119,7 @@ void Restaurant::drawLights()
 		drawLight();
 		glPopMatrix();
 	}
+	glPopMatrix();
 }
 
 void Restaurant::drawWaterTap()
@@ -273,7 +276,7 @@ void Restaurant::drawKitchen()
 		Cuboid(Point(0, 7, 3), 2.1, 0, 6).drawWithTexture(washBasin.textureID, 1, 1);
 		glPopMatrix();
 	}
-	glTranslated(0, 0, -20);
+	glTranslated(0, 0.1, -20);
 	Cuboid(Point(0, 0, 0), 10, 16, 10).drawWithTextureOnOneFace(cabinet.textureID, "left", 1, 1);
 	glTranslated(0, 15, 0);
 	Cuboid(Point(2.5, 0, 0), 10, 16, 5).drawWithTexture(sideWash.textureID, 1, 1);

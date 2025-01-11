@@ -2,6 +2,7 @@
 #include <bits/stdc++.h>
 #include "stb_image.h"
 #include "math3d.h"
+#include "stairsMall.h"
 #include "Texture.h"
 #include "Cuboid.h"
 #include "FurnitureStore.h"
@@ -20,15 +21,13 @@ struct color3f
 	color3f() { r = 0; g = 0; b = 0; }
 	color3f(float r, float g, float b) { this->r = r; this->g = g; this->b = b; }
 };
-
 //==================================================================================================================
 // Global variables
-FurnitureStore market;
 Point center = Point(0, -3, 0);
 Cafe cafe = Cafe(center);
+FurnitureStore furnitureStore;
 Texture texture;
 Outside outside(texture);
-SuperMarket superMarket;
 GLUquadric* quadric = gluNewQuadric();
 int g_iWidth = 800;
 int g_iHeight = 600;
@@ -45,7 +44,7 @@ bool g_mouse_left_down = false;
 bool g_mouse_right_down = false;
 
 // Movement settings
-const float g_translation_speed = 0.5;
+const float g_translation_speed = 1;
 const float g_rotation_speed = M_PI / 180 * 0.1;
 
 // light settings
@@ -135,7 +134,7 @@ int main(int argc, char** argv)
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
 	glutInitWindowSize(g_iWidth, g_iHeight);
-	glutCreateWindow("study");
+	glutCreateWindow("ALO Mall");
 	init();
 	glutDisplayFunc(display);
 	glutIdleFunc(idle);
@@ -164,9 +163,10 @@ void display()
 
 	//setupLighting();
 	//setupShadow();
+	//outside.draw();
+	//cafe.draw();
 	outside.draw();
-	cafe.draw();
-	//
+
 
 	glutSwapBuffers();
 }
@@ -197,8 +197,58 @@ void keyboard(unsigned char key, int x, int y)
 	else {
 		g_shift_down = false;
 	}
+	if (key == 'f' || key == 'F')
+	{
+		float x, y, z;
+		g_camera.GetPos(x, y, z);
+		Point playerPos = Point(x, y, z);
+		for (Door* door : outside.Doors) {
+			Point doorCenter = door->center;
+			double dist = sqrt((playerPos.x - doorCenter.x) * (playerPos.x - doorCenter.x) +
+				(playerPos.y - doorCenter.y) * (playerPos.y - doorCenter.y) +
+				(playerPos.z - doorCenter.z) * (playerPos.z - doorCenter.z));
+			if (dist <= 15)
+				door->open = !door->open;
+		}
+		if (outside.elevator.elevatorDoor->OpenRate >= 1) {
+			double dist;
+			dist = sqrt((playerPos.x - outside.elevator.elevatorDoorDown->center.x) * (playerPos.x - outside.elevator.elevatorDoorDown->center.x) +
+				(playerPos.y - outside.elevator.elevatorDoorDown->center.y) * (playerPos.y - outside.elevator.elevatorDoorDown->center.y) +
+				(playerPos.z - outside.elevator.elevatorDoorDown->center.z) * (playerPos.z - outside.elevator.elevatorDoorDown->center.z));
+			if (dist <= 15 && outside.elevator.height >= 50) {
+				outside.elevator.up = false;
+				outside.elevator.elevatorDoor->open = false;
+				outside.elevator.elevatorDoorUp->open = false;
+			}
+			dist = sqrt((playerPos.x - outside.elevator.elevatorDoorUp->center.x) * (playerPos.x - outside.elevator.elevatorDoorUp->center.x) +
+				(playerPos.y - outside.elevator.elevatorDoorUp->center.y) * (playerPos.y - outside.elevator.elevatorDoorUp->center.y) +
+				(playerPos.z - outside.elevator.elevatorDoorUp->center.z) * (playerPos.z - outside.elevator.elevatorDoorUp->center.z));
+			if (dist <= 15 && outside.elevator.height <= 0) {
+				outside.elevator.up = true;
+				outside.elevator.elevatorDoor->open = false;
+				outside.elevator.elevatorDoorDown->open = false;
+			}
+			dist = sqrt((playerPos.x - outside.elevator.elevatorDoor->center.x) * (playerPos.x - outside.elevator.elevatorDoor->center.x) +
+				(playerPos.y - outside.elevator.elevatorDoor->center.y) * (playerPos.y - outside.elevator.elevatorDoor->center.y) +
+				(playerPos.z - outside.elevator.elevatorDoor->center.z) * (playerPos.z - outside.elevator.elevatorDoor->center.z));
+			if (dist < 10) {
+				outside.elevator.up = !outside.elevator.up;
+				outside.elevator.elevatorDoor->open = false;
+				outside.elevator.elevatorDoorDown->open = false;
+				outside.elevator.elevatorDoorUp->open = false;
+				outside.elevator.in = true;
+			}
+		}
+	}
 
 	g_key[key] = true;
+	if (outside.elevator.in)
+	{
+		g_key['w'] = false;
+		g_key['a'] = false;
+		g_key['s'] = false;
+		g_key['d'] = false;
+	}
 }
 
 //camera related function: timer, mouse and mouse motion
@@ -225,6 +275,58 @@ void timer(int value)
 		}
 	}
 
+	if (outside.elevator.elevatorDoor->OpenRate <= 0)
+	{
+		if (!outside.elevator.up)
+		{
+			if (outside.elevator.height > 0)
+				outside.elevator.height -= 0.4, g_camera.Fly(outside.elevator.in ? -0.4 : 0.0);
+			else
+			{
+				outside.elevator.elevatorDoor->open = true;
+				outside.elevator.elevatorDoorDown->open = true;
+			}
+		}
+		if (outside.elevator.up)
+		{
+			if (outside.elevator.height < 50)
+				outside.elevator.height += 0.4, g_camera.Fly(outside.elevator.in ? 0.4 : 0.0);
+			else
+			{
+				outside.elevator.elevatorDoor->open = true;
+				outside.elevator.elevatorDoorUp->open = true;
+			}
+		}
+	}
+	for (Door* door : outside.Doors) {
+		if (door->open && door->OpenRate < 1)
+			door->OpenRate += 0.04;
+		if (!door->open && door->OpenRate > 0)
+			door->OpenRate -= 0.04;
+	}
+	for (Door* door : outside.elevatorDoors) {
+		if (door->open && door->OpenRate < 1)
+			door->OpenRate += 0.04;
+		if (!door->open && door->OpenRate > 0)
+			door->OpenRate -= 0.04;
+	}
+	if (outside.elevator.elevatorDoor->OpenRate >= 1)
+		outside.elevator.in = false;
+
+	float x, y, z;
+	g_camera.GetPos(x, y, z);
+	Point playerPos = Point(x, y, z);
+	Point doorCenter = outside.doorMov->center;
+	double dist = sqrt((playerPos.x - doorCenter.x) * (playerPos.x - doorCenter.x) +
+		(playerPos.y - doorCenter.y) * (playerPos.y - doorCenter.y) +
+		(playerPos.z - doorCenter.z) * (playerPos.z - doorCenter.z));
+	if (dist <= 20 && outside.doorMov->OpenRate < 1)
+		outside.doorMov->OpenRate += 0.1;
+	if (dist > 20 && outside.doorMov->OpenRate > 0)
+		outside.doorMov->OpenRate -= 0.1;
+
+	outside.doorMov->OpenRate = max((double)0, outside.doorMov->OpenRate);
+	outside.doorMov->OpenRate = min((double)1, outside.doorMov->OpenRate);
 	glutTimerFunc(1, timer, 0);	//call the timer again each 1 millisecond
 }
 
@@ -270,8 +372,10 @@ void init()
 
 	//load textures here 
 	cafe.cafeTextures();
-	market.loadTextures();
+	//furnitureStore.loadTextures();
+	//outside.OutsideTextures();
 	outside.OutsideTextures();
+
 	glClearColor(g_background.r, g_background.g, g_background.b, 1.0);
 	glClearDepth(1.0f);
 	glEnable(GL_DEPTH_TEST);
