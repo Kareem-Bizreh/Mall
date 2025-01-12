@@ -1,5 +1,5 @@
 #include "Outside.h"
-
+#define DEG_TO_RAD(angle) ((angle) * M_PI / 180.0)
 void Outside::drawMarkets()
 {
 	glPushMatrix();
@@ -156,11 +156,11 @@ Outside::Outside(Texture texture)
 };
 
 void Outside::OutsideTextures() {
-	furnitureStore.loadTextures();
-	cafe.cafeTextures();
-	superMarket.loadTextures();
-	restaurant.restaurantTextures();
-	garage.loadTexturesAndModels();
+	//furnitureStore.loadTextures();
+	//cafe.cafeTextures();
+	//superMarket.loadTextures();
+	//restaurant.restaurantTextures();
+	//garage.loadTexturesAndModels();
 	ground.loadTexture("textures/Outside/ground.jpg");
 	mall_ground.loadTexture("textures/Outside/mall_ground.jpg");
 	side.loadTexture("textures/Outside/side.jpg");
@@ -207,7 +207,7 @@ void Outside::render3DModel(float x, float y, float z, float scale, Model_3DS* m
 
 void Outside::draw() {
 	glPushMatrix();
-	garage.draw();
+	//garage.draw();
 	glPopMatrix();
 	Cuboid Ground(Point(105, 0, -155), 10, 320, 220);
 	Ground.drawWithTexture(ground.textureID, 2, 2);
@@ -313,35 +313,35 @@ void Outside::draw() {
 	glPopMatrix();
 
 	render3DModel(105, 0, 150, 3.0, tank);
-	drawStreetLight(Point(Platform.center.x - 130, Platform.center.y, Platform.center.z), 15.0f, 0.5f, 10.0f, 20.0f, 2.0f, true);
+	drawStreetLight(Point(Platform.center.x - 130, Platform.center.y, Platform.center.z), 15.0f, 0.5f, 10.0f, 20.0f, 2.0f, false);
 	render3DModel(Platform.center.x - 130, Platform.center.y, Platform.center.z + 25, 4, tree);
 
-	drawStreetLight(Point(Platform.center.x - 130, Platform.center.y, Platform.center.z + 100), 15.0f, 0.5f, 10.0f, 20.0f, 2.0f, true);
+	drawStreetLight(Point(Platform.center.x - 130, Platform.center.y, Platform.center.z + 100), 15.0f, 0.5f, 10.0f, 20.0f, 2.0f, false);
 	render3DModel(Platform.center.x - 130, Platform.center.y, Platform.center.z + 75, 4, tree);
 
-	drawStreetLight(Point(Platform.center.x - 130, Platform.center.y, Platform.center.z + 50), 15.0f, 0.5f, 10.0f, 20.0f, 2.0f, true);
+	drawStreetLight(Point(Platform.center.x - 130, Platform.center.y, Platform.center.z + 50), 15.0f, 0.5f, 10.0f, 20.0f, 2.0f, false);
 	render3DModel(Platform.center.x - 130, Platform.center.y, Platform.center.z - 25, 4, tree);
 
 
-	drawStreetLight(Point(Platform.center.x - 130, Platform.center.y, Platform.center.z - 100), 15.0f, 0.5f, 10.0f, 20.0f, 2.0f, true);
+	drawStreetLight(Point(Platform.center.x - 130, Platform.center.y, Platform.center.z - 100), 15.0f, 0.5f, 10.0f, 20.0f, 2.0f, false);
 	render3DModel(Platform.center.x - 130, Platform.center.y, Platform.center.z - 75, 4, tree);
 
-	drawStreetLight(Point(Platform.center.x - 130, Platform.center.y, Platform.center.z - 50), 15.0f, 0.5f, 10.0f, 20.0f, 2.0f, true);
+	drawStreetLight(Point(Platform.center.x - 130, Platform.center.y, Platform.center.z - 50), 15.0f, 0.5f, 10.0f, 20.0f, 2.0f, false);
 
-	drawStreetLight(Point(Platform.center.x + 130, Platform.center.y, Platform.center.z), 15.0f, 0.5f, 10.0f, 20.0f, 2.0f, false);
+	drawStreetLight(Point(Platform.center.x + 130, Platform.center.y, Platform.center.z), 15.0f, 0.5f, 10.0f, 20.0f, 2.0f, true);
 	render3DModel(Platform.center.x + 130, Platform.center.y, Platform.center.z + 25, 4, tree);
 
-	drawStreetLight(Point(Platform.center.x + 130, Platform.center.y, Platform.center.z + 100), 15.0f, 0.5f, 10.0f, 20.0f, 2.0f, false);
+	drawStreetLight(Point(Platform.center.x + 130, Platform.center.y, Platform.center.z + 100), 15.0f, 0.5f, 10.0f, 20.0f, 2.0f, true);
 	render3DModel(Platform.center.x + 130, Platform.center.y, Platform.center.z + 75, 4, tree);
 
-	drawStreetLight(Point(Platform.center.x + 130, Platform.center.y, Platform.center.z + 50), 15.0f, 0.5f, 10.0f, 20.0f, 2.0f, false);
+	drawStreetLight(Point(Platform.center.x + 130, Platform.center.y, Platform.center.z + 50), 15.0f, 0.5f, 10.0f, 20.0f, 2.0f, true);
 	render3DModel(Platform.center.x + 130, Platform.center.y, Platform.center.z - 25, 4, tree);
 
 
-	drawStreetLight(Point(Platform.center.x + 130, Platform.center.y, Platform.center.z - 100), 15.0f, 0.5f, 10.0f, 20.0f, 2.0f, false);
+	drawStreetLight(Point(Platform.center.x + 130, Platform.center.y, Platform.center.z - 100), 15.0f, 0.5f, 10.0f, 20.0f, 2.0f, true);
 	render3DModel(Platform.center.x + 130, Platform.center.y, Platform.center.z - 75, 4, tree);
 
-	drawStreetLight(Point(Platform.center.x + 130, Platform.center.y, Platform.center.z - 50), 15.0f, 0.5f, 10.0f, 20.0f, 2.0f, false);
+	drawStreetLight(Point(Platform.center.x + 130, Platform.center.y, Platform.center.z - 50), 15.0f, 0.5f, 10.0f, 20.0f, 2.0f, true);
 
 	glPushMatrix();
 	glTranslated(22, 12, -290);
@@ -360,30 +360,54 @@ void Outside::draw() {
 	glDisable(GL_BLEND);
 	glPopMatrix();
 	drawLake();
-	drawMarkets();
+	//drawMarkets();
 
 }
-void Outside::drawStreetLight(Point baseCenter, double poleHeight, double poleRadius, double armLength, double verticalArmLength, double lampSize, bool isLeftSide)
+
+
+inline double toRadians(double degrees) {
+	return degrees * M_PI / 180.0;
+}
+
+void Outside::drawStreetLight(Point baseCenter, double poleHeight, double poleRadius, double curveRadius, double curveAngle, double lampSize, bool isLeftSide)
 {
+	GLUquadric* quad = gluNewQuadric();
+
+	Point currentPosition = baseCenter;
+
+	Point verticalArmStart(baseCenter.x, baseCenter.y + poleHeight-12, baseCenter.z-0.1);
 	glColor3ub(101, 67, 33);
-	Cuboid pole(baseCenter, poleHeight, poleRadius, poleRadius);
-	pole.draw();
+	glPushMatrix();
+	glTranslated(verticalArmStart.x, verticalArmStart.y, verticalArmStart.z); 
+	glRotated(-90, 1, 0, 0); 
+	gluCylinder(quad, poleRadius+0.2, poleRadius+0.2, poleHeight+23, 32, 32); 
+	glPopMatrix();
 
-	Point verticalArmStart(baseCenter.x, baseCenter.y + poleHeight, baseCenter.z);
-	Cuboid verticalArm(verticalArmStart, verticalArmLength, poleRadius, poleRadius);
-	verticalArm.draw();
+	currentPosition.z += poleHeight - 15.5;
+	double angleStep = 5.0;
 
-	double horizontalOffset = (isLeftSide ? -armLength : armLength);
-	Point horizontalArmStart(verticalArmStart.x, verticalArmStart.y + verticalArmLength, verticalArmStart.z);
-	Point horizontalArmCenter(horizontalArmStart.x + horizontalOffset / 2, horizontalArmStart.y, horizontalArmStart.z);
-	Cuboid horizontalArm(horizontalArmCenter, poleRadius, poleRadius, poleRadius + 10);
-	horizontalArm.draw();
+	int curveDirection = isLeftSide ? -1 : 1; 
+
+	for (double angle = 0; angle <= 180; angle += angleStep) 
+	{
+		glPushMatrix();
+		glTranslated(currentPosition.x, currentPosition.y + 40, currentPosition.z);	
+		glRotated(curveDirection * angle, 0, 1, 0); 
+		gluCylinder(quad, poleRadius+ 0.4, poleRadius, angleStep / 360.0 * curveRadius * 2 * M_PI, 32, 32); // Short segment of the curve
+		glPopMatrix();
+
+		double angleNext = angle + angleStep;
+		currentPosition.x += curveRadius * (cos(toRadians(angleNext)) - cos(toRadians(angle))) * curveDirection;
+		currentPosition.y += curveRadius * (sin(toRadians(angleNext)) - sin(toRadians(angle)));
+	}
+	Point lampPosition(currentPosition.x, currentPosition.y, currentPosition.z);
 
 	glPushMatrix();
-	glColor3ub(255, 255, 0);
-	glTranslated(horizontalArmStart.x + horizontalOffset, horizontalArmStart.y - lampSize * 2 + 2, horizontalArmStart.z); // Move downward
-	glutSolidSphere(lampSize, 20, 20);
+	glColor3ub(255, 255, 0); 
+	glTranslated(lampPosition.x, lampPosition.y+40, lampPosition.z);
+	glutSolidSphere(lampSize, 20, 20); 
 	glPopMatrix();
+
 	glColor3ub(255, 255, 255);
 }
 void drawSphere(Point center, float radius) {

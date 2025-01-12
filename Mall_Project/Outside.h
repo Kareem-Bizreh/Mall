@@ -14,6 +14,7 @@
 #include "Door.h"
 #include "Lake.h"
 #include "Cylinder.h"
+#include <cmath> 
 class Outside {
 private:
 	Texture ground, mall_ground, side, right_door, left_door, mall_name, flag, stick, street, entry, elevator, elevatorGround, elevatorHandle, elevatorDoorR, elevatorDoorL, elevatorDoorControl,platform, cafe_ad, market_ad,garage_street,sarot;
