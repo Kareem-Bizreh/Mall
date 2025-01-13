@@ -10,7 +10,9 @@
 #include "Camera.h"
 #include "Cafe.h"
 #include "SuperMarket.h"
+#include "ElectronicDepartment.h"
 #include "Outside.h"
+
 using namespace std;
 
 struct color3f
@@ -44,6 +46,10 @@ bool g_mouse_right_down = false;
 // Movement settings
 const float g_translation_speed = 1;
 const float g_rotation_speed = M_PI / 180 * 0.1;
+const float elevator_speed = 0.4;
+const float elevator_door_speed = 0.1;
+const float door_speed = 0.04;
+const float auto_door_speed = 0.1;
 
 // light settings
 GLfloat LightPos[] = { -1.0f, 3.0f, 0.0f, 0.0f };
@@ -164,7 +170,7 @@ void display()
 	//outside.draw();
 	//cafe.draw();
 	outside.draw();
-	
+
 
 	glutSwapBuffers();
 }
@@ -278,9 +284,10 @@ void timer(int value)
 		if (!outside.elevator.up)
 		{
 			if (outside.elevator.height > 0)
-				outside.elevator.height -= 0.2, g_camera.Fly(outside.elevator.in ? -0.2 : 0.0);
+				outside.elevator.height -= elevator_speed, g_camera.Fly(outside.elevator.in ? -elevator_speed : 0.0);
 			else
 			{
+				outside.elevator.height = 0;
 				outside.elevator.elevatorDoor->open = true;
 				outside.elevator.elevatorDoorDown->open = true;
 			}
@@ -288,9 +295,10 @@ void timer(int value)
 		if (outside.elevator.up)
 		{
 			if (outside.elevator.height < 50)
-				outside.elevator.height += 0.2, g_camera.Fly(outside.elevator.in ? 0.2 : 0.0);
+				outside.elevator.height += elevator_speed, g_camera.Fly(outside.elevator.in ? elevator_speed : 0.0);
 			else
 			{
+				outside.elevator.height = 50;
 				outside.elevator.elevatorDoor->open = true;
 				outside.elevator.elevatorDoorUp->open = true;
 			}
@@ -298,19 +306,40 @@ void timer(int value)
 	}
 	for (Door* door : outside.Doors) {
 		if (door->open && door->OpenRate < 1)
-			door->OpenRate += 0.04;
+			door->OpenRate += door_speed;
 		if (!door->open && door->OpenRate > 0)
-			door->OpenRate -= 0.04;
+			door->OpenRate -= door_speed;
+		door->OpenRate = max((double)0, door->OpenRate);
+		door->OpenRate = min((double)1, door->OpenRate);
 	}
 	for (Door* door : outside.elevatorDoors) {
 		if (door->open && door->OpenRate < 1)
-			door->OpenRate += 0.02;
+			door->OpenRate += elevator_door_speed;
 		if (!door->open && door->OpenRate > 0)
-			door->OpenRate -= 0.02;
+			door->OpenRate -= elevator_door_speed;
+		door->OpenRate = max((double)0, door->OpenRate);
+		door->OpenRate = min((double)1, door->OpenRate);
 	}
 	if (outside.elevator.elevatorDoor->OpenRate >= 1)
 		outside.elevator.in = false;
 
+	float x, y, z;
+	g_camera.GetPos(x, y, z);
+	Point playerPos = Point(x, y, z);
+	for (Door* door : outside.AutoDoors)
+	{
+		Point doorCenter = door->center;
+		double dist = sqrt((playerPos.x - doorCenter.x) * (playerPos.x - doorCenter.x) +
+			(playerPos.y - doorCenter.y) * (playerPos.y - doorCenter.y) +
+			(playerPos.z - doorCenter.z) * (playerPos.z - doorCenter.z));
+		if (dist <= 20 && door->OpenRate < 1)
+			door->OpenRate += auto_door_speed;
+		if (dist > 20 && door->OpenRate > 0)
+			door->OpenRate -= auto_door_speed;
+
+		door->OpenRate = max((double)0, door->OpenRate);
+		door->OpenRate = min((double)1, door->OpenRate);
+	}
 	glutTimerFunc(1, timer, 0);	//call the timer again each 1 millisecond
 }
 

@@ -28,12 +28,23 @@ private:
 	Audio mallMusic;
 	Model_3DS* tree;
 	Model_3DS* tank;
+	Door* doorMov = new Door{ Point(108 ,26 ,-15), 0.0, false };
 	void drawMarkets();
 	void drawLake();
 public:
 	Elevator elevator;
 	std::vector <Door*> Doors{
-		//
+		cafe.doorMov,
+		restaurant.doorMov,
+		furnitureStore.doorMov,
+		furnitureStore.drawerMov1,
+		furnitureStore.drawerMov2,
+		furnitureStore.closetMov1,
+		furnitureStore.closetMov2
+	};
+
+	std::vector<Door*> AutoDoors{
+		doorMov
 	};
 
 	std::vector<Door*> elevatorDoors{

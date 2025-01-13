@@ -24,7 +24,7 @@ void Cafe::draw()
 	drawSideTable();
 	glPushMatrix();
 	glTranslated(center.x + 25.5, center.y, center.z + 25);
-	glRotated(+150, 0, 1, 0);
+	glRotated(150 * doorMov->OpenRate, 0, 1, 0);
 	Cuboid(Point(8.5, 0.05, 0), 25, 1, 17).drawWithTexture(door.textureID, 1, 1);
 	glPopMatrix();
 
