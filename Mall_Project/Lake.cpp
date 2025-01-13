@@ -109,18 +109,18 @@ void Lake::drawLake()
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glPopMatrix();
 
-	float time = glutGet(GLUT_ELAPSED_TIME) / 1000.0f; 
-	float waveAmplitude = 0.5f;                       
-	float waveFrequency = 1.5f;                      
+	float time = glutGet(GLUT_ELAPSED_TIME) / 1000.0f;
+	float waveAmplitude = 0.5f;
+	float waveFrequency = 1.5f;
 
-	float yOffset = waveAmplitude * sin(waveFrequency * time); 
-	float xOffset = waveAmplitude * cos((waveFrequency-1) * time); 
+	float yOffset = waveAmplitude * sin(waveFrequency * time);
+	float xOffset = waveAmplitude * cos((waveFrequency - 1) * time);
 	float zOffset = waveAmplitude * sin(waveFrequency * time);
 
-	Cuboid water(Point(25+xOffset, 0.2+yOffset , -12.5 + zOffset), 5, 19, 44);
-	Cuboid water2(Point(25+xOffset, 0.2 + yOffset, -37.5 + zOffset), 5, 19, 44);
-	Cuboid water3(Point(12.5 + xOffset, 0.2 + yOffset, -25 + zOffset), 5, 5.4, 19);
-	Cuboid water4(Point(37.5 + xOffset, 0.2 + yOffset, -25+zOffset), 5, 5.4, 19);
+	Cuboid water(Point(24 + xOffset, 1 + yOffset - 1, -10.5 + zOffset), 5, 19, 44);
+	Cuboid water2(Point(24 + xOffset,1 + yOffset - 1 , -35.5 + zOffset), 5, 19, 44);
+	Cuboid water3(Point(10.5 + xOffset, 1 + yOffset - 1, -23+ zOffset), 5, 5.4, 19);
+	Cuboid water4(Point(36.5 + xOffset, 1 + yOffset - 1, -23 + zOffset), 5, 5.4, 19);
 
 	glColor3ub(84, 64, 63);
 
@@ -137,110 +137,79 @@ void Lake::drawLake()
 	water3.drawWithTexture(Water.textureID, 6, 2);
 	water4.drawWithTexture(Water.textureID, 6, 2);
 
-	glDepthMask(GL_TRUE);
+	double curveRadius = 15.0;
+	double angleStep = 5.0;
+	double poleRadius = 0.5;
+	static double rotationAngle = 0.0;
+	int numRepetitions = 30;
+	double rotationStep = 360.0 / numRepetitions;
+	double flowOffset = 100.0;
 
-	glDisable(GL_BLEND);
+	Water.Use();
+
+	Point basePosition(26, 20, -27);
+
+	glPushMatrix();
+	glTranslated(basePosition.x, basePosition.y, basePosition.z);
+	glRotated(rotationAngle, 0, 1, 0);
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glDepthMask(GL_FALSE);
 
-	glColor4f(1.0f, 1.0f, 1.0f, 0.5f); // Set water color with transparency
+	for (int i = 0; i < numRepetitions; ++i) {
+		glPushMatrix();
+		double currentRotation = i * rotationStep;
+		glRotated(currentRotation, 0, 1, 0);
 
-	// Semi-circle parameters
-double curveRadius = 10.0; // Radius of the semi-circle
-double angleStep = 5.0;    // Smaller steps for smoother curvature
-double poleRadius = 0.5;   // Radius of the pole
-static double rotationAngle = 0.0; // Incremental rotation angle
+		Point currentPosition(0, 0, 0);
 
-// Activate the water texture
-Water.Use();
+		for (double angle = 90; angle <= 270; angle += angleStep) {
+			glPushMatrix();
+			glTranslated(currentPosition.x, currentPosition.y, currentPosition.z);
+			glRotated(-angle, 0, 0, 1);
 
-// Apply rotation
-glPushMatrix();
-glTranslated(26, yOffset + 22, -25); // Move the center of rotation to the desired position
-glRotated(rotationAngle, 0, 1, 0);   // Rotate around the Y-axis
-glTranslated(-26, -(yOffset + 22), 25); // Undo the translation
+			gluQuadricTexture(quad, GL_TRUE);
 
-// Draw semi-circle for water on the right
-Point currentPosition(26 + 5, yOffset, -25); // Starting point for the right side
-for (double angle = 90; angle <= 270; angle += angleStep)
-{
-    glPushMatrix();
-    glTranslated(currentPosition.x - 6, currentPosition.y + 22, currentPosition.z + 3); // Move to the current position
-    glRotated(-angle, 0, 0, 1); // Rotate around Z-axis for curvature
-    gluCylinder(quad, poleRadius, poleRadius, angleStep / 360.0 * curveRadius * 2 * M_PI, 32, 32); // Short segment
-    glPopMatrix();
+			double textureFlowV = flowOffset + (angle - 90) / 180.0;
+			double textureFlowU = i * 0.02;
 
-    // Update position along the curve
-    double angleNext = angle + angleStep;
-    currentPosition.y += curveRadius * (sin(toRadians(angleNext)) - sin(toRadians(angle)));
-    currentPosition.z += curveRadius * (cos(toRadians(angle)) - cos(toRadians(angleNext)));
-}
+			glColor4f(1.0, 1.0, 1.0, 0.4);
 
-// Draw semi-circle for water on the left
-currentPosition = Point(26 + 5, yOffset, -25); // Starting point for the left side
-for (double angle = -90; angle >= -270; angle -= angleStep)
-{
-    glPushMatrix();
-    glTranslated(currentPosition.x - 6, currentPosition.y + 22, currentPosition.z - 3); // Move to the current position
-    glRotated(angle, 0, 0, 1); // Rotate around Z-axis for curvature
-    gluCylinder(quad, poleRadius, poleRadius, angleStep / 360.0 * curveRadius * 2 * M_PI, 32, 32); // Short segment
-    glPopMatrix();
+			glBegin(GL_QUADS);
+			glTexCoord2f(textureFlowU, textureFlowV);               glVertex3f(0, 0, 0);
+			glTexCoord2f(textureFlowU + 0.5, textureFlowV);         glVertex3f(poleRadius, 0, 0);
+			glTexCoord2f(textureFlowU + 0.5, textureFlowV + 0.5);   glVertex3f(poleRadius, 0, poleRadius);
+			glTexCoord2f(textureFlowU, textureFlowV + 0.5);         glVertex3f(0, 0, poleRadius);
+			glEnd();
 
-    // Update position along the curve
-    double angleNext = angle + angleStep;
-    currentPosition.y += curveRadius * (sin(toRadians(angleNext)) - sin(toRadians(angle)));
-    currentPosition.z += curveRadius * (cos(toRadians(angle)) - cos(toRadians(angleNext)));
-}
+			gluCylinder(quad, poleRadius, poleRadius + 1, angleStep / 360.0 * curveRadius * 2 * M_PI, 32, 32);
 
-// Draw semi-circle for water on the front
-currentPosition = Point(21, yOffset, -25); // Starting point on the left side
-for (double angle = 180; angle < 360; angle += angleStep)
-{
-    glPushMatrix();
-    glTranslated(currentPosition.x, currentPosition.y + 22, currentPosition.z); // Move to the current position
-    glRotated(angle, 0, 1, 0); // Rotate around Y-axis for curvature from left to right
-    gluCylinder(quad, poleRadius, poleRadius, angleStep / 360.0 * curveRadius * 2 * M_PI, 32, 32); // Short segment
-    glPopMatrix();
+			glPopMatrix();
 
-    // Update position along the curve
-    double angleNext = angle + angleStep;
-    currentPosition.x += curveRadius * (sin(toRadians(angleNext)) - sin(toRadians(angle))); // Left-to-right movement
-    currentPosition.y += curveRadius * (cos(toRadians(angle)) - cos(toRadians(angleNext))); // Vertical movement
-}
+			double angleNext = angle + angleStep;
+			currentPosition.y += curveRadius * (sin(toRadians(angleNext)) - sin(toRadians(angle)));
+			currentPosition.z += curveRadius * (cos(toRadians(angle)) - cos(toRadians(angleNext)));
+		}
 
-// Draw semi-circle for water on the back
-currentPosition = Point(29, yOffset, -25); // Starting point on the right side
-for (double angle = 180; angle < 360; angle += angleStep)
-{
-    glPushMatrix();
-    glTranslated(currentPosition.x, currentPosition.y + 22, currentPosition.z); // Move to the current position
-    glRotated(-angle, 0, 1, 0); // Rotate around Y-axis for curvature from right to left
-    gluCylinder(quad, poleRadius, poleRadius, angleStep / 360.0 * curveRadius * 2 * M_PI, 32, 32); // Short segment
-    glPopMatrix();
+		glPopMatrix();
+	}
 
-    // Update position along the curve
-    double angleNext = angle + angleStep;
-    currentPosition.x -= curveRadius * (sin(toRadians(angleNext)) - sin(toRadians(angle))); // Right-to-left movement
-    currentPosition.y += curveRadius * (cos(toRadians(angle)) - cos(toRadians(angleNext))); // Vertical movement
-}
+	glPopMatrix();
 
-// Restore the matrix
-glPopMatrix();
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glDisable(GL_TEXTURE_2D);
+	glColor4f(1.0, 1.0, 1.0, 1.0);
+	glDepthMask(GL_TRUE);
+	glDisable(GL_BLEND);
 
-// Unbind the texture after rendering
-glBindTexture(GL_TEXTURE_2D, 0);
-glDisable(GL_TEXTURE_2D);
+	flowOffset -= 1.0;
+	if (flowOffset <= -50.0) {
+		flowOffset += 50.0;
+	}
 
-glDepthMask(GL_TRUE);
-glDisable(GL_BLEND);
-
-// Update rotation angle for the next frame
-rotationAngle += 1.0; // Increase angle for the spinning effect
-if (rotationAngle >= 360.0)
-{
-    rotationAngle -= 360.0; // Keep the angle within [0, 360]
-}
+	rotationAngle += 1.0;
+	if (rotationAngle >= 360.0) {
+		rotationAngle -= 360.0;
+	}
 
 }

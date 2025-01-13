@@ -14,14 +14,10 @@
 #include "Door.h"
 #include "Lake.h"
 #include "Cylinder.h"
-<<<<<<< HEAD
-#include <cmath> 
-=======
 #include "Elevator.h"
->>>>>>> 2ee4f3356e7217dcb3db3c7e0205a06db74e92d3
 class Outside {
 private:
-	Texture ground, mall_ground, side, right_door, left_door, mall_name, flag, stick, street, entry, platform, cafe_ad, market_ad, garage_street, sarot;
+	Texture ground, mall_ground, side, right_door, left_door, mall_name, flag, stick, street, entry, platform, cafe_ad, market_ad, garage_street, sarot,cafe_ad_o,market_ad_o;
 	Flag wavingFlag;
 	Lake lake;
 	SuperMarket superMarket;

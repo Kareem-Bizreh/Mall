@@ -1,5 +1,5 @@
 #include "Outside.h"
-#define DEG_TO_RAD(angle) ((angle) * M_PI / 180.0)
+
 void Outside::drawMarkets()
 {
 	glPushMatrix();
@@ -45,11 +45,11 @@ Outside::Outside(Texture texture)
 };
 
 void Outside::OutsideTextures() {
-	//furnitureStore.loadTextures();
-	//cafe.cafeTextures();
-	//superMarket.loadTextures();
-	//restaurant.restaurantTextures();
-	//garage.loadTexturesAndModels();
+	furnitureStore.loadTextures();
+	cafe.cafeTextures();
+	superMarket.loadTextures();
+	restaurant.restaurantTextures();
+	garage.loadTexturesAndModels();
 	ground.loadTexture("textures/Outside/ground.jpg");
 	mall_ground.loadTexture("textures/Outside/mall_ground.jpg");
 	side.loadTexture("textures/Outside/side.jpg");
@@ -67,6 +67,8 @@ void Outside::OutsideTextures() {
 	tree->Load((char*)"models/Outside/tree1_3ds/Tree1.3ds");
 	garage_street.loadTexture("textures/Outside/street2.jpg");
 	sarot.loadTexture("textures/Outside/sarot.jpeg");
+	cafe_ad.loadTexture("textures/Outside/cafe_ad_O.jpeg");
+	market_ad.loadTexture("textures/Outside/market_ad_O.jpeg");
 	lake.loadTextures();
 	elevator.loadTextures();
 }
@@ -92,16 +94,10 @@ void Outside::render3DModel(float x, float y, float z, float scale, Model_3DS* m
 void Outside::draw() {
 	drawLake();
 	glPushMatrix();
-	//garage.draw();
+	garage.draw();
 	glPopMatrix();
 	Cuboid Ground(Point(105, 0, -155), 10, 320, 220);
 	Ground.drawWithTexture(ground.textureID, 2, 2);
-
-	//	Cuboid Platform(Point(105, -1, -155), 2, 630, 400);
-	//	Platform.drawWithTexture(platform.textureID, 9, 9);
-	//	Cuboid Street(Point(105, 1, -495), 0.5, 50, 200);
-	//	Street.drawWithTexture(street.textureID, 1, 1);
-
 	Cuboid Platform(Point(105, -1, -155), 2, 630, 370);
 	Platform.drawWithTexture(platform.textureID, 6, 6);
 	Cuboid Street(Point(62.5, 1, -495), 0.5, 50, 285);
@@ -164,11 +160,17 @@ void Outside::draw() {
 	Cuboid Front_Top(Point(105, 41, -5), 72, 0, 200);
 	Front_Top.drawWithTexture(side.textureID, 1, 1);
 
-	Cuboid Front_BR(Point(46, 10, -5), 31, 0, 82);
-	Front_BR.drawWithTexture(market_ad.textureID, 1, 1);
+	Cuboid Front_BR_Outside(Point(46, 10, -5), 31, 0, 82);
+	Front_BR_Outside.drawWithTexture(market_ad.textureID, 1, 1);
 
-	Cuboid Front_BL(Point(165, 10, -5), 31, 0, 80);
-	Front_BL.drawWithTexture(cafe_ad.textureID, 1, 1);
+	Cuboid Front_BL_Outside(Point(165, 10, -5), 31, 0, 80);
+	Front_BL_Outside.drawWithTexture(cafe_ad.textureID, 1, 1);
+
+	Cuboid Front_BR_Inside(Point(46, 10, -5.1), 31, 0, 82);
+	Front_BR_Inside.drawWithTexture(market_ad.textureID, 1, 1);
+
+	Cuboid Front_BL_Inside(Point(165, 10, -5.1), 31, 0, 80);
+	Front_BL_Inside.drawWithTexture(cafe_ad.textureID, 1, 1);
 
 	Cuboid Right_Door(Point(97 - doorMov->OpenRate * 15, 10.2, -4.9), 31, 1, 20);
 	Right_Door.drawWithTexture(right_door.textureID, 1, 1);
@@ -258,14 +260,7 @@ void Outside::draw() {
 	glColor3f(1, 1, 1);
 	glDisable(GL_BLEND);
 	glPopMatrix();
-<<<<<<< HEAD
-	drawLake();
-	//drawMarkets();
-
-=======
->>>>>>> 2ee4f3356e7217dcb3db3c7e0205a06db74e92d3
 }
-
 
 inline double toRadians(double degrees) {
 	return degrees * M_PI / 180.0;
@@ -277,25 +272,25 @@ void Outside::drawStreetLight(Point baseCenter, double poleHeight, double poleRa
 
 	Point currentPosition = baseCenter;
 
-	Point verticalArmStart(baseCenter.x, baseCenter.y + poleHeight-12, baseCenter.z-0.1);
+	Point verticalArmStart(baseCenter.x, baseCenter.y + poleHeight - 12, baseCenter.z - 0.1);
 	glColor3ub(101, 67, 33);
 	glPushMatrix();
-	glTranslated(verticalArmStart.x, verticalArmStart.y, verticalArmStart.z); 
-	glRotated(-90, 1, 0, 0); 
-	gluCylinder(quad, poleRadius+0.2, poleRadius+0.2, poleHeight+23, 32, 32); 
+	glTranslated(verticalArmStart.x, verticalArmStart.y, verticalArmStart.z);
+	glRotated(-90, 1, 0, 0);
+	gluCylinder(quad, poleRadius + 0.2, poleRadius + 0.2, poleHeight + 23, 32, 32);
 	glPopMatrix();
 
 	currentPosition.z += poleHeight - 15.5;
 	double angleStep = 5.0;
 
-	int curveDirection = isLeftSide ? -1 : 1; 
+	int curveDirection = isLeftSide ? -1 : 1;
 
-	for (double angle = 0; angle <= 180; angle += angleStep) 
+	for (double angle = 0; angle <= 180; angle += angleStep)
 	{
 		glPushMatrix();
-		glTranslated(currentPosition.x, currentPosition.y + 40, currentPosition.z);	
-		glRotated(curveDirection * angle, 0, 1, 0); 
-		gluCylinder(quad, poleRadius+ 0.4, poleRadius, angleStep / 360.0 * curveRadius * 2 * M_PI, 32, 32); // Short segment of the curve
+		glTranslated(currentPosition.x, currentPosition.y + 40, currentPosition.z);
+		glRotated(curveDirection * angle, 0, 1, 0);
+		gluCylinder(quad, poleRadius + 0.4, poleRadius, angleStep / 360.0 * curveRadius * 2 * M_PI, 32, 32); 
 		glPopMatrix();
 
 		double angleNext = angle + angleStep;
@@ -305,13 +300,14 @@ void Outside::drawStreetLight(Point baseCenter, double poleHeight, double poleRa
 	Point lampPosition(currentPosition.x, currentPosition.y, currentPosition.z);
 
 	glPushMatrix();
-	glColor3ub(255, 255, 0); 
-	glTranslated(lampPosition.x, lampPosition.y+40, lampPosition.z);
-	glutSolidSphere(lampSize, 20, 20); 
+	glColor3ub(255, 255, 0);
+	glTranslated(lampPosition.x, lampPosition.y + 40, lampPosition.z);
+	glutSolidSphere(lampSize, 20, 20);
 	glPopMatrix();
 
 	glColor3ub(255, 255, 255);
 }
+
 void drawSphere(Point center, float radius) {
 	glPushMatrix();
 	glTranslated(center.x, center.y, center.z);
