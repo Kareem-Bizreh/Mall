@@ -258,13 +258,10 @@ void keyboard(unsigned char key, int x, int y)
 //camera related function: timer, mouse and mouse motion
 void timer(int value)
 {
-	/*float prevX, prevY, prevZ;
-	g_camera.GetPos(prevX, prevY, prevZ);*/
 	if (g_fps_mode) {
 		float newX, newY, newZ;
-		g_camera.GetPos(newX, newY, newZ); // الحصول على الموقع الحالي للكاميرا
+		g_camera.GetPos(newX, newY, newZ); 
 
-		// حساب الموقع الجديد بناءً على الحركة المطلوبة
 		if (g_key['w']) {
 			newZ -= g_translation_speed; // Move forward
 		}
@@ -284,7 +281,6 @@ void timer(int value)
 			newY += g_translation_speed; // Fly up
 		}
 
-		// التحقق من الاصطدام مع الأبواب قبل التحرك
 		bool canMove = true;
 		Point newPos = Point(newX, newY, newZ);
 
@@ -294,14 +290,12 @@ void timer(int value)
 				(newPos.y - doorCenter.y) * (newPos.y - doorCenter.y) +
 				(newPos.z - doorCenter.z) * (newPos.z - doorCenter.z));
 
-			// إذا كانت الكاميرا قريبة من باب مغلق، منع الحركة
 			if (dist <= 7 && !door->open) {
 				canMove = false;
 				break;
 			}
 		}
 
-		// إذا كان المسار آمنًا، قم بتنفيذ الحركة
 		if (canMove) {
 			if (g_key['w']) {
 				g_camera.Move(g_translation_speed);
