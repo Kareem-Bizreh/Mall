@@ -142,6 +142,8 @@
     <ClCompile Include="Closet.cpp" />
     <ClCompile Include="Cuboid.cpp" />
     <ClCompile Include="Cylinder.cpp" />
+    <ClCompile Include="ElectronicDepartment.cpp" />
+    <ClCompile Include="Elevator.cpp" />
     <ClCompile Include="Flag.cpp" />
     <ClCompile Include="FurnitureStore.cpp" />
     <ClCompile Include="Garage.cpp" />
@@ -168,6 +170,8 @@
     <ClInclude Include="Cuboid.h" />
     <ClInclude Include="Cylinder.h" />
     <ClInclude Include="Door.h" />
+    <ClInclude Include="ElectronicDepartment.h" />
+    <ClInclude Include="Elevator.h" />
     <ClInclude Include="Flag.h" />
     <ClInclude Include="FurnitureStore.h" />
     <ClInclude Include="Garage.h" />

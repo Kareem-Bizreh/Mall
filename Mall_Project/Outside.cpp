@@ -32,117 +32,6 @@ void Outside::drawMarkets()
 	glPopMatrix();
 }
 
-void Outside::drawElevator(double height)
-{
-	elevatorDoor->center.y = height + 24.5;
-	glColor3f(0.8, 0.8, 0.8);
-	glPushMatrix();
-	glTranslated(0, height, 0);
-	Cuboid(Point(0, 0, -12), 25, 0, 30).drawWithTexture(elevator.textureID, 1, 1);
-	glColor3f(1, 1, 1);
-	Cuboid(Point(-15, 0, 0), 25, 24, 0).drawWithTexture(elevator.textureID, 1, 1);
-	Cuboid(Point(15, 0, 0), 25, 24, 0).drawWithTexture(elevator.textureID, 1, 1);
-	Cuboid(Point(0, 0, 0), 0, 24, 30).drawWithTexture(elevatorGround.textureID, 1, 1);
-	Cuboid(Point(0, 25, 0), 0, 24, 30).drawWithTexture(elevator.textureID, 1, 1);
-
-	GLUquadric* quad = gluNewQuadric();
-	gluQuadricTexture(quad, GL_TRUE);
-	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, elevatorHandle.textureID);
-
-	glPushMatrix();
-
-	glTranslated(12, 12.5, -8);
-	gluCylinder(quad, 0.5, 0.5, 16, 32, 32);
-
-	glPushMatrix();
-	glColor3f(0.7, 0.7, 0.7);
-	gluSphere(quad, 0.7, 32, 32);
-	glTranslated(0, 0, 16);
-	gluSphere(quad, 0.7, 32, 32);
-	glColor3f(1, 1, 1);
-	glPopMatrix();
-
-	glTranslated(-24, 0, 0);
-	gluCylinder(quad, 0.5, 0.5, 16, 32, 32);
-
-	glPushMatrix();
-	glColor3f(0.7, 0.7, 0.7);
-	gluSphere(quad, 0.7, 32, 32);
-	glTranslated(0, 0, 16);
-	gluSphere(quad, 0.7, 32, 32);
-	glColor3f(1, 1, 1);
-	glPopMatrix();
-
-	glPopMatrix();
-
-	glPushMatrix();
-	glRotated(90, 0, 1, 0);
-	glTranslated(6, 12.5, 12);
-	gluCylinder(quad, 0.5, 0.5, 3, 32, 32);
-	glTranslated(-12, 0, 0);
-	gluCylinder(quad, 0.5, 0.5, 3, 32, 32);
-
-	glTranslated(0, 0, -27);
-	gluCylinder(quad, 0.5, 0.5, 3, 32, 32);
-	glTranslated(12, 0, 0);
-	gluCylinder(quad, 0.5, 0.5, 3, 32, 32);
-	glPopMatrix();
-
-	glDisable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, 0);
-
-	Cuboid(Point(12, 0, 12), 25, 0, 6).drawWithTexture(elevator.textureID, 1, 1);
-	Cuboid(Point(-12, 0, 12), 25, 0, 6).drawWithTexture(elevator.textureID, 1, 1);
-	Cuboid(Point(-11, 12, 11.98), 3, 0, 1.5).drawWithTexture(elevatorDoorControl.textureID, 1, 1);
-
-	Cuboid(Point(-4.5 - elevatorDoor->OpenRate * 6, 0, 12.1), 25, 0, 9).drawWithTexture(elevatorDoorL.textureID, 1, 1);
-	Cuboid(Point(4.5 + elevatorDoor->OpenRate * 6, 0, 12.1), 25, 0, 9).drawWithTexture(elevatorDoorR.textureID, 1, 1);
-	glPopMatrix();
-
-	Cuboid(Point(-15.1, 0, 0), 75, 24, 0).drawWithTexture(elevator.textureID, 1, 1);
-	Cuboid(Point(15.1, 0, 0), 75, 24, 0).drawWithTexture(elevator.textureID, 1, 1);
-	Cuboid(Point(0, 25, 12), 25, 0, 30).drawWithTexture(elevator.textureID, 1, 1);
-
-	Cuboid(Point(12, 0, 12.1), 25, 0, 6).drawWithTexture(elevator.textureID, 1, 1);
-	Cuboid(Point(-12, 0, 12.1), 25, 0, 6).drawWithTexture(elevator.textureID, 1, 1);
-	Cuboid(Point(11, 12, 12.11), 3, 0, 1.5).drawWithTexture(elevatorDoorControl.textureID, 1, 1);
-
-	Cuboid(Point(-4.5 - elevatorDoorDown->OpenRate * 6, 0, 12.2), 25, 0, 9).drawWithTexture(elevatorDoorL.textureID, 1, 1);
-	Cuboid(Point(4.5 + elevatorDoorDown->OpenRate * 6, 0, 12.2), 25, 0, 9).drawWithTexture(elevatorDoorR.textureID, 1, 1);
-
-	Cuboid(Point(12, 50, 12.1), 25, 0, 6).drawWithTexture(elevator.textureID, 1, 1);
-	Cuboid(Point(-12, 50, 12.1), 25, 0, 6).drawWithTexture(elevator.textureID, 1, 1);
-	Cuboid(Point(11, 62, 12.11), 3, 0, 1.5).drawWithTexture(elevatorDoorControl.textureID, 1, 1);
-
-	Cuboid(Point(-4.5 - elevatorDoorUp->OpenRate * 6, 50, 12.2), 25, 0, 9).drawWithTexture(elevatorDoorL.textureID, 1, 1);
-	Cuboid(Point(4.5 + elevatorDoorUp->OpenRate * 6, 50, 12.2), 25, 0, 9).drawWithTexture(elevatorDoorR.textureID, 1, 1);
-
-	glColor3f(0.3, 0.3, 0.3);
-	glPushMatrix();
-	glTranslated(-15, 0, -12);
-	glRotated(-90, 1, 0, 0);
-	gluCylinder(quad, 1, 1, 100, 32, 32);
-	glPopMatrix();
-	glPushMatrix();
-	glTranslated(15, 0, -12);
-	glRotated(-90, 1, 0, 0);
-	gluCylinder(quad, 1, 1, 100, 32, 32);
-	glPopMatrix();
-	glPushMatrix();
-	glTranslated(-15, 0, 12);
-	glRotated(-90, 1, 0, 0);
-	gluCylinder(quad, 1, 1, 100, 32, 32);
-	glPopMatrix();
-	glPushMatrix();
-	glTranslated(15, 0, 12);
-	glRotated(-90, 1, 0, 0);
-	gluCylinder(quad, 1, 1, 100, 32, 32);
-	glPopMatrix();
-	glColor3f(1, 1, 1);
-	gluDeleteQuadric(quad);
-}
-
 void Outside::drawLake()
 {
 	glPushMatrix();
@@ -171,12 +60,6 @@ void Outside::OutsideTextures() {
 	stick.loadTexture("textures/Outside/stick.jpg");
 	street.loadTexture("textures/Outside/street.jpg");
 	entry.loadTexture("textures/Outside/entry.jpg");
-	elevator.loadTexture("textures/Outside/elevator.jpg");
-	elevatorGround.loadTexture("textures/Outside/elevatorGround.jpg");
-	elevatorHandle.loadTexture("textures/Outside/elevatorHandle.jpg");
-	elevatorDoorR.loadTexture("textures/Outside/elevatorDoorR.jpg");
-	elevatorDoorL.loadTexture("textures/Outside/elevatorDoorL.jpg");
-	elevatorDoorControl.loadTexture("textures/Outside/elevatorDoorControl.jpg");
 	platform.loadTexture("textures/Outside/platform.jpeg");
 	cafe_ad.loadTexture("textures/Outside/cafe_ad.jpeg");
 	market_ad.loadTexture("textures/Outside/market_ad.jpeg");
@@ -185,6 +68,7 @@ void Outside::OutsideTextures() {
 	garage_street.loadTexture("textures/Outside/street2.jpg");
 	sarot.loadTexture("textures/Outside/sarot.jpeg");
 	lake.loadTextures();
+	elevator.loadTextures();
 }
 
 
@@ -206,11 +90,18 @@ void Outside::render3DModel(float x, float y, float z, float scale, Model_3DS* m
 
 
 void Outside::draw() {
+	drawLake();
 	glPushMatrix();
 	//garage.draw();
 	glPopMatrix();
 	Cuboid Ground(Point(105, 0, -155), 10, 320, 220);
 	Ground.drawWithTexture(ground.textureID, 2, 2);
+
+	//	Cuboid Platform(Point(105, -1, -155), 2, 630, 400);
+	//	Platform.drawWithTexture(platform.textureID, 9, 9);
+	//	Cuboid Street(Point(105, 1, -495), 0.5, 50, 200);
+	//	Street.drawWithTexture(street.textureID, 1, 1);
+
 	Cuboid Platform(Point(105, -1, -155), 2, 630, 370);
 	Platform.drawWithTexture(platform.textureID, 6, 6);
 	Cuboid Street(Point(62.5, 1, -495), 0.5, 50, 285);
@@ -241,7 +132,7 @@ void Outside::draw() {
 	Cuboid FloorB_right(Point(165, 61.22, -106), 0, 200, 80);
 	Cuboid FloorB_front(Point(105, 61.23, -40), 0, 70, 200);
 	Cuboid FloorB_back(Point(105, 61.24, -165), 0, 80, 200);
-	
+
 	FloorB_left.drawWithTexture(mall_ground.textureID, 0, 0);
 	FloorB_right.drawWithTexture(mall_ground.textureID, 0, 0);
 	FloorB_front.drawWithTexture(mall_ground.textureID, 0, 0);
@@ -279,10 +170,10 @@ void Outside::draw() {
 	Cuboid Front_BL(Point(165, 10, -5), 31, 0, 80);
 	Front_BL.drawWithTexture(cafe_ad.textureID, 1, 1);
 
-	Cuboid Right_Door(Point(97, 10.2, -4.9), 31, 1, 20);
+	Cuboid Right_Door(Point(97 - doorMov->OpenRate * 15, 10.2, -4.9), 31, 1, 20);
 	Right_Door.drawWithTexture(right_door.textureID, 1, 1);
 
-	Cuboid Left_Door(Point(117, 10.2, -4.9), 31, 1, 20);
+	Cuboid Left_Door(Point(117 + doorMov->OpenRate * 15, 10.2, -4.9), 31, 1, 20);
 	Left_Door.drawWithTexture(left_door.textureID, 1, 1);
 
 
@@ -303,13 +194,6 @@ void Outside::draw() {
 	glPushMatrix();
 	glColor3ub(180, 180, 180);
 	Cylinder().draw(Point(165, 112.5, -262), 12, 12, 112.5, 36, 36);
-	glPopMatrix();
-
-
-	glPushMatrix();
-	glTranslated(149, 10, -227);
-	glRotated(-90, 0, 1, 0);
-	stairsMall().draw(Point(0, 0, 0));
 	glPopMatrix();
 
 	render3DModel(105, 0, 150, 3.0, tank);
@@ -345,12 +229,27 @@ void Outside::draw() {
 
 	glPushMatrix();
 	glTranslated(22, 12, -290);
+	glColor3f(0.7, 0.7, 0.7);
 	Cuboid(Point(0, -2.1, 0), 2, 28, 34).drawWithTexture(mall_ground.textureID, 1, 1);
-	glPushMatrix();
-	drawElevator(0);
-	glPopMatrix();
+	elevator.draw();
 	glTranslated(0, 47.75, 50);
 	Cuboid(Point(0, 0.1, -1), 1.5, 72, 28).drawWithTexture(mall_ground.textureID, 2, 8);
+	glColor3f(1, 1, 1);
+	glPopMatrix();
+
+	drawMarkets();
+
+	// draw stairs
+	glPushMatrix();
+	glTranslated(149, 10, -227);
+	glRotated(-90, 0, 1, 0);
+	stairsMall().draw(Point(0, 0, 0));
+	glPopMatrix();
+
+	// draw glass for elevator
+	glPushMatrix();
+	glTranslated(22, 12, -290);
+	glTranslated(0, 47.75, 50);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_BLEND);
 	glColor4ub(163, 163, 163, 182);
@@ -359,9 +258,12 @@ void Outside::draw() {
 	glColor3f(1, 1, 1);
 	glDisable(GL_BLEND);
 	glPopMatrix();
+<<<<<<< HEAD
 	drawLake();
 	//drawMarkets();
 
+=======
+>>>>>>> 2ee4f3356e7217dcb3db3c7e0205a06db74e92d3
 }
 
 

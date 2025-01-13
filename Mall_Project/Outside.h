@@ -14,10 +14,14 @@
 #include "Door.h"
 #include "Lake.h"
 #include "Cylinder.h"
+<<<<<<< HEAD
 #include <cmath> 
+=======
+#include "Elevator.h"
+>>>>>>> 2ee4f3356e7217dcb3db3c7e0205a06db74e92d3
 class Outside {
 private:
-	Texture ground, mall_ground, side, right_door, left_door, mall_name, flag, stick, street, entry, elevator, elevatorGround, elevatorHandle, elevatorDoorR, elevatorDoorL, elevatorDoorControl,platform, cafe_ad, market_ad,garage_street,sarot;
+	Texture ground, mall_ground, side, right_door, left_door, mall_name, flag, stick, street, entry, platform, cafe_ad, market_ad, garage_street, sarot;
 	Flag wavingFlag;
 	Lake lake;
 	SuperMarket superMarket;
@@ -28,19 +32,31 @@ private:
 	Audio mallMusic;
 	Model_3DS* tree;
 	Model_3DS* tank;
-	Door* elevatorDoor = new Door{ Point(22, 24.5, -288), 0.0, false };
-	Door* elevatorDoorDown = new Door{ Point(22, 24.5, -288), 0.0, false };
-	Door* elevatorDoorUp = new Door{ Point(22, 74.5, -287.9), 0.0, false };
-
+	Door* doorMov = new Door{ Point(108 ,26 ,-15), 0.0, false };
 	void drawMarkets();
 	void drawLake();
-	void drawElevator(double height);
 public:
+	Elevator elevator;
 	std::vector <Door*> Doors{
-		elevatorDoor,
-		elevatorDoorDown,
-		elevatorDoorUp
+		cafe.doorMov,
+		restaurant.doorMov,
+		furnitureStore.doorMov,
+		furnitureStore.drawerMov1,
+		furnitureStore.drawerMov2,
+		furnitureStore.closetMov1,
+		furnitureStore.closetMov2
 	};
+
+	std::vector<Door*> AutoDoors{
+		doorMov
+	};
+
+	std::vector<Door*> elevatorDoors{
+		elevator.elevatorDoor,
+		elevator.elevatorDoorUp,
+		elevator.elevatorDoorDown
+	};
+
 	Outside(Texture flagTexture);
 	void OutsideTextures();
 	void drawStreetLight(Point baseCenter, double poleHeight, double poleRadius, double armLength, double verticalArmLength, double lampSize, bool isLeftSide);
