@@ -117,10 +117,10 @@ void Lake::drawLake()
 	float xOffset = waveAmplitude * cos((waveFrequency - 1) * time);
 	float zOffset = waveAmplitude * sin(waveFrequency * time);
 
-	Cuboid water(Point(24 + xOffset, 1 + yOffset - 1, -10.5 + zOffset), 5, 19, 44);
-	Cuboid water2(Point(24 + xOffset,1 + yOffset - 1 , -35.5 + zOffset), 5, 19, 44);
-	Cuboid water3(Point(10.5 + xOffset, 1 + yOffset - 1, -23+ zOffset), 5, 5.4, 19);
-	Cuboid water4(Point(36.5 + xOffset, 1 + yOffset - 1, -23 + zOffset), 5, 5.4, 19);
+	Cuboid water(Point(25 + xOffset, yOffset - 2, -11.5 + zOffset), 8, 19, 44);
+	Cuboid water2(Point(25 + xOffset, yOffset - 2 , -36.5 + zOffset), 8, 19, 44);
+	Cuboid water3(Point(11.5 + xOffset,  yOffset - 2, -24+ zOffset), 8, 5.4, 19);
+	Cuboid water4(Point(37.5 + xOffset,  yOffset - 2, -24 + zOffset), 8, 5.4, 19);
 
 	glColor3ub(84, 64, 63);
 
@@ -137,17 +137,17 @@ void Lake::drawLake()
 	water3.drawWithTexture(Water.textureID, 6, 2);
 	water4.drawWithTexture(Water.textureID, 6, 2);
 
-	double curveRadius = 15.0;
+	double curveRadius = 10.0;
 	double angleStep = 5.0;
 	double poleRadius = 0.5;
 	static double rotationAngle = 0.0;
-	int numRepetitions = 30;
+	int numRepetitions = 40;
 	double rotationStep = 360.0 / numRepetitions;
 	double flowOffset = 100.0;
 
 	Water.Use();
 
-	Point basePosition(26, 20, -27);
+	Point basePosition(26, 20, -25);
 
 	glPushMatrix();
 	glTranslated(basePosition.x, basePosition.y, basePosition.z);
@@ -161,7 +161,7 @@ void Lake::drawLake()
 		double currentRotation = i * rotationStep;
 		glRotated(currentRotation, 0, 1, 0);
 
-		Point currentPosition(0, 0, 0);
+		Point currentPosition(0, 0.5, 0);
 
 		for (double angle = 90; angle <= 270; angle += angleStep) {
 			glPushMatrix();
@@ -173,7 +173,7 @@ void Lake::drawLake()
 			double textureFlowV = flowOffset + (angle - 90) / 180.0;
 			double textureFlowU = i * 0.02;
 
-			glColor4f(1.0, 1.0, 1.0, 0.4);
+			glColor4f(1.0, 1.0, 1.0, 0.2);
 
 			glBegin(GL_QUADS);
 			glTexCoord2f(textureFlowU, textureFlowV);               glVertex3f(0, 0, 0);

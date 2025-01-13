@@ -44,7 +44,7 @@ bool g_mouse_left_down = false;
 bool g_mouse_right_down = false;
 
 // Movement settings
-const float g_translation_speed = 0.5;
+const float g_translation_speed = 1.5;
 const float g_rotation_speed = M_PI / 180 * 0.1;
 const float elevator_speed = 0.4;
 const float elevator_door_speed = 0.1;
@@ -379,7 +379,7 @@ void timer(int value)
 		door->OpenRate = max((double)0, door->OpenRate);
 		door->OpenRate = min((double)1, door->OpenRate);
 	}
-	glutTimerFunc(1, timer, 0);	//call the timer again each 1 millisecond
+	glutTimerFunc(1000/3, timer, 0);	//call the timer again each 1 millisecond
 }
 
 void specialKeys(int key, int x, int y) {
