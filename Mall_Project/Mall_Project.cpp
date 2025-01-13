@@ -1,4 +1,4 @@
-#include <GL/glut.h>
+﻿#include <GL/glut.h>
 #include <bits/stdc++.h>
 #include "stb_image.h"
 #include "math3d.h"
@@ -44,7 +44,7 @@ bool g_mouse_left_down = false;
 bool g_mouse_right_down = false;
 
 // Movement settings
-const float g_translation_speed = 1;
+const float g_translation_speed = 0.5;
 const float g_rotation_speed = M_PI / 180 * 0.1;
 const float elevator_speed = 0.4;
 const float elevator_door_speed = 0.1;
@@ -258,24 +258,69 @@ void keyboard(unsigned char key, int x, int y)
 //camera related function: timer, mouse and mouse motion
 void timer(int value)
 {
+	/*float prevX, prevY, prevZ;
+	g_camera.GetPos(prevX, prevY, prevZ);*/
 	if (g_fps_mode) {
+		float newX, newY, newZ;
+		g_camera.GetPos(newX, newY, newZ); // الحصول على الموقع الحالي للكاميرا
+
+		// حساب الموقع الجديد بناءً على الحركة المطلوبة
 		if (g_key['w']) {
-			g_camera.Move(g_translation_speed);
+			newZ -= g_translation_speed; // Move forward
 		}
 		else if (g_key['s']) {
-			g_camera.Move(-g_translation_speed);
+			newZ += g_translation_speed; // Move backward
 		}
 		if (g_key['a']) {
-			g_camera.Strafe(g_translation_speed);
+			newX -= g_translation_speed; // Strafe left
 		}
 		else if (g_key['d']) {
-			g_camera.Strafe(-g_translation_speed);
+			newX += g_translation_speed; // Strafe right
 		}
 		if (g_mouse_left_down) {
-			g_camera.Fly(-g_translation_speed);
+			newY -= g_translation_speed; // Fly down
 		}
 		else if (g_mouse_right_down) {
-			g_camera.Fly(g_translation_speed);
+			newY += g_translation_speed; // Fly up
+		}
+
+		// التحقق من الاصطدام مع الأبواب قبل التحرك
+		bool canMove = true;
+		Point newPos = Point(newX, newY, newZ);
+
+		for (Door* door : outside.Doors) {
+			Point doorCenter = door->center;
+			double dist = sqrt((newPos.x - doorCenter.x) * (newPos.x - doorCenter.x) +
+				(newPos.y - doorCenter.y) * (newPos.y - doorCenter.y) +
+				(newPos.z - doorCenter.z) * (newPos.z - doorCenter.z));
+
+			// إذا كانت الكاميرا قريبة من باب مغلق، منع الحركة
+			if (dist <= 7 && !door->open) {
+				canMove = false;
+				break;
+			}
+		}
+
+		// إذا كان المسار آمنًا، قم بتنفيذ الحركة
+		if (canMove) {
+			if (g_key['w']) {
+				g_camera.Move(g_translation_speed);
+			}
+			else if (g_key['s']) {
+				g_camera.Move(-g_translation_speed);
+			}
+			if (g_key['a']) {
+				g_camera.Strafe(g_translation_speed);
+			}
+			else if (g_key['d']) {
+				g_camera.Strafe(-g_translation_speed);
+			}
+			if (g_mouse_left_down) {
+				g_camera.Fly(-g_translation_speed);
+			}
+			else if (g_mouse_right_down) {
+				g_camera.Fly(g_translation_speed);
+			}
 		}
 	}
 
@@ -384,7 +429,7 @@ void init()
 	menucreate();
 
 	//load textures here 
-	cafe.cafeTextures();
+	//cafe.cafeTextures();
 	//furnitureStore.loadTextures();
 	//outside.OutsideTextures();
 	outside.OutsideTextures();

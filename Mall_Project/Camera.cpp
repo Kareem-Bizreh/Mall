@@ -39,20 +39,6 @@ bool Camera::CheckCollision(const Point& newPos) {
 			return true; // تصادم مع جدار
 		}
 	}
-	//for (const auto& door : elevatorDoors) {
-	//	if (!door->open) { // إذا كان الباب مغلقًا
-	//		// تعريف حدود الباب (يمكن تعديلها حسب حجم الباب)
-	//		Point doorMin = Point(door->center.x - 3, door->center.y - 12.5, door->center.z - 0);
-	//		Point doorMax = Point(door->center.x + 3, door->center.y + 12.5, door->center.z + 0);
-
-	//		// التحقق من التصادم مع الباب
-	//		if (newPos.x > doorMin.x && newPos.x < doorMax.x &&
-	//			newPos.y > doorMin.y && newPos.y < doorMax.y &&
-	//			newPos.z > doorMin.z && newPos.z < doorMax.z) {
-	//			return true; // تصادم مع باب مغلق
-	//		}
-	//	} 
-	//}
 	return false; // لا يوجد تصادم
 }
 
@@ -91,7 +77,7 @@ void Camera::Move(float incr)
 
 	Point newPos(m_x + incr * lx, m_y + incr * ly, m_z + incr * lz);
 
-	if (!CheckCollision(newPos) ) {
+	if (!CheckCollision(newPos)) {
 		m_x = newPos.x;
 		m_y = newPos.y;
 		m_z = newPos.z;
