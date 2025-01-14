@@ -3,6 +3,18 @@
 #include "Texture.h"
 #include "Cylinder.h"
 
+ElectronicDepartment::ElectronicDepartment()
+{
+
+}
+
+ElectronicDepartment::ElectronicDepartment(float x, float y, float z)
+{
+    this->x = x;
+    this->y = y;
+    this->z = z;
+}
+
 void ElectronicDepartment::loadTextures() {
     // chip1
     chip_text1.loadTexture("textures/Electronic Department/textures/chip1.jpg");
@@ -328,16 +340,16 @@ void ElectronicDepartment::loadTextures() {
 }
 
 
-void ElectronicDepartment::draw(float x, float y, float z)
+void ElectronicDepartment::draw()
 {
     // COMPUTER STORE-------COMPUTER STORE-------COMPUTER STORE-------COMPUTER STORE
 
     glPushMatrix();
-    glTranslated(x - 68, y, z);
+    glTranslated(x - 67, y, z);
 
 
     // wall
-    drawStructure(x, y, z, logoTex1);
+    drawStructure(x, y, z, logoTex1, techDoor);
 
 
     // store sign
@@ -433,7 +445,7 @@ void ElectronicDepartment::draw(float x, float y, float z)
 
 
     // walls 
-    drawStructure(x, y, z, logoTex2);
+    drawStructure(x, y, z, logoTex2, csDoor);
 
 
     // store sign
@@ -531,11 +543,11 @@ void ElectronicDepartment::draw(float x, float y, float z)
     // PHONE STORE----------PHONE STORE----------PHONE STORE----------PHONE STORE
 
     glPushMatrix();
-    glTranslated(x + 68, y, z);
+    glTranslated(x + 67, y, z);
 
 
     // walls
-    drawStructure(x, y, z, logoTex3);
+    drawStructure(x, y, z, logoTex3, mobileDoor);
     glTranslated(x, y + 0.5, z);
 
 
@@ -627,7 +639,7 @@ void ElectronicDepartment::draw(float x, float y, float z)
     // PHONE STORE----------PHONE STORE----------PHONE STORE----------PHONE STORE
 }
 
-void ElectronicDepartment::drawStructure(float x, float y, float z, int logo)
+void ElectronicDepartment::drawStructure(float x, float y, float z, int logo, Door* door)
 {
     float thickness = 0.5;
     float height = 50;
@@ -659,9 +671,18 @@ void ElectronicDepartment::drawStructure(float x, float y, float z, int logo)
     Cuboid(Point(x - 18, y + 20, z + 25), 30, thickness, 10).drawWithTextureOnOneFace(chipTex1, "back", 1, 1);    // internal top part
     Cuboid(Point(x - 18, y + 20, z + 25.5), 30, thickness, 10).drawWithTextureOnOneFace(wallTex, "front", 1, 1);  // internal top part
 
-    Cuboid(Point(x - 15.5, y, z + 25), 20.5, 0.5, 5).drawWithTexture(rightDoorTex, 1, 1);                         // right door
-    Cuboid(Point(x - 20.5, y, z + 25), 20.5, 0.5, 5).drawWithTexture(leftDoorTex, 1, 1);                          // left door
+    
+    glPushMatrix();
+    glTranslated(x - 13, y, z + 25);
+	glRotated(doorAngle * -door->OpenRate, 0, 1, 0);
+    Cuboid(Point(-2.5, 0, 0), 20.5, 0.5, 5).drawWithTexture(rightDoorTex, 1, 1);                         // right door
+    glPopMatrix();
 
+    glPushMatrix();
+    glTranslated(x - 23, y, z + 25);
+    glRotated(doorAngle * door->OpenRate, 0, 1, 0);
+    Cuboid(Point(2.5, 0, 0), 20.5, 0.5, 5).drawWithTexture(leftDoorTex, 1, 1);                          // left door
+    glPopMatrix();
 }
 
 void ElectronicDepartment::drawTable(float x, float y, float z, float height, float length, float width)

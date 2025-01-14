@@ -15,6 +15,8 @@
 #include "Lake.h"
 #include "Cylinder.h"
 #include "Elevator.h"
+#include "ElectronicDepartment.h"
+
 class Outside {
 private:
 	Texture ground, mall_ground, side, right_door, left_door, mall_name, flag, stick, street, entry, platform, cafe_ad, market_ad, garage_street, sarot;
@@ -25,6 +27,7 @@ private:
 	Garage garage;
 	Cafe cafe = Cafe(Point(0, 0, 0));
 	Restaurant restaurant = Restaurant(Point(0, 0, 0));
+	ElectronicDepartment electronicDepartment = ElectronicDepartment(0, 0, 0);
 	Audio mallMusic;
 	Model_3DS* tree;
 	Model_3DS* tank;
@@ -40,7 +43,10 @@ public:
 		furnitureStore.drawerMov1,
 		furnitureStore.drawerMov2,
 		furnitureStore.closetMov1,
-		furnitureStore.closetMov2
+		furnitureStore.closetMov2,
+		electronicDepartment.techDoor,
+		electronicDepartment.csDoor,
+		electronicDepartment.mobileDoor
 	};
 
 	std::vector<Door*> elevatorDoors{

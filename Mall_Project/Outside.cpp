@@ -30,6 +30,12 @@ void Outside::drawMarkets()
 	glRotated(-90, 0, 1, 0);
 	furnitureStore.drawStore(Point(0, 0, 0));
 	glPopMatrix();
+
+	glPushMatrix();
+	glTranslated(30.8, 61.3, -105.9);
+	glRotated(90, 0, 1, 0);
+	electronicDepartment.draw();
+	glPopMatrix();
 }
 
 void Outside::drawLake()
@@ -49,6 +55,7 @@ void Outside::OutsideTextures() {
 	cafe.cafeTextures();
 	superMarket.loadTextures();
 	restaurant.restaurantTextures();
+	electronicDepartment.loadTextures();
 	garage.loadTexturesAndModels();
 	ground.loadTexture("textures/Outside/ground.jpg");
 	mall_ground.loadTexture("textures/Outside/mall_ground.jpg");

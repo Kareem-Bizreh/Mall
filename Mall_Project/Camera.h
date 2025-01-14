@@ -58,6 +58,33 @@ public:
 		{Point(173.789,11.9664,-24.5818),Point(202.478,30.2351,-19.0607)},//الطاولات الجانبية يلي بالقهوة
 		{Point(186.888,11.8883,-87.5818),Point(202.478,30.2351,-19.0607)},//الطاولات الجانبية يلي بالقهوة
 		{Point(155.121,11.3071,-99.0372),Point(184.842,26.5823,-85.2615)},//الطاولات الجانبية يلي بالقهوة 
+
+		// Electronic Department
+		// front wall
+		{Point(55, 61.3, -215),Point(59, 112, -168)},// right of the right door
+		{Point(55, 82, -168),Point(59, 112, -158)},// above of the right door
+		{Point(55, 61.3, -158),Point(59, 112, -102)},// between the right door and the middle door
+		{Point(55, 82, -102),Point(59, 112, -92)},// above of the middle door
+		{Point(55, 61.3, -92),Point(59, 112, -36)},// between the left door and the middle door
+		{Point(55, 82, -36),Point(59, 112, -26)},// above of the middle door
+		{Point(55, 61.3, -26),Point(59, 112, -14)},// left of the left door
+
+		// right wall
+		{Point(0, 61.3, -218),Point(51.5, 112, -214)},
+
+		// tech store
+		{Point(40, 53, -70),Point(59, 88, -45)},	// office
+		{Point(15, 60, -69),Point(33, 80, -31)},	// laptops table
+
+		// counter strike		
+		{Point(45, 61.3, -150),Point(59, 80, -106)},// right table
+		{Point(3, 61.3, -150),Point(16, 80, -106)}, // left table
+		{Point(22, 61.3, -150),Point(39, 80, -106)},// middle table
+		{Point(3, 61.3, -100),Point(30, 88, -80)},  // office
+
+		// mobile store
+		{Point(3, 61.3, -167),Point(30, 88, -147)},  // office
+		{Point(3, 61.3, -208),Point(18, 85, -175)},  // cabinet
 	};
 
 private:

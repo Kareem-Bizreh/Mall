@@ -1,11 +1,18 @@
 #pragma once
 #include "Texture.h"
+#include "Door.h"
 
 class ElectronicDepartment
 {
 public:
-	void draw(float x, float y, float z);
+	ElectronicDepartment();
+	ElectronicDepartment(float x, float y, float z);
+	void draw();
 	void loadTextures();
+	Door* techDoor = new Door{ Point(55.8, 61.3, -30.9), 0.0, false };
+	Door* csDoor = new Door{ Point(55.8, 61.3, -97.9), 0.0, false };
+	Door* mobileDoor = new Door{ Point(55.8, 61.3, -164.9), 0.0, false };
+	float doorAngle = 120;
 
 Texture 
 chip_text1,
@@ -268,7 +275,8 @@ USPTex;
 
 
 private:
-	void drawStructure(float x, float y, float z, int logo);
+	float x, y, z;
+	void drawStructure(float x, float y, float z, int logo, Door* door);
 	void drawTable(float x, float y, float z, float height, float length, float width);
 	void drawChair(float x, float y, float z, float angle = 0, float axisX = 0, float axisY = 0, float axisZ = 0);
 	void drawOffice(float x, float y, float z, int sticker, float angle = 0, float axisX = 0, float axisY = 0, float axisZ = 0);

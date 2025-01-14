@@ -26,6 +26,7 @@ struct color3f
 Point center = Point(0, -3, 0);
 Cafe cafe = Cafe(center);
 FurnitureStore furnitureStore;
+ElectronicDepartment electronicDepartment;
 Texture texture;
 Outside outside(texture);
 GLUquadric* quadric = gluNewQuadric();
@@ -44,7 +45,7 @@ bool g_mouse_left_down = false;
 bool g_mouse_right_down = false;
 
 // Movement settings
-const float g_translation_speed = 1;
+const float g_translation_speed = 3;
 const float g_rotation_speed = M_PI / 180 * 0.1;
 
 // light settings
