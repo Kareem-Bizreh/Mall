@@ -19,7 +19,7 @@
 
 class Outside {
 private:
-	Texture ground, mall_ground, side, right_door, left_door, mall_name, flag, stick, street, entry, platform, cafe_ad, market_ad, garage_street, sarot;
+	Texture ground, mall_ground, side, right_door, left_door, mall_name, flag, stick, street, entry, platform, cafe_ad, market_ad, garage_street, sarot,cafe_ad_o,market_ad_o;
 	Flag wavingFlag;
 	Lake lake;
 	SuperMarket superMarket;
@@ -31,11 +31,11 @@ private:
 	Audio mallMusic;
 	Model_3DS* tree;
 	Model_3DS* tank;
+	Door* doorMov = new Door{ Point(108 ,26 ,-15), 0.0, false };
 	void drawMarkets();
 	void drawLake();
 public:
 	Elevator elevator;
-	Door* doorMov = new Door{ Point(108 ,26 ,-15), 0.0, false };
 	std::vector <Door*> Doors{
 		cafe.doorMov,
 		restaurant.doorMov,
@@ -47,6 +47,10 @@ public:
 		electronicDepartment.techDoor,
 		electronicDepartment.csDoor,
 		electronicDepartment.mobileDoor
+	};
+
+	std::vector<Door*> AutoDoors{
+		doorMov
 	};
 
 	std::vector<Door*> elevatorDoors{

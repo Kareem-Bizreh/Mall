@@ -1,4 +1,4 @@
-#include <GL/glut.h>
+﻿#include <GL/glut.h>
 #include <bits/stdc++.h>
 #include "stb_image.h"
 #include "math3d.h"
@@ -47,6 +47,10 @@ bool g_mouse_right_down = false;
 // Movement settings
 const float g_translation_speed = 3;
 const float g_rotation_speed = M_PI / 180 * 0.1;
+const float elevator_speed = 0.4;
+const float elevator_door_speed = 0.1;
+const float door_speed = 0.04;
+const float auto_door_speed = 0.1;
 
 // light settings
 GLfloat LightPos[] = { -1.0f, 3.0f, 0.0f, 0.0f };
@@ -256,23 +260,62 @@ void keyboard(unsigned char key, int x, int y)
 void timer(int value)
 {
 	if (g_fps_mode) {
+		float newX, newY, newZ;
+		g_camera.GetPos(newX, newY, newZ); 
+
 		if (g_key['w']) {
-			g_camera.Move(g_translation_speed);
+			newZ -= g_translation_speed; // Move forward
 		}
 		else if (g_key['s']) {
-			g_camera.Move(-g_translation_speed);
+			newZ += g_translation_speed; // Move backward
 		}
 		if (g_key['a']) {
-			g_camera.Strafe(g_translation_speed);
+			newX -= g_translation_speed; // Strafe left
 		}
 		else if (g_key['d']) {
-			g_camera.Strafe(-g_translation_speed);
+			newX += g_translation_speed; // Strafe right
 		}
 		if (g_mouse_left_down) {
-			g_camera.Fly(-g_translation_speed);
+			newY -= g_translation_speed; // Fly down
 		}
 		else if (g_mouse_right_down) {
-			g_camera.Fly(g_translation_speed);
+			newY += g_translation_speed; // Fly up
+		}
+
+		bool canMove = true;
+		Point newPos = Point(newX, newY, newZ);
+
+		for (Door* door : outside.Doors) {
+			Point doorCenter = door->center;
+			double dist = sqrt((newPos.x - doorCenter.x) * (newPos.x - doorCenter.x) +
+				(newPos.y - doorCenter.y) * (newPos.y - doorCenter.y) +
+				(newPos.z - doorCenter.z) * (newPos.z - doorCenter.z));
+
+			if (dist <= 7 && !door->open) {
+				canMove = false;
+				break;
+			}
+		}
+
+		if (canMove) {
+			if (g_key['w']) {
+				g_camera.Move(g_translation_speed);
+			}
+			else if (g_key['s']) {
+				g_camera.Move(-g_translation_speed);
+			}
+			if (g_key['a']) {
+				g_camera.Strafe(g_translation_speed);
+			}
+			else if (g_key['d']) {
+				g_camera.Strafe(-g_translation_speed);
+			}
+			if (g_mouse_left_down) {
+				g_camera.Fly(-g_translation_speed);
+			}
+			else if (g_mouse_right_down) {
+				g_camera.Fly(g_translation_speed);
+			}
 		}
 	}
 
@@ -281,9 +324,10 @@ void timer(int value)
 		if (!outside.elevator.up)
 		{
 			if (outside.elevator.height > 0)
-				outside.elevator.height -= 0.4, g_camera.Fly(outside.elevator.in ? -0.4 : 0.0);
+				outside.elevator.height -= elevator_speed, g_camera.Fly(outside.elevator.in ? -elevator_speed : 0.0);
 			else
 			{
+				outside.elevator.height = 0;
 				outside.elevator.elevatorDoor->open = true;
 				outside.elevator.elevatorDoorDown->open = true;
 			}
@@ -291,9 +335,10 @@ void timer(int value)
 		if (outside.elevator.up)
 		{
 			if (outside.elevator.height < 50)
-				outside.elevator.height += 0.4, g_camera.Fly(outside.elevator.in ? 0.4 : 0.0);
+				outside.elevator.height += elevator_speed, g_camera.Fly(outside.elevator.in ? elevator_speed : 0.0);
 			else
 			{
+				outside.elevator.height = 50;
 				outside.elevator.elevatorDoor->open = true;
 				outside.elevator.elevatorDoorUp->open = true;
 			}
@@ -301,15 +346,19 @@ void timer(int value)
 	}
 	for (Door* door : outside.Doors) {
 		if (door->open && door->OpenRate < 1)
-			door->OpenRate += 0.04;
+			door->OpenRate += door_speed;
 		if (!door->open && door->OpenRate > 0)
-			door->OpenRate -= 0.04;
+			door->OpenRate -= door_speed;
+		door->OpenRate = max((double)0, door->OpenRate);
+		door->OpenRate = min((double)1, door->OpenRate);
 	}
 	for (Door* door : outside.elevatorDoors) {
 		if (door->open && door->OpenRate < 1)
-			door->OpenRate += 0.04;
+			door->OpenRate += elevator_door_speed;
 		if (!door->open && door->OpenRate > 0)
-			door->OpenRate -= 0.04;
+			door->OpenRate -= elevator_door_speed;
+		door->OpenRate = max((double)0, door->OpenRate);
+		door->OpenRate = min((double)1, door->OpenRate);
 	}
 	if (outside.elevator.elevatorDoor->OpenRate >= 1)
 		outside.elevator.in = false;
@@ -317,18 +366,21 @@ void timer(int value)
 	float x, y, z;
 	g_camera.GetPos(x, y, z);
 	Point playerPos = Point(x, y, z);
-	Point doorCenter = outside.doorMov->center;
-	double dist = sqrt((playerPos.x - doorCenter.x) * (playerPos.x - doorCenter.x) +
-		(playerPos.y - doorCenter.y) * (playerPos.y - doorCenter.y) +
-		(playerPos.z - doorCenter.z) * (playerPos.z - doorCenter.z));
-	if (dist <= 20 && outside.doorMov->OpenRate < 1)
-		outside.doorMov->OpenRate += 0.1;
-	if (dist > 20 && outside.doorMov->OpenRate > 0)
-		outside.doorMov->OpenRate -= 0.1;
+	for (Door* door : outside.AutoDoors)
+	{
+		Point doorCenter = door->center;
+		double dist = sqrt((playerPos.x - doorCenter.x) * (playerPos.x - doorCenter.x) +
+			(playerPos.y - doorCenter.y) * (playerPos.y - doorCenter.y) +
+			(playerPos.z - doorCenter.z) * (playerPos.z - doorCenter.z));
+		if (dist <= 20 && door->OpenRate < 1)
+			door->OpenRate += auto_door_speed;
+		if (dist > 20 && door->OpenRate > 0)
+			door->OpenRate -= auto_door_speed;
 
-	outside.doorMov->OpenRate = max((double)0, outside.doorMov->OpenRate);
-	outside.doorMov->OpenRate = min((double)1, outside.doorMov->OpenRate);
-	glutTimerFunc(1, timer, 0);	//call the timer again each 1 millisecond
+		door->OpenRate = max((double)0, door->OpenRate);
+		door->OpenRate = min((double)1, door->OpenRate);
+	}
+	glutTimerFunc(1000/3, timer, 0);	//call the timer again each 1 millisecond
 }
 
 void specialKeys(int key, int x, int y) {
@@ -372,7 +424,7 @@ void init()
 	menucreate();
 
 	//load textures here 
-	cafe.cafeTextures();
+	//cafe.cafeTextures();
 	//furnitureStore.loadTextures();
 	//outside.OutsideTextures();
 	outside.OutsideTextures();
