@@ -117,10 +117,10 @@ void Lake::drawLake()
 	float xOffset = waveAmplitude * cos((waveFrequency - 1) * time);
 	float zOffset = waveAmplitude * sin(waveFrequency * time);
 
-	Cuboid water(Point(25 + xOffset, yOffset - 2, -11.5 + zOffset), 8, 19, 44);
-	Cuboid water2(Point(25 + xOffset, yOffset - 2 , -36.5 + zOffset), 8, 19, 44);
-	Cuboid water3(Point(11.5 + xOffset,  yOffset - 2, -24+ zOffset), 8, 5.4, 19);
-	Cuboid water4(Point(37.5 + xOffset,  yOffset - 2, -24 + zOffset), 8, 5.4, 19);
+	Cuboid water(Point(25 + xOffset, yOffset - 1.5, -11.5 + zOffset), 8, 19, 44);
+	Cuboid water2(Point(25 + xOffset, yOffset - 1.5, -36.5 + zOffset), 8, 19, 44);
+	Cuboid water3(Point(11.5 + xOffset, yOffset - 1.5, -24 + zOffset), 8, 5.4, 19);
+	Cuboid water4(Point(37.5 + xOffset, yOffset - 1.5, -24 + zOffset), 8, 5.4, 19);
 
 	glColor3ub(84, 64, 63);
 
@@ -136,80 +136,8 @@ void Lake::drawLake()
 	water2.drawWithTexture(Water.textureID, 10, 2);
 	water3.drawWithTexture(Water.textureID, 6, 2);
 	water4.drawWithTexture(Water.textureID, 6, 2);
+	glColor3ub(255, 255, 255);
 
-	double curveRadius = 10.0;
-	double angleStep = 5.0;
-	double poleRadius = 0.5;
-	static double rotationAngle = 0.0;
-	int numRepetitions = 40;
-	double rotationStep = 360.0 / numRepetitions;
-	double flowOffset = 100.0;
-
-	Water.Use();
-
-	Point basePosition(26, 20, -25);
-
-	glPushMatrix();
-	glTranslated(basePosition.x, basePosition.y, basePosition.z);
-	glRotated(rotationAngle, 0, 1, 0);
-
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-	for (int i = 0; i < numRepetitions; ++i) {
-		glPushMatrix();
-		double currentRotation = i * rotationStep;
-		glRotated(currentRotation, 0, 1, 0);
-
-		Point currentPosition(0, 0.5, 0);
-
-		for (double angle = 90; angle <= 270; angle += angleStep) {
-			glPushMatrix();
-			glTranslated(currentPosition.x, currentPosition.y, currentPosition.z);
-			glRotated(-angle, 0, 0, 1);
-
-			gluQuadricTexture(quad, GL_TRUE);
-
-			double textureFlowV = flowOffset + (angle - 90) / 180.0;
-			double textureFlowU = i * 0.02;
-
-			glColor4f(1.0, 1.0, 1.0, 0.2);
-
-			glBegin(GL_QUADS);
-			glTexCoord2f(textureFlowU, textureFlowV);               glVertex3f(0, 0, 0);
-			glTexCoord2f(textureFlowU + 0.5, textureFlowV);         glVertex3f(poleRadius, 0, 0);
-			glTexCoord2f(textureFlowU + 0.5, textureFlowV + 0.5);   glVertex3f(poleRadius, 0, poleRadius);
-			glTexCoord2f(textureFlowU, textureFlowV + 0.5);         glVertex3f(0, 0, poleRadius);
-			glEnd();
-
-			gluCylinder(quad, poleRadius, poleRadius + 1, angleStep / 360.0 * curveRadius * 2 * M_PI, 32, 32);
-
-			glPopMatrix();
-
-			double angleNext = angle + angleStep;
-			currentPosition.y += curveRadius * (sin(toRadians(angleNext)) - sin(toRadians(angle)));
-			currentPosition.z += curveRadius * (cos(toRadians(angle)) - cos(toRadians(angleNext)));
-		}
-
-		glPopMatrix();
-	}
-
-	glPopMatrix();
-
-	glBindTexture(GL_TEXTURE_2D, 0);
-	glDisable(GL_TEXTURE_2D);
-	glColor4f(1.0, 1.0, 1.0, 1.0);
 	glDepthMask(GL_TRUE);
 	glDisable(GL_BLEND);
-
-	flowOffset -= 1.0;
-	if (flowOffset <= -50.0) {
-		flowOffset += 50.0;
-	}
-
-	rotationAngle += 1.0;
-	if (rotationAngle >= 360.0) {
-		rotationAngle -= 360.0;
-	}
-
 }

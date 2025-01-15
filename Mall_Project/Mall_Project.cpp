@@ -380,7 +380,7 @@ void timer(int value)
 		door->OpenRate = max((double)0, door->OpenRate);
 		door->OpenRate = min((double)1, door->OpenRate);
 	}
-	glutTimerFunc(1000/3, timer, 0);	//call the timer again each 1 millisecond
+	glutTimerFunc(1000/30, timer, 0);	//call the timer again each 1 millisecond
 }
 
 void specialKeys(int key, int x, int y) {
