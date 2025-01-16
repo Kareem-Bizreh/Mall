@@ -15,11 +15,7 @@ void Restaurant::draw()
 	Cuboid(Point(center.x + 8, center.y, center.z + 25), 50, 0.1, 84).drawWithTexture(wall.textureID, 10, 5);
 	Cuboid(Point(center.x - 42, center.y + 25, center.z + 25), 25, 0.1, 16).drawWithTexture(wall.textureID, 2, 3);
 	Cuboid(Point(center.x - 42, center.y + 30, center.z + 26), 10, 2, 11).drawWithTextureOnOneFace(logo.textureID, "front", 1, 1);
-	glPushMatrix();
-	glTranslated(center.x - 34, center.y, center.z + 25);
-	glRotated(180 - 150 * doorMov->OpenRate, 0, 1, 0);
-	Cuboid(Point(8, 0.05, 0), 25, 1, 16).drawWithTexture(door.textureID, 1, 1);
-	glPopMatrix();
+	//
 	Cuboid(Point(center.x + 15, center.y + 0.1, center.z + 7), 15, 36, 3).drawWithTexture(table.textureID, 8, 8);
 	glColor3f(0.7, 0.7, 0.7);
 	Cuboid(Point(center.x + 11, center.y + 10, center.z + 7), 1, 36, 5).drawWithTexture(table.textureID, 4, 4);
@@ -32,6 +28,15 @@ void Restaurant::draw()
 	glPopMatrix();
 	drawLights();
 	drawKitchen();
+}
+
+void Restaurant::drawDynamic()
+{
+	glPushMatrix();
+	glTranslated(center.x - 34, center.y, center.z + 25);
+	glRotated(180 - 150 * doorMov->OpenRate, 0, 1, 0);
+	Cuboid(Point(8, 0.05, 0), 25, 1, 16).drawWithTexture(door.textureID, 1, 1);
+	glPopMatrix();
 }
 
 void Restaurant::drawChair()

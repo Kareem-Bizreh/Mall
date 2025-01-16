@@ -35,6 +35,7 @@ int g_iHeight = 600;
 const float g_fNear = 1;
 const float g_fFar = 1000000000.0f;
 color3f g_background;
+GLuint displayListID;
 
 //camera variables
 Camera g_camera;
@@ -45,12 +46,12 @@ bool g_mouse_left_down = false;
 bool g_mouse_right_down = false;
 
 // Movement settings
-const float g_translation_speed = 0.75;
+const float g_translation_speed = 1.5;
 const float g_rotation_speed = M_PI / 180 * 0.1;
 const float elevator_speed = 0.4;
-const float elevator_door_speed = 0.1;
+const float elevator_door_speed = 0.05;
 const float door_speed = 0.04;
-const float auto_door_speed = 0.1;
+const float auto_door_speed = 0.08;
 
 // light settings
 GLfloat LightPos[] = { -1.0f, 3.0f, 0.0f, 0.0f };
@@ -168,9 +169,9 @@ void display()
 
 	//setupLighting();
 	//setupShadow();
-	//outside.draw();
-	//cafe.draw();
-	outside.draw();
+
+	outside.drawDynamic();
+	glCallList(displayListID);
 
 
 	glutSwapBuffers();
@@ -263,26 +264,26 @@ void timer(int value)
 
 	if (g_fps_mode) {
 
-			if (g_key['w']) {
-				g_camera.Move(g_translation_speed);
-			}
-			else if (g_key['s']) {
-				g_camera.Move(-g_translation_speed);
-			}
-			if (g_key['a']) {
-				g_camera.Strafe(g_translation_speed);
-			}
-			else if (g_key['d']) {
-				g_camera.Strafe(-g_translation_speed);
-			}
-			if (g_mouse_left_down) {
-				g_camera.Fly(-g_translation_speed);
-			}
-			else if (g_mouse_right_down) {
-				g_camera.Fly(g_translation_speed);
-			}
+		if (g_key['w']) {
+			g_camera.Move(g_translation_speed);
 		}
-	
+		else if (g_key['s']) {
+			g_camera.Move(-g_translation_speed);
+		}
+		if (g_key['a']) {
+			g_camera.Strafe(g_translation_speed);
+		}
+		else if (g_key['d']) {
+			g_camera.Strafe(-g_translation_speed);
+		}
+		if (g_mouse_left_down) {
+			g_camera.Fly(-g_translation_speed);
+		}
+		else if (g_mouse_right_down) {
+			g_camera.Fly(g_translation_speed);
+		}
+	}
+
 	if (outside.elevator.elevatorDoor->OpenRate <= 0)
 	{
 		if (!outside.elevator.up)
@@ -344,7 +345,7 @@ void timer(int value)
 		door->OpenRate = max((double)0, door->OpenRate);
 		door->OpenRate = min((double)1, door->OpenRate);
 	}
-	glutTimerFunc(1000/30, timer, 0);	//call the timer again each 1 millisecond
+	glutTimerFunc(1000 / 30, timer, 0);	//call the timer again each 1 millisecond
 }
 
 void specialKeys(int key, int x, int y) {
@@ -388,10 +389,16 @@ void init()
 	menucreate();
 
 	//load textures here 
-	//cafe.cafeTextures();
-	//furnitureStore.loadTextures();
-	//outside.OutsideTextures();
+
 	outside.OutsideTextures();
+
+	//display list
+	displayListID = glGenLists(1);
+	glNewList(displayListID, GL_COMPILE);
+
+	outside.drawStatic();
+
+	glEndList();
 
 	glClearColor(g_background.r, g_background.g, g_background.b, 1.0);
 	glClearDepth(1.0f);

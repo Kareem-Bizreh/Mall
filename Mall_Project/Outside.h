@@ -19,7 +19,7 @@
 
 class Outside {
 private:
-	Texture ground, mall_ground, side, right_door, left_door, mall_name, flag, stick, street, entry, platform, cafe_ad, market_ad, garage_street, sarot,cafe_ad_o,market_ad_o;
+	Texture ground, mall_ground, side, right_door, left_door, mall_name, flag, stick, street, entry, platform, cafe_ad, market_ad, garage_street, sarot, cafe_ad_o, market_ad_o;
 	Flag wavingFlag;
 	Lake lake;
 	SuperMarket superMarket;
@@ -62,7 +62,8 @@ public:
 	Outside(Texture flagTexture);
 	void OutsideTextures();
 	void drawStreetLight(Point baseCenter, double poleHeight, double poleRadius, double armLength, double verticalArmLength, double lampSize, bool isLeftSide);
-	void draw();
+	void drawStatic();
+	void drawDynamic();
 	void render3DModel(float x, float y, float z, float scale, Model_3DS* model);
 	void drawFence();
 };

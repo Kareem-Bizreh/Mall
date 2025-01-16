@@ -2,6 +2,52 @@
 
 void Elevator::draw()
 {
+	GLUquadric* quad = gluNewQuadric();
+
+	// elevator home
+	Cuboid(Point(-15.1, 0, 0), 75, 24, 0).drawWithTexture(elevator.textureID, 1, 1);
+	Cuboid(Point(15.1, 0, 0), 75, 24, 0).drawWithTexture(elevator.textureID, 1, 1);
+	Cuboid(Point(0, 75.1, 0), 0, 25, 31).drawWithTexture(elevator.textureID, 1, 1);
+	Cuboid(Point(0, 25 - 0.1, 12.22), 25.2, 0, 30).drawWithTexture(elevator.textureID, 1, 1);
+
+	// elevator down door
+	Cuboid(Point(12, 0, 12.22), 25, 0, 6).drawWithTexture(elevator.textureID, 1, 1);
+	Cuboid(Point(-12, 0, 12.22), 25, 0, 6).drawWithTexture(elevator.textureID, 1, 1);
+	Cuboid(Point(11, 12, 12.23), 3, 0, 1.5).drawWithTexture(elevatorDoorControl.textureID, 1, 1);
+
+	// elevator up door
+	Cuboid(Point(12, 50, 12.22), 25, 0, 6).drawWithTexture(elevator.textureID, 1, 1);
+	Cuboid(Point(-12, 50, 12.22), 25, 0, 6).drawWithTexture(elevator.textureID, 1, 1);
+	Cuboid(Point(11, 62, 12.23), 3, 0, 1.5).drawWithTexture(elevatorDoorControl.textureID, 1, 1);
+
+	// Columns
+	glColor3f(0.3, 0.3, 0.3);
+	glPushMatrix();
+	glTranslated(-15, 0, -12);
+	glRotated(-90, 1, 0, 0);
+	gluCylinder(quad, 1, 1, 100, 32, 32);
+	glPopMatrix();
+	glPushMatrix();
+	glTranslated(15, 0, -12);
+	glRotated(-90, 1, 0, 0);
+	gluCylinder(quad, 1, 1, 100, 32, 32);
+	glPopMatrix();
+	glPushMatrix();
+	glTranslated(-15, 0, 12);
+	glRotated(-90, 1, 0, 0);
+	gluCylinder(quad, 1, 1, 100, 32, 32);
+	glPopMatrix();
+	glPushMatrix();
+	glTranslated(15, 0, 12);
+	glRotated(-90, 1, 0, 0);
+	gluCylinder(quad, 1, 1, 100, 32, 32);
+	glPopMatrix();
+	glColor3f(1, 1, 1);
+	gluDeleteQuadric(quad);
+}
+
+void Elevator::drawDynamic()
+{
 	elevatorDoor->center.y = height + 24.5;
 	glColor3f(0.8, 0.8, 0.8);
 	glPushMatrix();
@@ -71,51 +117,14 @@ void Elevator::draw()
 	Cuboid(Point(4.5 + elevatorDoor->OpenRate * 6, 0, 12.1), 25, 0, 9).drawWithTexture(elevatorDoorR.textureID, 1, 1);
 	glPopMatrix();
 
-	// elevator hoom
-	Cuboid(Point(-15.1, 0, 0), 75, 24, 0).drawWithTexture(elevator.textureID, 1, 1);
-	Cuboid(Point(15.1, 0, 0), 75, 24, 0).drawWithTexture(elevator.textureID, 1, 1);
-	Cuboid(Point(0, 75.1, 0), 0, 25, 31).drawWithTexture(elevator.textureID, 1, 1);
-	Cuboid(Point(0, 25 - 0.1, 12.22), 25.2, 0, 30).drawWithTexture(elevator.textureID, 1, 1);
-
 	// elevator down door
-	Cuboid(Point(12, 0, 12.22), 25, 0, 6).drawWithTexture(elevator.textureID, 1, 1);
-	Cuboid(Point(-12, 0, 12.22), 25, 0, 6).drawWithTexture(elevator.textureID, 1, 1);
-	Cuboid(Point(11, 12, 12.23), 3, 0, 1.5).drawWithTexture(elevatorDoorControl.textureID, 1, 1);
-
 	Cuboid(Point(-4.5 - elevatorDoorDown->OpenRate * 6, 0, 12.2), 25, 0, 9).drawWithTexture(elevatorDoorL.textureID, 1, 1);
 	Cuboid(Point(4.5 + elevatorDoorDown->OpenRate * 6, 0, 12.2), 25, 0, 9).drawWithTexture(elevatorDoorR.textureID, 1, 1);
 
 	// elevator up door
-	Cuboid(Point(12, 50, 12.22), 25, 0, 6).drawWithTexture(elevator.textureID, 1, 1);
-	Cuboid(Point(-12, 50, 12.22), 25, 0, 6).drawWithTexture(elevator.textureID, 1, 1);
-	Cuboid(Point(11, 62, 12.23), 3, 0, 1.5).drawWithTexture(elevatorDoorControl.textureID, 1, 1);
-
 	Cuboid(Point(-4.5 - elevatorDoorUp->OpenRate * 6, 50, 12.2), 25, 0, 9).drawWithTexture(elevatorDoorL.textureID, 1, 1);
 	Cuboid(Point(4.5 + elevatorDoorUp->OpenRate * 6, 50, 12.2), 25, 0, 9).drawWithTexture(elevatorDoorR.textureID, 1, 1);
 
-	// Columns
-	glColor3f(0.3, 0.3, 0.3);
-	glPushMatrix();
-	glTranslated(-15, 0, -12);
-	glRotated(-90, 1, 0, 0);
-	gluCylinder(quad, 1, 1, 100, 32, 32);
-	glPopMatrix();
-	glPushMatrix();
-	glTranslated(15, 0, -12);
-	glRotated(-90, 1, 0, 0);
-	gluCylinder(quad, 1, 1, 100, 32, 32);
-	glPopMatrix();
-	glPushMatrix();
-	glTranslated(-15, 0, 12);
-	glRotated(-90, 1, 0, 0);
-	gluCylinder(quad, 1, 1, 100, 32, 32);
-	glPopMatrix();
-	glPushMatrix();
-	glTranslated(15, 0, 12);
-	glRotated(-90, 1, 0, 0);
-	gluCylinder(quad, 1, 1, 100, 32, 32);
-	glPopMatrix();
-	glColor3f(1, 1, 1);
 	gluDeleteQuadric(quad);
 }
 

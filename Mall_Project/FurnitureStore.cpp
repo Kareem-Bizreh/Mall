@@ -77,9 +77,7 @@ void FurnitureStore::drawDynamic(Point center) {
 	glPopMatrix();
 
 
-	//doors of furnitureMarket
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glEnable(GL_BLEND);
+	//doors of furnitureMar
 	glColor4ub(255, 255, 255, 200);
 	glPushMatrix();
 	glTranslated(center.x - 94, center.y + 0.1, center.z + 26);
@@ -94,8 +92,6 @@ void FurnitureStore::drawDynamic(Point center) {
 	glTranslated(-(center.x - 74.5), -(center.y + 0.1), -(center.z + 26));
 	Cuboid(Point(center.x - 79.5, center.y + 0.1, center.z + 25.5), 20, 1, 10).drawWithTexture(rightDoor.textureID, 1, 1);
 	glPopMatrix();
-
-	glDisable(GL_BLEND);
 }
 void FurnitureStore::drawStore(Point center) {
 
@@ -220,12 +216,10 @@ void FurnitureStore::drawStore(Point center) {
 	glPopMatrix();
 
 
-	//draw mirror
-	this->drawMirror(Point(center.x, center.y, center.z));
-
 	this->drawGround(center);
 
-	this->drawDynamic(center);
+	//draw mirror
+	this->drawMirror(Point(center.x, center.y, center.z));
 }
 
 void FurnitureStore::drawSeats(Point center) {
@@ -430,14 +424,10 @@ void FurnitureStore::drawGround(Point center) {
 
 	Cuboid(Point(center.x, center.y + 50.1, center.z), 1, 52, 202).drawWithTexture(wall.textureID, 12, 3);
 
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glEnable(GL_BLEND);
 	glColor4ub(255, 255, 255, 200);
 	//wall of doors
 	Cuboid(Point(center.x - 97.5, center.y + 0.1, center.z + 25.5), 20, 1, 7).drawWithTexture(leftWall.textureID, 1, 1);
 	Cuboid(Point(center.x - 71, center.y + 0.1, center.z + 25.5), 20, 1, 7).drawWithTexture(rightWall.textureID, 1, 1);
-
-	glDisable(GL_BLEND);
 }
 void FurnitureStore::drawShelves(Point center) {
 	glColor3ub(70, 70, 70);

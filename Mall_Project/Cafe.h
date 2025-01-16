@@ -12,6 +12,7 @@ public:
 	Door* doorMov = new Door{ Point(153.5 ,25 ,-23), 0.0, false };
 
 	void draw();
+	void drawDynamic();
 	void drawSideTable();
 	void drawChair();
 	void drawLight();

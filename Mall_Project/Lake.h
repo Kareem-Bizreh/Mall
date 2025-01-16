@@ -8,5 +8,6 @@ public:
 	void loadTextures();
 	void drawLake();
 	void drawParties();
+	void drawWater();
 	Texture lakeWall, floorLake, partie, Water, Cylinder;
 };

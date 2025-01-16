@@ -376,7 +376,6 @@ void ElectronicDepartment::draw()
 {
     // COMPUTER STORE-------COMPUTER STORE-------COMPUTER STORE-------COMPUTER STORE
 
-    drawDynamic();
     glPushMatrix();
     glTranslated(x - 67, y, z);
 

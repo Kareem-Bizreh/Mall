@@ -22,11 +22,6 @@ void Cafe::draw()
 	Cuboid(Point(center.x + 34, center.y + 30, center.z + 26), 10, 2, 11).drawWithTextureOnOneFace(logo.textureID, "front", 1, 1);
 
 	drawSideTable();
-	glPushMatrix();
-	glTranslated(center.x + 25.5, center.y, center.z + 25);
-	glRotated(150 * doorMov->OpenRate, 0, 1, 0);
-	Cuboid(Point(8.5, 0.05, 0), 25, 1, 17).drawWithTexture(door.textureID, 1, 1);
-	glPopMatrix();
 
 	Cuboid(Point(center.x + 6.5, center.y + 0.05, center.z + 13.5), 15, 22.99, 3).drawWithTexture(sideTable.textureID, 10, 10);
 	Cuboid(Point(center.x - 9, center.y + 0.05, center.z + 3.5), 15, 3, 28).drawWithTexture(sideTable.textureID, 10, 10);
@@ -35,6 +30,15 @@ void Cafe::draw()
 	drawCup(true);
 	glPopMatrix();
 	Cuboid(Point(center.x - 5, center.y + 0.1, center.z + 22.5), 25, 4.9, 17).drawWithTextureOnOneFace(fridge.textureID, "back", 1, 1);
+}
+
+void Cafe::drawDynamic()
+{
+	glPushMatrix();
+	glTranslated(center.x + 25.5, center.y, center.z + 25);
+	glRotated(150 * doorMov->OpenRate, 0, 1, 0);
+	Cuboid(Point(8.5, 0.05, 0), 25, 1, 17).drawWithTexture(door.textureID, 1, 1);
+	glPopMatrix();
 }
 
 void Cafe::drawSideTable()

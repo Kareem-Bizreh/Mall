@@ -8,10 +8,12 @@ void Outside::drawMarkets()
 	glRotated(-90, 0, 1, 0);
 	cafe.draw();
 	glPopMatrix();
+
 	glTranslated(0, 0, -42.5 - 7.6);
 	glColor3f(0.7, 0.7, 0.7);
 	Cuboid(Point(0, 0, 0), 50, 15, 50).draw();
 	glColor3f(1, 1, 1);
+
 	glPushMatrix();
 	glTranslated(0, 0, -42.5 - 15.1);
 	glRotated(-90, 0, 1, 0);
@@ -26,15 +28,15 @@ void Outside::drawMarkets()
 	glPopMatrix();
 
 	glPushMatrix();
-	glTranslated(178.5, 61.3, -106.1);
-	glRotated(-90, 0, 1, 0);
-	furnitureStore.drawStore(Point(0, 0, 0));
-	glPopMatrix();
-
-	glPushMatrix();
 	glTranslated(30.8, 61.3, -105.9);
 	glRotated(90, 0, 1, 0);
 	electronicDepartment.draw();
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslated(178.5, 61.3, -106.1);
+	glRotated(-90, 0, 1, 0);
+	furnitureStore.drawStore(Point(0, 0, 0));
 	glPopMatrix();
 }
 
@@ -42,10 +44,10 @@ void Outside::drawLake()
 {
 	glPushMatrix();
 	glTranslated(80, 11, -75);
-	lake.drawParties();
 	lake.drawLake();
 	glPopMatrix();
 }
+
 Outside::Outside(Texture texture)
 	: wavingFlag(Point(105, 135, -155), 200, 100, 0, 20, 30, flag, stick) {
 };
@@ -74,8 +76,8 @@ void Outside::OutsideTextures() {
 	tree->Load((char*)"models/Outside/tree1_3ds/Tree1.3ds");
 	garage_street.loadTexture("textures/Outside/street2.jpg");
 	sarot.loadTexture("textures/Outside/sarot.jpeg");
-	cafe_ad.loadTexture("textures/Outside/cafe_ad_O.jpeg");
-	market_ad.loadTexture("textures/Outside/market_ad_O.jpeg");
+	cafe_ad_o.loadTexture("textures/Outside/cafe_ad_O.jpeg");
+	market_ad_o.loadTexture("textures/Outside/market_ad_O.jpeg");
 	lake.loadTextures();
 	elevator.loadTextures();
 }
@@ -98,7 +100,7 @@ void Outside::render3DModel(float x, float y, float z, float scale, Model_3DS* m
 
 
 
-void Outside::draw() {
+void Outside::drawStatic() {
 	drawLake();
 	glPushMatrix();
 	garage.draw();
@@ -108,21 +110,16 @@ void Outside::draw() {
 	Cuboid Platform(Point(105, -1, -155), 2, 630, 370);
 	Platform.drawWithTexture(platform.textureID, 6, 6);
 	Cuboid Street(Point(62.5, 1, -495), 0.5, 50, 285);
-	Street.drawWithTexture(garage_street.textureID, 1, 1);
+	Street.drawWithTexture(garage_street.textureID, 5, 1);
 	Cuboid Main_Street(Point(-105, 1, -180), 0.5, 680, 50);
-	Main_Street.drawWithTexture(street.textureID, 1, 1);
+	Main_Street.drawWithTexture(street.textureID, 1, 10);
 	glPushMatrix();
 	glColor3f(0.5f, 0.5f, 0.5f);
 	Cuboid Top(Point(105, 113, -155), 0, 300, 200);
 	Top.drawWithTexture(mall_ground.textureID, 0, 0);
 	glColor3ub(255, 255, 255);
 	glPopMatrix();
-	Flag wavingFlag(Point(105, 163, -20.0), 20, 50, 40, 10, 30, flag, stick);
-	wavingFlag.setWaveProperties(0.1f, 2.0f, 1.0f);
-	glColor3ub(255, 255, 255);
-	glPushMatrix();
-	wavingFlag.drawWavingFlag();
-	glPopMatrix();
+
 	Cuboid stick(Point(85, 113.1, -20.0), 60, 5, 5);
 	stick.drawWithTexture(mall_ground.textureID, 1, 1);
 	Cuboid Bottom(Point(105, 10.1, -155), 0, 300, 200);
@@ -159,7 +156,7 @@ void Outside::draw() {
 
 	Cuboid Back(Point(105, 10, -305), 103, 0, 200);
 	Back.drawWithTexture(side.textureID, 1, 1);
-	Cuboid Sarot(Point(95, 20, -304.9), 50, 0, 50);
+	Cuboid Sarot(Point(120, 60, -304.9), 50, 0, 50);
 	Sarot.drawWithTexture(sarot.textureID, 1, 1);
 	Cuboid Mall_Name(Point(110, 67, -4.9), 46.1, 0, 68);
 	Mall_Name.drawWithTexture(mall_name.textureID, 1, 1);
@@ -174,17 +171,10 @@ void Outside::draw() {
 	Front_BL_Outside.drawWithTexture(cafe_ad.textureID, 1, 1);
 
 	Cuboid Front_BR_Inside(Point(46, 10, -5.1), 31, 0, 82);
-	Front_BR_Inside.drawWithTexture(market_ad.textureID, 1, 1);
+	Front_BR_Inside.drawWithTexture(market_ad_o.textureID, 1, 1);
 
 	Cuboid Front_BL_Inside(Point(165, 10, -5.1), 31, 0, 80);
-	Front_BL_Inside.drawWithTexture(cafe_ad.textureID, 1, 1);
-
-	Cuboid Right_Door(Point(97 - doorMov->OpenRate * 15, 10.2, -4.9), 31, 1, 20);
-	Right_Door.drawWithTexture(right_door.textureID, 1, 1);
-
-	Cuboid Left_Door(Point(117 + doorMov->OpenRate * 15, 10.2, -4.9), 31, 1, 20);
-	Left_Door.drawWithTexture(left_door.textureID, 1, 1);
-
+	Front_BL_Inside.drawWithTexture(cafe_ad_o.textureID, 1, 1);
 
 	Cuboid Stairs1(Point(105, 3, 10.1), -2.4, 10.1, 68);
 	Stairs1.drawWithTexture(mall_ground.textureID, 2, 2);
@@ -237,12 +227,12 @@ void Outside::draw() {
 	drawStreetLight(Point(Platform.center.x + 130, Platform.center.y, Platform.center.z - 50), 15.0f, 0.5f, 10.0f, 20.0f, 2.0f, true);
 
 	glPushMatrix();
-	glTranslated(22, 12, -290);
+	glTranslated(72, 12, -290);
 	glColor3f(0.7, 0.7, 0.7);
 	Cuboid(Point(0, -2.1, 0), 2, 28, 34).drawWithTexture(mall_ground.textureID, 1, 1);
 	elevator.draw();
 	glTranslated(0, 47.75, 50);
-	Cuboid(Point(0, 0.1, -1), 1.5, 72, 28).drawWithTexture(mall_ground.textureID, 2, 8);
+	Cuboid(Point(0, 1.6, -1), 0, 72, 28).drawWithTexture(mall_ground.textureID, 2, 8);
 	glColor3f(1, 1, 1);
 	glPopMatrix();
 
@@ -257,15 +247,92 @@ void Outside::draw() {
 
 	// draw glass for elevator
 	glPushMatrix();
-	glTranslated(22, 12, -290);
+	glTranslated(72, 12, -290);
 	glTranslated(0, 47.75, 50);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_BLEND);
 	glColor4ub(163, 163, 163, 182);
-	Cuboid(Point(13, 0.2, -1), 15, 72, 1).draw();
-	Cuboid(Point(-13, 0.2, -1), 15, 72, 1).draw();
+	Cuboid(Point(13, 1.7, -1), 13.5, 72, 1).draw();
+	Cuboid(Point(-13, 1.7, -1), 13.5, 72, 1).draw();
 	glColor3f(1, 1, 1);
 	glDisable(GL_BLEND);
+	glPopMatrix();
+
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable(GL_BLEND);
+	glColor4ub(163, 163, 163, 182);
+	glPushMatrix();
+	glTranslated(57, 59.75, -227);
+	glRotated(-90, 0, 1, 0);
+	Cuboid(Point(22, 1.9, -0.5), 13.3, 2, 1).draw();
+	glPopMatrix();
+	glColor3f(1, 1, 1);
+	glDisable(GL_BLEND);
+
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable(GL_BLEND);
+	glColor4ub(163, 163, 163, 182);
+	glPushMatrix();
+	glTranslated(105.5, 59.75, -227);
+	glRotated(-90, 0, 1, 0);
+	Cuboid(Point(22, 1.9, 0), 13.3, 41, 1).draw();
+	glPopMatrix();
+	glColor3f(1, 1, 1);
+	glDisable(GL_BLEND);
+}
+
+void Outside::drawDynamic()
+{
+	glPushMatrix();
+	glTranslated(80, 11, -75);
+	lake.drawWater();
+	glPopMatrix();
+
+	Flag wavingFlag(Point(105, 163, -20.0), 20, 50, 40, 10, 30, flag, stick);
+	wavingFlag.setWaveProperties(0.1f, 2.0f, 1.0f);
+	glColor3ub(255, 255, 255);
+	glPushMatrix();
+	wavingFlag.drawWavingFlag();
+	glPopMatrix();
+
+	Cuboid Right_Door(Point(97 - doorMov->OpenRate * 15, 10.2, -4.9), 31, 1, 20);
+	Right_Door.drawWithTexture(right_door.textureID, 1, 1);
+
+	Cuboid Left_Door(Point(117 + doorMov->OpenRate * 15, 10.2, -4.9), 31, 1, 20);
+	Left_Door.drawWithTexture(left_door.textureID, 1, 1);
+
+	glPushMatrix();
+	glTranslated(179, 10.3, -48);
+	glPushMatrix();
+	glRotated(-90, 0, 1, 0);
+	cafe.drawDynamic();
+	glPopMatrix();
+
+	glTranslated(0, 0, -42.5 - 7.6);
+
+	glPushMatrix();
+	glTranslated(0, 0, -42.5 - 15.1);
+	glRotated(-90, 0, 1, 0);
+	restaurant.drawDynamic();
+	glPopMatrix();
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslated(72, 12, -290);
+	elevator.drawDynamic();
+	glColor3f(1, 1, 1);
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslated(178.5, 61.3, -106.1);
+	glRotated(-90, 0, 1, 0);
+	furnitureStore.drawDynamic(Point(0, 0, 0));
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslated(30.8, 61.3, -105.9);
+	glRotated(90, 0, 1, 0);
+	electronicDepartment.drawDynamic();
 	glPopMatrix();
 }
 
@@ -297,7 +364,7 @@ void Outside::drawStreetLight(Point baseCenter, double poleHeight, double poleRa
 		glPushMatrix();
 		glTranslated(currentPosition.x, currentPosition.y + 40, currentPosition.z);
 		glRotated(curveDirection * angle, 0, 1, 0);
-		gluCylinder(quad, poleRadius + 0.4, poleRadius, angleStep / 360.0 * curveRadius * 2 * M_PI, 32, 32); 
+		gluCylinder(quad, poleRadius + 0.4, poleRadius, angleStep / 360.0 * curveRadius * 2 * M_PI, 32, 32);
 		glPopMatrix();
 
 		double angleNext = angle + angleStep;
@@ -397,32 +464,5 @@ void Outside::drawFence() {
 		verticalCuboid.draw();
 	}
 
-	Point cylinderPosition[2] = {
-		 {35.5 ,77,-203},
-		 {125.5 ,77,-203}
-	};
-
-	cylinderRadius = 1.0f;
-	cylinderHeight = 15.0f;
-
-	for (int i = 0; i < 2; i++) {
-		glColor3ub(128, 128, 128);
-		Cylinder().draw(cylinderPosition[i], cylinderRadius, cylinderRadius, cylinderHeight, 20, 20);
-
-		glColor3ub(70, 70, 70);
-		Point sphereCenter = { cylinderPosition[i].x, cylinderPosition[i].y, cylinderPosition[i].z };
-		drawSphere(sphereCenter, 2.0f);
-	}
-	{
-		double cuboidLength = fabs(cylinderPosition[0].x - cylinderPosition[1].x);
-		Point midpoint = {
-			(cylinderPosition[1].x + cylinderPosition[0].x) / 2,
-			cylinderPosition[1].y + cylinderHeight / 2 - 15,
-			cylinderPosition[1].z
-		};
-		glColor3ub(98, 98, 98);
-		Cuboid verticalCuboid(midpoint, cuboidHeight, cuboidWidth, cuboidLength);
-		verticalCuboid.draw();
-	}
 	glColor3ub(255, 255, 255);
 }
