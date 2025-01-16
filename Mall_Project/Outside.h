@@ -28,7 +28,6 @@ private:
 	Cafe cafe = Cafe(Point(0, 0, 0));
 	Restaurant restaurant = Restaurant(Point(0, 0, 0));
 	ElectronicDepartment electronicDepartment = ElectronicDepartment(0, 0, 0);
-	Audio mallMusic;
 	Model_3DS* tree;
 	Model_3DS* tank;
 	Door* doorMov = new Door{ Point(108 ,26 ,-15), 0.0, false };

@@ -29,6 +29,7 @@ FurnitureStore furnitureStore;
 ElectronicDepartment electronicDepartment;
 Texture texture;
 Outside outside(texture);
+Audio arrival_elevator,elevator_moving,open_door,close_door,Auto_door;
 GLUquadric* quadric = gluNewQuadric();
 int g_iWidth = 800;
 int g_iHeight = 600;
@@ -48,9 +49,9 @@ bool g_mouse_right_down = false;
 // Movement settings
 const float g_translation_speed = 1.5;
 const float g_rotation_speed = M_PI / 180 * 0.1;
-const float elevator_speed = 0.4;
+const float elevator_speed = 0.7;
 const float elevator_door_speed = 0.05;
-const float door_speed = 0.04;
+const float door_speed = 0.06;
 const float auto_door_speed = 0.08;
 
 // light settings
@@ -86,7 +87,7 @@ void timer(int value);
 void idle();
 void menucreate();
 void menufunction(int option);
-
+void loadAudios();
 //==================================================================================================================
 
 void setupLighting()
@@ -289,20 +290,31 @@ void timer(int value)
 		if (!outside.elevator.up)
 		{
 			if (outside.elevator.height > 0)
+			{
 				outside.elevator.height -= elevator_speed, g_camera.Fly(outside.elevator.in ? -elevator_speed : 0.0);
+				elevator_moving.playAudio();
+			}
 			else
 			{
+				elevator_moving.stopAudio();		
+				arrival_elevator.playAudio();
 				outside.elevator.height = 0;
 				outside.elevator.elevatorDoor->open = true;
 				outside.elevator.elevatorDoorDown->open = true;
+				
 			}
 		}
 		if (outside.elevator.up)
 		{
 			if (outside.elevator.height < 50)
+			{
 				outside.elevator.height += elevator_speed, g_camera.Fly(outside.elevator.in ? elevator_speed : 0.0);
+				elevator_moving.playAudio();
+			}
 			else
 			{
+				elevator_moving.stopAudio();
+				arrival_elevator.playAudio();
 				outside.elevator.height = 50;
 				outside.elevator.elevatorDoor->open = true;
 				outside.elevator.elevatorDoorUp->open = true;
@@ -311,9 +323,17 @@ void timer(int value)
 	}
 	for (Door* door : outside.Doors) {
 		if (door->open && door->OpenRate < 1)
+		{
 			door->OpenRate += door_speed;
+			open_door.playAudio();
+			close_door.stopAudio();
+		}
 		if (!door->open && door->OpenRate > 0)
+		{
 			door->OpenRate -= door_speed;
+			close_door.playAudio();
+			open_door.stopAudio();
+		}
 		door->OpenRate = max((double)0, door->OpenRate);
 		door->OpenRate = min((double)1, door->OpenRate);
 	}
@@ -338,10 +358,15 @@ void timer(int value)
 			(playerPos.y - doorCenter.y) * (playerPos.y - doorCenter.y) +
 			(playerPos.z - doorCenter.z) * (playerPos.z - doorCenter.z));
 		if (dist <= 20 && door->OpenRate < 1)
+		{
 			door->OpenRate += auto_door_speed;
+			Auto_door.playAudio();
+		}
 		if (dist > 20 && door->OpenRate > 0)
+		{
 			door->OpenRate -= auto_door_speed;
-
+			Auto_door.playAudio();
+		}
 		door->OpenRate = max((double)0, door->OpenRate);
 		door->OpenRate = min((double)1, door->OpenRate);
 	}
@@ -391,7 +416,7 @@ void init()
 	//load textures here 
 
 	outside.OutsideTextures();
-
+	loadAudios();
 	//display list
 	displayListID = glGenLists(1);
 	glNewList(displayListID, GL_COMPILE);
@@ -542,4 +567,12 @@ void menufunction(int option)
 	else if (option == 7)	//exit of application
 		exit(0);
 	glutPostRedisplay();
+}
+void loadAudios()
+{
+	arrival_elevator.loadAudio("audios/elevator_arrival.wav");
+	elevator_moving.loadAudio("audios/elevator_moving.wav");
+	open_door.loadAudio("audios/open_door.wav");
+	close_door.loadAudio("audios/close_door.wav");
+	Auto_door.loadAudio("audios/automatic_door.wav");
 }
