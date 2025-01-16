@@ -339,11 +339,44 @@ void ElectronicDepartment::loadTextures() {
     USPTex = USP_text.textureID;
 }
 
+void ElectronicDepartment::drawDynamic() {
+    // doors of computerMarket
+    glPushMatrix();
+    glTranslated(x - 67, y, z);
+    drawDoors(x, y, z, techDoor);
+    glPopMatrix();
 
+    // doors  of counter strike 
+    glPushMatrix();
+    glTranslated(x, y, z);
+    drawDoors(x, y, z, csDoor);
+    glPopMatrix();
+
+    // doors of phone store
+    glPushMatrix();
+    glTranslated(x + 67, y, z);
+    drawDoors(x, y, z, mobileDoor);
+    glPopMatrix();
+
+}
+void ElectronicDepartment::drawDoors(float x,float y,float z , Door* door) {
+    glPushMatrix();
+    glTranslated(x - 13, y, z + 25);
+    glRotated(doorAngle * -door->OpenRate, 0, 1, 0);
+    Cuboid(Point(-2.5, 0, 0), 20.5, 0.5, 5).drawWithTexture(rightDoorTex, 1, 1);                         // right door
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslated(x - 23, y, z + 25);
+    glRotated(doorAngle * door->OpenRate, 0, 1, 0);
+    Cuboid(Point(2.5, 0, 0), 20.5, 0.5, 5).drawWithTexture(leftDoorTex, 1, 1);                          // left door
+    glPopMatrix();
+}
 void ElectronicDepartment::draw()
 {
     // COMPUTER STORE-------COMPUTER STORE-------COMPUTER STORE-------COMPUTER STORE
 
+    drawDynamic();
     glPushMatrix();
     glTranslated(x - 67, y, z);
 
@@ -672,17 +705,17 @@ void ElectronicDepartment::drawStructure(float x, float y, float z, int logo, Do
     Cuboid(Point(x - 18, y + 20, z + 25.5), 30, thickness, 10).drawWithTextureOnOneFace(wallTex, "front", 1, 1);  // internal top part
 
     
-    glPushMatrix();
-    glTranslated(x - 13, y, z + 25);
-	glRotated(doorAngle * -door->OpenRate, 0, 1, 0);
-    Cuboid(Point(-2.5, 0, 0), 20.5, 0.5, 5).drawWithTexture(rightDoorTex, 1, 1);                         // right door
-    glPopMatrix();
+ //   glPushMatrix();
+ //   glTranslated(x - 13, y, z + 25);
+	//glRotated(doorAngle * -door->OpenRate, 0, 1, 0);
+ //   Cuboid(Point(-2.5, 0, 0), 20.5, 0.5, 5).drawWithTexture(rightDoorTex, 1, 1);                         // right door
+ //   glPopMatrix();
 
-    glPushMatrix();
-    glTranslated(x - 23, y, z + 25);
-    glRotated(doorAngle * door->OpenRate, 0, 1, 0);
-    Cuboid(Point(2.5, 0, 0), 20.5, 0.5, 5).drawWithTexture(leftDoorTex, 1, 1);                          // left door
-    glPopMatrix();
+ //   glPushMatrix();
+ //   glTranslated(x - 23, y, z + 25);
+ //   glRotated(doorAngle * door->OpenRate, 0, 1, 0);
+ //   Cuboid(Point(2.5, 0, 0), 20.5, 0.5, 5).drawWithTexture(leftDoorTex, 1, 1);                          // left door
+ //   glPopMatrix();
 }
 
 void ElectronicDepartment::drawTable(float x, float y, float z, float height, float length, float width)

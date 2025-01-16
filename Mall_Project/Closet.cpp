@@ -26,6 +26,8 @@ void Closet::draw(Point center) {
 	//roof 
 	Cuboid(Point(center.x, center.y + 7.5, center.z + 3.4), 0.2, 6.8, 10).drawWithTexture(wood.textureID, 2, 2);
 
+}
+void Closet::drawDynamic(Point center) {
 
 	//right door
 	glPushMatrix();

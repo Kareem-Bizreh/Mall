@@ -30,6 +30,7 @@ private:
 	void drawDiningTable2(Point center);
 public:
 	FurnitureStore();
+	void drawDynamic(Point center);
 	void moveDrawer(float offset);
 	void drawStore(Point center);
 	void loadTextures();

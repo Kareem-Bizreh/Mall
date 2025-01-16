@@ -9,6 +9,7 @@ public:
 	float leftDoorAngle = 120.0f;
 	Texture rightDoor, leftDoor, wood;
 	void draw(Point center);
+	void drawDynamic(Point center);
 	void openDoors(float angle);
 	void closeDoors(float angle);
 	Door* closetMov;

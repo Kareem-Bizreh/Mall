@@ -7,7 +7,9 @@ class ElectronicDepartment
 public:
 	ElectronicDepartment();
 	ElectronicDepartment(float x, float y, float z);
+	void drawDynamic();
 	void draw();
+	void drawDoors(float x,float y,float z, Door* door);
 	void loadTextures();
 	Door* techDoor = new Door{ Point(55.8, 61.3, -30.9), 0.0, false };
 	Door* csDoor = new Door{ Point(55.8, 61.3, -97.9), 0.0, false };

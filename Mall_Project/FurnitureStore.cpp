@@ -38,6 +38,65 @@ void FurnitureStore::loadTextures() {
 	woodChair2.loadTexture("textures\\FurnitureStore\\wood4.jpg");
 	woodTable2.loadTexture("textures\\FurnitureStore\\wood5.jpg");
 }
+void FurnitureStore::drawDynamic(Point center) {
+
+	//closets
+	glPushMatrix();
+	glTranslated(center.x + 99.5, center.y + 1.5, center.z + 15);
+	glRotated(-90, 0, 1, 0);
+	glScaled(1.5, 2, 1);
+	closet1.drawDynamic(Point(0, 0, 0));
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslated(center.x + 99.5, center.y + 1.5, center.z - 10);
+	glRotated(-90, 0, 1, 0);
+	glScaled(1.5, 2, 1);
+	closet2.drawDynamic(Point(0, 0, 0));
+	glPopMatrix();
+
+	//drawer bed
+	glPushMatrix();
+	glTranslated(center.x + 65, center.y + 1.2, center.z - 22.5);
+	glScaled(0.8, 0.8, 0.8);
+
+	glTranslated(0, 0, drawer2Offset * drawerMov2->OpenRate);
+	Cuboid(Point(center.x, center.y + 5.25, center.z - 0.25), 0.5, 4.75, 10).drawWithTexture(woodTable.textureID, 1, 2);
+	Cuboid(Point(center.x - 4.75, center.y + 5.75, center.z - 0.25), 4.25, 4.5, 0.5).drawWithTexture(woodTable.textureID, 1, 2);
+	Cuboid(Point(center.x + 4.75, center.y + 5.75, center.z - 0.25), 4.25, 4.5, 0.5).drawWithTexture(woodTable.textureID, 1, 2);
+	Cuboid(Point(center.x, center.y + 5.25, center.z - 2.25), 4.5, 0.5, 10).drawWithTexture(woodTable.textureID, 1, 1);
+	Cuboid(Point(center.x, center.y + 5.75, center.z + 2.25), 4.25, 0.5, 10).drawWithTexture(drawer.textureID, 1, 1);
+	glPopMatrix();
+
+
+	//drawer office
+	glPushMatrix();
+	glTranslated(center.x - 92.5, center.y + 4, center.z - 13.9);
+	glScaled(0.5, 0.5, 0.5);
+	this->drawDrawer(Point(0, 0, 0));
+	glPopMatrix();
+
+
+	//doors of furnitureMarket
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable(GL_BLEND);
+	glColor4ub(255, 255, 255, 200);
+	glPushMatrix();
+	glTranslated(center.x - 94, center.y + 0.1, center.z + 26);
+	glRotated(leftDoorAngle * doorMov->OpenRate, 0, 1, 0);
+	glTranslated(-(center.x - 94), -(center.y + 0.1), -(center.z + 26));
+	Cuboid(Point(center.x - 89, center.y + 0.1, center.z + 25.5), 20, 1, 10).drawWithTexture(leftDoor.textureID, 1, 1);
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslated(center.x - 74.5, center.y + 0.1, center.z + 26);
+	glRotated(-doorMov->OpenRate * rightDoorAngle, 0, 1, 0);
+	glTranslated(-(center.x - 74.5), -(center.y + 0.1), -(center.z + 26));
+	Cuboid(Point(center.x - 79.5, center.y + 0.1, center.z + 25.5), 20, 1, 10).drawWithTexture(rightDoor.textureID, 1, 1);
+	glPopMatrix();
+
+	glDisable(GL_BLEND);
+}
 void FurnitureStore::drawStore(Point center) {
 
 	//darw shelves 
@@ -113,12 +172,6 @@ void FurnitureStore::drawStore(Point center) {
 	this->drawDoubleBed(Point(0, 0, 0));
 	glPopMatrix();
 
-	//glPushMatrix();
-	//glTranslated(center.x, center.y + 4, center.z + 5);
-	////glRotated(90, 0, 1, 0);
-	//this->drawDoubleBed(Point(0, 0, 0));
-	//glPopMatrix();
-
 	//sofa
 	glPushMatrix();
 	glTranslated(center.x + 40, center.y + 3.1, center.z - 8);
@@ -146,13 +199,6 @@ void FurnitureStore::drawStore(Point center) {
 	this->drawCircularTable(Point(center.x + 24, center.y + 1.5, center.z - 8.5));
 	glPopMatrix();
 
-	//this->drawCarpet(Point(center.x, center.y + 4, center.z));
-
-	//glPushMatrix();
-	//glScaled(1.5, 1.5, 2);
-	//this->drawDiningTable(Point(center.x - 10, center.y, center.z));
-	//glPopMatrix();
-
 	//office
 	glPushMatrix();
 	glTranslated(center.x - 85, center.y + 0.1, center.z - 10);
@@ -166,11 +212,6 @@ void FurnitureStore::drawStore(Point center) {
 	this->drawMonitor(Point(0, 0, 0));
 	glPopMatrix();
 
-	glPushMatrix();
-	glTranslated(center.x - 92.5, center.y + 4, center.z - 13.9);
-	glScaled(0.5, 0.5, 0.5);
-	this->drawDrawer(Point(0, 0, 0));
-	glPopMatrix();
 
 	glPushMatrix();
 	glTranslated(center.x - 85, center.y + 0.1, center.z - 21);
@@ -183,6 +224,8 @@ void FurnitureStore::drawStore(Point center) {
 	this->drawMirror(Point(center.x, center.y, center.z));
 
 	this->drawGround(center);
+
+	this->drawDynamic(center);
 }
 
 void FurnitureStore::drawSeats(Point center) {
@@ -390,21 +433,6 @@ void FurnitureStore::drawGround(Point center) {
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_BLEND);
 	glColor4ub(255, 255, 255, 200);
-	//doors
-	glPushMatrix();
-	glTranslated(center.x - 94, center.y + 0.1, center.z + 26);
-	glRotated(leftDoorAngle * doorMov->OpenRate, 0, 1, 0);
-	glTranslated(-(center.x - 94), -(center.y + 0.1), -(center.z + 26));
-	Cuboid(Point(center.x - 89, center.y + 0.1, center.z + 25.5), 20, 1, 10).drawWithTexture(leftDoor.textureID, 1, 1);
-	glPopMatrix();
-
-	glPushMatrix();
-	glTranslated(center.x - 74.5, center.y + 0.1, center.z + 26);
-	glRotated(-doorMov->OpenRate * rightDoorAngle, 0, 1, 0);
-	glTranslated(-(center.x - 74.5), -(center.y + 0.1), -(center.z + 26));
-	Cuboid(Point(center.x - 79.5, center.y + 0.1, center.z + 25.5), 20, 1, 10).drawWithTexture(rightDoor.textureID, 1, 1);
-	glPopMatrix();
-
 	//wall of doors
 	Cuboid(Point(center.x - 97.5, center.y + 0.1, center.z + 25.5), 20, 1, 7).drawWithTexture(leftWall.textureID, 1, 1);
 	Cuboid(Point(center.x - 71, center.y + 0.1, center.z + 25.5), 20, 1, 7).drawWithTexture(rightWall.textureID, 1, 1);
@@ -737,15 +765,6 @@ void FurnitureStore::drawDrawers(Point center) {
 	Cuboid(Point(center.x - 4.75, center.y + 0.5, center.z - 0.25), 5, 4.5, 0.5).drawWithTexture(woodTable.textureID, 1, 2);
 	Cuboid(Point(center.x + 4.75, center.y + 0.5, center.z - 0.25), 5, 4.5, 0.5).drawWithTexture(woodTable.textureID, 1, 2);
 	Cuboid(Point(center.x, center.y + 0.5, center.z + 2.25), 5, 0.5, 10).drawWithTexture(drawer.textureID, 1, 1);
-
-	glPushMatrix();
-	glTranslated(0, 0, drawer2Offset * drawerMov2->OpenRate);
-	Cuboid(Point(center.x, center.y + 5.25, center.z - 0.25), 0.5, 4.75, 10).drawWithTexture(woodTable.textureID, 1, 2);
-	Cuboid(Point(center.x - 4.75, center.y + 5.75, center.z - 0.25), 4.25, 4.5, 0.5).drawWithTexture(woodTable.textureID, 1, 2);
-	Cuboid(Point(center.x + 4.75, center.y + 5.75, center.z - 0.25), 4.25, 4.5, 0.5).drawWithTexture(woodTable.textureID, 1, 2);
-	Cuboid(Point(center.x, center.y + 5.25, center.z - 2.25), 4.5, 0.5, 10).drawWithTexture(woodTable.textureID, 1, 1);
-	Cuboid(Point(center.x, center.y + 5.75, center.z + 2.25), 4.25, 0.5, 10).drawWithTexture(drawer.textureID, 1, 1);
-	glPopMatrix();
 }
 void FurnitureStore::drawDoubleBed(Point center) {
 	//first bed base
