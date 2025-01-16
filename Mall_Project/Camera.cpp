@@ -41,7 +41,24 @@ bool Camera::CheckCollision(const Point& newPos) {
 	}
 	return false; // لا يوجد تصادم
 }
-
+bool Camera::CheckDoorCollision(const Point& newPos) {
+	if (newPos.x > doorWalls[0].min.x && newPos.x < doorWalls[0].max.x &&
+		newPos.y > doorWalls[0].min.y && newPos.y < doorWalls[0].max.y &&
+		newPos.z > doorWalls[0].min.z && newPos.z < doorWalls[0].max.z && !Doors[0]->open) {
+		return true; // تصادم مع جدار
+	}
+	if (newPos.x > doorWalls[1].min.x && newPos.x < doorWalls[1].max.x &&
+		newPos.y > doorWalls[1].min.y && newPos.y < doorWalls[1].max.y &&
+		newPos.z > doorWalls[1].min.z && newPos.z < doorWalls[1].max.z && !Doors[1]->open) {
+		return true; // تصادم مع جدار
+	}
+	if (newPos.x > doorWalls[2].min.x && newPos.x < doorWalls[2].max.x &&
+		newPos.y > doorWalls[2].min.y && newPos.y < doorWalls[2].max.y &&
+		newPos.z > doorWalls[2].min.z && newPos.z < doorWalls[2].max.z && !Doors[2]->open) {
+		return true; // تصادم مع جدار
+	}
+	return false; // لا يوجد اصطدام
+}
 //to place a position of the camera
 void Camera::SetPos(float x, float y, float z)
 {
@@ -69,45 +86,46 @@ void Camera::GetDirectionVector(float& x, float& y, float& z)
 }
 
 //move the camera position
-void Camera::Move(float incr)
-{
+void Camera::Move(float incr) {
 	float lx = cos(m_yaw) * cos(m_pitch);
 	float ly = sin(m_pitch);
 	float lz = sin(m_yaw) * cos(m_pitch);
 
 	Point newPos(m_x + incr * lx, m_y + incr * ly, m_z + incr * lz);
 
-	if (!CheckCollision(newPos)) {
+	// التحقق من الاصطدام مع الجدران والأبواب
+	if (!CheckCollision(newPos) && !CheckDoorCollision(newPos)) {
 		m_x = newPos.x;
 		m_y = newPos.y;
 		m_z = newPos.z;
 	}
-
-	std::cout << "x = " << m_x << " , " << " y = " << m_y << " , " << " z = " << m_z << std::endl;
+	std::cout << "x = " << m_x << " " << " y = " << m_y << " " << " z = " << m_z << std::endl;
 	Refresh();
 }
 
-//"strafe" the camera position
-void Camera::Strafe(float incr)
-{
+void Camera::Strafe(float incr) {
 	float newX = m_x + incr * m_strafe_lx;
 	float newZ = m_z + incr * m_strafe_lz;
 
-	// إنشاء كائن Point للموقع الجديد
 	Point newPos(newX, m_y, newZ);
 
-	// التحقق من التصادم قبل التحرك
-	if (!CheckCollision(newPos)) {
+	// التحقق من الاصطدام مع الجدران والأبواب
+	if (!CheckCollision(newPos) && !CheckDoorCollision(newPos)) {
 		m_x = newX;
 		m_z = newZ;
 	}
+
+	std::cout << "x = " << m_x << " " << " y = " << m_y << " " << " z = " << m_z << std::endl;
+
+
+	Refresh();
 }
 
-void Camera::Fly(float incr)
-{
+void Camera::Fly(float incr) {
 	Point newPos(m_x, m_y + incr, m_z);
 
-	if (!CheckCollision(newPos)) {
+	// التحقق من الاصطدام مع الجدران والأبواب
+	if (!CheckCollision(newPos) && !CheckDoorCollision(newPos)) {
 		m_y = newPos.y;
 	}
 
