@@ -27,6 +27,9 @@ void Lake::drawParties()
 	upParties.drawWithTexture(partie.textureID, 1, 1);
 }
 
+inline double toRadians(double degrees) {
+	return degrees * M_PI / 180.0;
+}
 void Lake::drawLake()
 {
 	GLUquadric* quad = gluNewQuadric();
@@ -106,18 +109,18 @@ void Lake::drawLake()
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glPopMatrix();
 
-	float time = glutGet(GLUT_ELAPSED_TIME) / 1000.0f; 
-	float waveAmplitude = 0.5f;                       
-	float waveFrequency = 1.5f;                      
+	float time = glutGet(GLUT_ELAPSED_TIME) / 1000.0f;
+	float waveAmplitude = 0.5f;
+	float waveFrequency = 1.5f;
 
-	float yOffset = waveAmplitude * sin(waveFrequency * time); 
-	float xOffset = waveAmplitude * cos((waveFrequency-1) * time); 
+	float yOffset = waveAmplitude * sin(waveFrequency * time);
+	float xOffset = waveAmplitude * cos((waveFrequency - 1) * time);
 	float zOffset = waveAmplitude * sin(waveFrequency * time);
 
-	Cuboid water(Point(25+xOffset, 0.2+yOffset , -12.5 + zOffset), 5, 19, 44);
-	Cuboid water2(Point(25+xOffset, 0.2 + yOffset, -37.5 + zOffset), 5, 19, 44);
-	Cuboid water3(Point(12.5 + xOffset, 0.2 + yOffset, -25 + zOffset), 5, 5.4, 19);
-	Cuboid water4(Point(37.5 + xOffset, 0.2 + yOffset, -25+zOffset), 5, 5.4, 19);
+	Cuboid water(Point(25 + xOffset, yOffset - 1.5, -11.5 + zOffset), 8, 19, 44);
+	Cuboid water2(Point(25 + xOffset, yOffset - 1.5, -36.5 + zOffset), 8, 19, 44);
+	Cuboid water3(Point(11.5 + xOffset, yOffset - 1.5, -24 + zOffset), 8, 5.4, 19);
+	Cuboid water4(Point(37.5 + xOffset, yOffset - 1.5, -24 + zOffset), 8, 5.4, 19);
 
 	glColor3ub(84, 64, 63);
 
@@ -133,33 +136,7 @@ void Lake::drawLake()
 	water2.drawWithTexture(Water.textureID, 10, 2);
 	water3.drawWithTexture(Water.textureID, 6, 2);
 	water4.drawWithTexture(Water.textureID, 6, 2);
-
-	glDepthMask(GL_TRUE);
-
-	glDisable(GL_BLEND);
-
-	 time = glutGet(GLUT_ELAPSED_TIME) / 1000.0f; 
-	float cycleTime = fmod(time, 1.0f);               
-
-	 yOffset = 12.0f - (15.0f * cycleTime); 
-
-	
-	Cuboid water_R(Point(26 + 5, yOffset, -25), 10, 1, 1);   
-	Cuboid water_L(Point(24 - 5, yOffset, -25), 10, 1, 1);  
-	Cuboid water_F(Point(25, yOffset, -26 - 5), 10, 1, 1);  
-	Cuboid water_B(Point(25, yOffset, -24 + 5), 10, 1, 1);   
-
-	
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glDepthMask(GL_FALSE);
-
-	glColor4f(1.0f, 1.0f, 1.0f, 0.5f);
-
-	water_R.drawWithTexture(Water.textureID, 1, 1);
-	water_L.drawWithTexture(Water.textureID, 1, 1);
-	water_F.drawWithTexture(Water.textureID, 1, 1);
-	water_B.drawWithTexture(Water.textureID, 1, 1);
+	glColor3ub(255, 255, 255);
 
 	glDepthMask(GL_TRUE);
 	glDisable(GL_BLEND);

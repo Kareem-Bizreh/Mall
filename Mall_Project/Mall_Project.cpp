@@ -26,6 +26,7 @@ struct color3f
 Point center = Point(0, -3, 0);
 Cafe cafe = Cafe(center);
 FurnitureStore furnitureStore;
+ElectronicDepartment electronicDepartment;
 Texture texture;
 Outside outside(texture);
 GLUquadric* quadric = gluNewQuadric();
@@ -44,7 +45,11 @@ bool g_mouse_left_down = false;
 bool g_mouse_right_down = false;
 
 // Movement settings
+<<<<<<< HEAD
 const float g_translation_speed = 0.75;
+=======
+const float g_translation_speed = 3;
+>>>>>>> efd234eedea1e767b7e23dc5b5576141386732d7
 const float g_rotation_speed = M_PI / 180 * 0.1;
 const float elevator_speed = 0.4;
 const float elevator_door_speed = 0.1;
@@ -343,7 +348,7 @@ void timer(int value)
 		door->OpenRate = max((double)0, door->OpenRate);
 		door->OpenRate = min((double)1, door->OpenRate);
 	}
-	glutTimerFunc(1, timer, 0);	//call the timer again each 1 millisecond
+	glutTimerFunc(1000/30, timer, 0);	//call the timer again each 1 millisecond
 }
 
 void specialKeys(int key, int x, int y) {
