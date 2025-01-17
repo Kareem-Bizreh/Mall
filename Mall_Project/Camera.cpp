@@ -57,16 +57,6 @@ bool Camera::CheckDoorCollision(const Point& newPos) {
 		newPos.z > doorWalls[2].min.z && newPos.z < doorWalls[2].max.z && !Doors[2]->open) {
 		return true; // تصادم مع جدار
 	}
-	if (newPos.x > doorWalls[3].min.x && newPos.x < doorWalls[3].max.x &&
-		newPos.y > doorWalls[3].min.y && newPos.y < doorWalls[3].max.y &&
-		newPos.z > doorWalls[3].min.z && newPos.z < doorWalls[3].max.z && !ElevetorDoors[1]->open) {
-		return true; // تصادم مع جدار
-	}
-	if (newPos.x > doorWalls[4].min.x && newPos.x < doorWalls[4].max.x &&
-		newPos.y > doorWalls[4].min.y && newPos.y < doorWalls[4].max.y &&
-		newPos.z > doorWalls[4].min.z && newPos.z < doorWalls[4].max.z && !ElevetorDoors[2]->open) {
-		return true; // تصادم مع جدار
-	}
 	if (newPos.x > doorWalls[5].min.x && newPos.x < doorWalls[5].max.x &&
 		newPos.y > doorWalls[5].min.y && newPos.y < doorWalls[5].max.y &&
 		newPos.z > doorWalls[5].min.z && newPos.z < doorWalls[5].max.z && !Doors[9]->open) {
