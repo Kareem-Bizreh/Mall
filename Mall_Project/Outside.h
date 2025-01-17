@@ -16,6 +16,7 @@
 #include "Cylinder.h"
 #include "Elevator.h"
 #include "ElectronicDepartment.h"
+#include "Fountain.h"
 
 class Outside {
 private:
@@ -29,7 +30,6 @@ private:
 	Cafe cafe = Cafe(Point(0, 0, 0));
 	Restaurant restaurant = Restaurant(Point(0, 0, 0));
 	ElectronicDepartment electronicDepartment = ElectronicDepartment(0, 0, 0);
-	Audio mallMusic;
 	Model_3DS* tree;
 	Model_3DS* tank;
 	Model_3DS* fence;
@@ -38,6 +38,8 @@ private:
 	void drawMarkets();
 	void drawLake();
 public:
+	Audio arrival_elevator, elevator_moving, open_door, close_door, Auto_door;
+	Fountain fountain;
 	Elevator elevator;
 	std::vector <Door*> Doors{
 		cafe.doorMov,
@@ -64,6 +66,7 @@ public:
 
 	Outside(Texture flagTexture);
 	void OutsideTextures();
+	void loadAudios();
 	void drawStreetLight(Point baseCenter, double poleHeight, double poleRadius, double armLength, double verticalArmLength, double lampSize, bool isLeftSide);
 	void drawStatic();
 	void drawDynamic();
@@ -71,4 +74,5 @@ public:
 	void drawFence();
 	void drawFencesOnSideWalk();
 	void drawStreets();
+	void drawFountain(const float WATER_COLOR[]);
 };

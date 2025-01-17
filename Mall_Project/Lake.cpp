@@ -30,37 +30,32 @@ void Lake::drawParties()
 void Lake::drawWater()
 {
 	float time = glutGet(GLUT_ELAPSED_TIME) / 1000.0f;
-	float waveAmplitude = 0.5f;
-	float waveFrequency = 1.5f;
+	float waveAmplitude = 0.8f;
+	float waveFrequency = 2.0f;
 
 	float yOffset = waveAmplitude * sin(waveFrequency * time);
-	float xOffset = waveAmplitude * cos((waveFrequency - 1) * time);
-	float zOffset = waveAmplitude * sin(waveFrequency * time);
+	float xOffset = 0;// waveAmplitude* cos((waveFrequency - 1) * time);
+	float zOffset = 0;//waveAmplitude * sin(waveFrequency * time);
 
-	Cuboid water(Point(25 + xOffset, yOffset - 1.5, -11.5 + zOffset), 8, 19, 44);
+	Cuboid water(Point(25 + xOffset, yOffset - 0.2, -25 + zOffset), 8, 50, 50);
 	Cuboid water2(Point(25 + xOffset, yOffset - 1.5, -36.5 + zOffset), 8, 19, 44);
 	Cuboid water3(Point(11.5 + xOffset, yOffset - 1.5, -24 + zOffset), 8, 5.4, 19);
 	Cuboid water4(Point(37.5 + xOffset, yOffset - 1.5, -24 + zOffset), 8, 5.4, 19);
 
-	glColor3ub(84, 64, 63);
-
-
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	//glEnable(GL_BLEND);
+	glColor4ub(255, 255, 255, 182);
 
 	//glDepthMask(GL_FALSE);
 
-	glColor4f(1.0f, 1.0f, 1.0f, 0.5f);
 
-	water.drawWithTexture(Water.textureID, 10, 2);
-	water2.drawWithTexture(Water.textureID, 10, 2);
+	water.drawWithTexture(Water.textureID, 1, 1);
+	/*water2.drawWithTexture(Water.textureID, 10, 2);
 	water3.drawWithTexture(Water.textureID, 6, 2);
-	water4.drawWithTexture(Water.textureID, 6, 2);
-	glColor3ub(255, 255, 255);
+	water4.drawWithTexture(Water.textureID, 6, 2);*/
 
 	//glDepthMask(GL_TRUE);
-	glDisable(GL_BLEND);
-	glColor3f(1, 1, 1);
+	//glDisable(GL_BLEND);
 }
 
 inline double toRadians(double degrees) {

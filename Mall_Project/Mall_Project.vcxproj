@@ -136,6 +136,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Study\Study\Fountain.cpp" />
     <ClCompile Include="Audio.cpp" />
     <ClCompile Include="Cafe.cpp" />
     <ClCompile Include="Camera.cpp" />
@@ -148,6 +149,7 @@
     <ClCompile Include="FurnitureStore.cpp" />
     <ClCompile Include="Garage.cpp" />
     <ClCompile Include="Lake.cpp" />
+    <ClCompile Include="Lighting.cpp" />
     <ClCompile Include="Mall_Project.cpp" />
     <ClCompile Include="math3d.cpp" />
     <ClCompile Include="Model_3DS.cpp" />
@@ -163,6 +165,8 @@
     <ClCompile Include="Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Study\Study\Fountain.h" />
+    <ClInclude Include="..\..\Study\Study\Vector3.hpp" />
     <ClInclude Include="Audio.h" />
     <ClInclude Include="Cafe.h" />
     <ClInclude Include="Camera.h" />
@@ -176,6 +180,7 @@
     <ClInclude Include="FurnitureStore.h" />
     <ClInclude Include="Garage.h" />
     <ClInclude Include="Lake.h" />
+    <ClInclude Include="Lighting.h" />
     <ClInclude Include="math3d.h" />
     <ClInclude Include="Model_3DS.h" />
     <ClInclude Include="Outside.h" />
