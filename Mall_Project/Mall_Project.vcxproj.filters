@@ -90,7 +90,7 @@
     <ClCompile Include="ElectronicDepartment.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Study\Study\Fountain.cpp">
+    <ClCompile Include="Lighting.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -170,10 +170,7 @@
     <ClInclude Include="ElectronicDepartment.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Study\Study\Fountain.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Study\Study\Vector3.hpp">
+    <ClInclude Include="Lighting.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

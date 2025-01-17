@@ -43,7 +43,7 @@ void Outside::drawMarkets()
 void Outside::drawLake()
 {
 	glPushMatrix();
-	glTranslated(80, 11, -75);
+	glTranslated(80, 10, -75);
 	lake.drawLake();
 	glPopMatrix();
 }

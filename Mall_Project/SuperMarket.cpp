@@ -136,7 +136,8 @@ void SuperMarket::draw()
 	right.drawWithTextureOnOneFace(welcome.textureID, "left", 1, 1);
 	left.drawWithTextureOnOneFace(discounts.textureID, "right", 2, 2);
 	back.drawWithTextureOnOneFace(backWall.textureID, "front", 10, 3);
-
+	/////////////////////////////////////////////////////////////
+	
 	// draw sheleves 
 	Cuboid sheleves_1(Point(79, 0.2, -47), 30, 2, 158);
 	Cuboid sheleves_2(Point(38, 0.2, -35), 30, 6, 40);
@@ -160,7 +161,8 @@ void SuperMarket::draw()
 	backOfSheleves_7.drawWithTextureOnOneFace(marketImage.textureID, "front", 1, 1);
 
 	logoCuboid.drawWithTextureNoTopBottom(logo.textureID, 1, 1);
-
+	/////////////////////////////////////////////////////
+	
 	//draw table 
 	glPushMatrix();
 	glTranslated(173, 0, -35); // point x = 173 , y = 0 , z = -35
@@ -187,6 +189,7 @@ void SuperMarket::draw()
 	glScaled(1, 0.8, 1);
 	this->drawLight();
 	glPopMatrix();
+	/////////////////////////////////////////////////////
 
 	// 	gluCylinder(quad, 0.1, 0.1, 15, 32, 32);
 	// draw cylinder to load logo
@@ -202,7 +205,37 @@ void SuperMarket::draw()
 	glRotated(-90, 1, 0, 0);
 	gluCylinder(quad, 0.1, 0.1, 10, 32, 32);
 	glPopMatrix();
+	////////////////////////////////////////////////////
 
+	// draw cylinder for exit super market
+	glColor3f(0, 0, 0);
+	glPushMatrix();
+	glTranslatef(170, 0.2 , -1.5);
+	glRotated(-90, 1, 0, 0);
+	gluCylinder(quad, 2, 2 , 10, 32, 32);
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(170, 10.2, -1.5);
+	glRotated(-90, 1, 0, 0);
+	gluCylinder(quad, 2, 0, 1, 32, 32);
+	glPopMatrix();
+	
+
+	glColor3ub(0, 0, 0);
+	glPushMatrix();
+	glTranslatef(185, 0.2, -1.5);
+	glRotated(-90, 1, 0, 0);
+	gluCylinder(quad, 2, 2, 10, 32, 32);
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(185, 10.2, -1.5);
+	glRotated(-90, 1, 0, 0);
+	gluCylinder(quad, 2, 0, 1, 32, 32);
+	glPopMatrix();
+/////////////////////////////////////////////////
+	
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
