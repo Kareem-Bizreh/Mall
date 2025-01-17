@@ -29,7 +29,7 @@ FurnitureStore furnitureStore;
 ElectronicDepartment electronicDepartment;
 Texture texture;
 Outside outside(texture);
-Audio arrival_elevator,elevator_moving,open_door,close_door,Auto_door;
+Audio arrival_elevator, elevator_moving, open_door, close_door, Auto_door;
 GLUquadric* quadric = gluNewQuadric();
 int g_iWidth = 800;
 int g_iHeight = 600;
@@ -296,12 +296,12 @@ void timer(int value)
 			}
 			else
 			{
-				elevator_moving.stopAudio();		
+				elevator_moving.stopAudio();
 				arrival_elevator.playAudio();
 				outside.elevator.height = 0;
 				outside.elevator.elevatorDoor->open = true;
 				outside.elevator.elevatorDoorDown->open = true;
-				
+
 			}
 		}
 		if (outside.elevator.up)
