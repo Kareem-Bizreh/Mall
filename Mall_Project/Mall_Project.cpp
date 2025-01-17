@@ -46,7 +46,7 @@ bool g_mouse_left_down = false;
 bool g_mouse_right_down = false;
 
 // Movement settings
-const float g_translation_speed = 1.5;
+const float g_translation_speed = 5;
 const float g_rotation_speed = M_PI / 180 * 0.1;
 const float elevator_speed = 0.4;
 const float elevator_door_speed = 0.05;

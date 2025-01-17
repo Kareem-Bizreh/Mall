@@ -68,16 +68,21 @@ void Outside::OutsideTextures() {
 	flag.loadTexture("textures/Outside/flag.jpg");
 	stick.loadTexture("textures/Outside/stick.jpg");
 	street.loadTexture("textures/Outside/street.jpg");
+	street3.loadTexture("textures/Outside/street3.jpg");
 	entry.loadTexture("textures/Outside/entry.jpg");
 	platform.loadTexture("textures/Outside/platform.jpeg");
 	cafe_ad.loadTexture("textures/Outside/cafe_ad.jpeg");
 	market_ad.loadTexture("textures/Outside/market_ad.jpeg");
 	tree = new Model_3DS();
 	tree->Load((char*)"models/Outside/tree1_3ds/Tree1.3ds");
+	fence = new Model_3DS();
+	fence->Load((char*)"models/Outside/fence_3ds/fence.3ds");
 	garage_street.loadTexture("textures/Outside/street2.jpg");
 	sarot.loadTexture("textures/Outside/sarot.jpeg");
 	cafe_ad_o.loadTexture("textures/Outside/cafe_ad_O.jpeg");
 	market_ad_o.loadTexture("textures/Outside/market_ad_O.jpeg");
+	sideWalk.loadTexture("textures/Outside/sidewalk.jpg");
+	grass.loadTexture("textures/Outside/grass.jpg");
 	lake.loadTextures();
 	elevator.loadTextures();
 }
@@ -98,21 +103,490 @@ void Outside::render3DModel(float x, float y, float z, float scale, Model_3DS* m
 	glPopMatrix();
 }
 
+void Outside::drawFencesOnSideWalk() {
+	//----------------------------------------------------first grass----------------------------------------------------------------
+	//----------------------------------------------first side---------------------------------------------------
+
+	//first fence 
+	glPushMatrix();
+	glTranslated(14.5, 0.5, 237.5);
+	glRotated(90, 0, 1, 0);
+	render3DModel(0, 0, 0, 5, fence);
+	glPopMatrix();
+
+	//second fence 
+	glPushMatrix();
+	glTranslated(14.5, 0.5, 247.5);
+	glRotated(90, 0, 1, 0);
+	render3DModel(0, 0, 0, 5, fence);
+	glPopMatrix();
+
+	//third fence 
+	glPushMatrix();
+	glTranslated(14.5, 0.5, 257.5);
+	glRotated(90, 0, 1, 0);
+	render3DModel(0, 0, 0, 5, fence);
+	glPopMatrix();
+
+	//fourth fence 
+	glPushMatrix();
+	glTranslated(14.5, 0.5, 267.5);
+	glRotated(90, 0, 1, 0);
+	render3DModel(0, 0, 0, 5, fence);
+	glPopMatrix();
+
+	//fifth fence 
+	glPushMatrix();
+	glTranslated(14.5, 0.5, 277.5);
+	glRotated(90, 0, 1, 0);
+	render3DModel(0, 0, 0, 5, fence);
+	glPopMatrix();
 
 
+	//----------------------------------------------second side---------------------------------------------------
+
+	//first fence 
+	glPushMatrix();
+	glTranslated(65.5, 0.5, 237.5);
+	glRotated(90, 0, 1, 0);
+	render3DModel(0, 0, 0, 5, fence);
+	glPopMatrix();
+
+	//second fence 
+	glPushMatrix();
+	glTranslated(65.5, 0.5, 247.5);
+	glRotated(90, 0, 1, 0);
+	render3DModel(0, 0, 0, 5, fence);
+	glPopMatrix();
+
+	//third fence 
+	glPushMatrix();
+	glTranslated(65.5, 0.5, 257.5);
+	glRotated(90, 0, 1, 0);
+	render3DModel(0, 0, 0, 5, fence);
+	glPopMatrix();
+
+	//fourth fence 
+	glPushMatrix();
+	glTranslated(65.5, 0.5, 267.5);
+	glRotated(90, 0, 1, 0);
+	render3DModel(0, 0, 0, 5, fence);
+	glPopMatrix();
+
+	//fifth fence 
+	glPushMatrix();
+	glTranslated(65.5, 0.5, 277.5);
+	glRotated(90, 0, 1, 0);
+	render3DModel(0, 0, 0, 5, fence);
+	glPopMatrix();
+
+	//----------------------------------------------third side---------------------------------------------------
+
+
+	//first fence 
+	render3DModel(56, 0.5, 227, 5, fence);
+
+	//second fence 
+	render3DModel(46, 0.5, 227, 5, fence);
+
+
+	//third fence 
+	render3DModel(14, 0.5, 227, 5, fence);
+
+	//fourth fence 
+	render3DModel(24, 0.5, 227, 5, fence);
+
+	//----------------------------------------------fourth side---------------------------------------------------
+
+
+	//first fence 
+	render3DModel(56, 0.5, 278, 5, fence);
+
+	//second fence 
+	render3DModel(46, 0.5, 278, 5, fence);
+
+
+	//third fence 
+	render3DModel(14, 0.5, 278, 5, fence);
+
+	//fourth fence 
+	render3DModel(24, 0.5, 278, 5, fence);
+
+
+	//----------------------------------------------------second grass----------------------------------------------------------------
+	//----------------------------------------------first side---------------------------------------------------
+
+	//first fence 
+	glPushMatrix();
+	glTranslated(-14.5, 0.5, 237.5);
+	glRotated(90, 0, 1, 0);
+	render3DModel(0, 0, 0, 5, fence);
+	glPopMatrix();
+
+	//second fence 
+	glPushMatrix();
+	glTranslated(-14.5, 0.5, 247.5);
+	glRotated(90, 0, 1, 0);
+	render3DModel(0, 0, 0, 5, fence);
+	glPopMatrix();
+
+	//third fence 
+	glPushMatrix();
+	glTranslated(-14.5, 0.5, 257.5);
+	glRotated(90, 0, 1, 0);
+	render3DModel(0, 0, 0, 5, fence);
+	glPopMatrix();
+
+	//fourth fence 
+	glPushMatrix();
+	glTranslated(-14.5, 0.5, 267.5);
+	glRotated(90, 0, 1, 0);
+	render3DModel(0, 0, 0, 5, fence);
+	glPopMatrix();
+
+	//fifth fence 
+	glPushMatrix();
+	glTranslated(-14.5, 0.5, 277.5);
+	glRotated(90, 0, 1, 0);
+	render3DModel(0, 0, 0, 5, fence);
+	glPopMatrix();
+
+
+	//----------------------------------------------second side---------------------------------------------------
+
+	//first fence 
+	glPushMatrix();
+	glTranslated(-65.5, 0.5, 237.5);
+	glRotated(90, 0, 1, 0);
+	render3DModel(0, 0, 0, 5, fence);
+	glPopMatrix();
+
+	//second fence 
+	glPushMatrix();
+	glTranslated(-65.5, 0.5, 247.5);
+	glRotated(90, 0, 1, 0);
+	render3DModel(0, 0, 0, 5, fence);
+	glPopMatrix();
+
+	//third fence 
+	glPushMatrix();
+	glTranslated(-65.5, 0.5, 257.5);
+	glRotated(90, 0, 1, 0);
+	render3DModel(0, 0, 0, 5, fence);
+	glPopMatrix();
+
+	//fourth fence 
+	glPushMatrix();
+	glTranslated(-65.5, 0.5, 267.5);
+	glRotated(90, 0, 1, 0);
+	render3DModel(0, 0, 0, 5, fence);
+	glPopMatrix();
+
+	//fifth fence 
+	glPushMatrix();
+	glTranslated(-65.5, 0.5, 277.5);
+	glRotated(90, 0, 1, 0);
+	render3DModel(0, 0, 0, 5, fence);
+	glPopMatrix();
+
+	//----------------------------------------------third side---------------------------------------------------
+
+
+	//first fence 
+	render3DModel(-66, 0.5, 227, 5, fence);
+
+	//second fence 
+	render3DModel(-56, 0.5, 227, 5, fence);
+
+
+	//third fence 
+	render3DModel(-34, 0.5, 227, 5, fence);
+
+	//fourth fence 
+	render3DModel(-24, 0.5, 227, 5, fence);
+
+	//----------------------------------------------fourth side---------------------------------------------------
+
+
+	//first fence 
+	render3DModel(-66, 0.5, 278, 5, fence);
+
+	//second fence 
+	render3DModel(-56, 0.5, 278, 5, fence);
+
+
+	//third fence 
+	render3DModel(-34, 0.5, 278, 5, fence);
+
+	//fourth fence 
+	render3DModel(-24, 0.5, 278, 5, fence);
+
+
+	//----------------------------------------------------third grass----------------------------------------------------------------
+	//----------------------------------------------first side---------------------------------------------------
+
+	//first fence 
+	glPushMatrix();
+	glTranslated(224.5, 0.5, 237.5);
+	glRotated(90, 0, 1, 0);
+	render3DModel(0, 0, 0, 5, fence);
+	glPopMatrix();
+
+	//second fence 
+	glPushMatrix();
+	glTranslated(224.5, 0.5, 247.5);
+	glRotated(90, 0, 1, 0);
+	render3DModel(0, 0, 0, 5, fence);
+	glPopMatrix();
+
+	//third fence 
+	glPushMatrix();
+	glTranslated(224.5, 0.5, 257.5);
+	glRotated(90, 0, 1, 0);
+	render3DModel(0, 0, 0, 5, fence);
+	glPopMatrix();
+
+	//fourth fence 
+	glPushMatrix();
+	glTranslated(224.5, 0.5, 267.5);
+	glRotated(90, 0, 1, 0);
+	render3DModel(0, 0, 0, 5, fence);
+	glPopMatrix();
+
+	//fifth fence 
+	glPushMatrix();
+	glTranslated(224.5, 0.5, 277.5);
+	glRotated(90, 0, 1, 0);
+	render3DModel(0, 0, 0, 5, fence);
+	glPopMatrix();
+
+
+	//----------------------------------------------second side---------------------------------------------------
+
+	//first fence 
+	glPushMatrix();
+	glTranslated(275.5, 0.5, 237.5);
+	glRotated(90, 0, 1, 0);
+	render3DModel(0, 0, 0, 5, fence);
+	glPopMatrix();
+
+	//second fence 
+	glPushMatrix();
+	glTranslated(275.5, 0.5, 247.5);
+	glRotated(90, 0, 1, 0);
+	render3DModel(0, 0, 0, 5, fence);
+	glPopMatrix();
+
+	//third fence 
+	glPushMatrix();
+	glTranslated(275.5, 0.5, 257.5);
+	glRotated(90, 0, 1, 0);
+	render3DModel(0, 0, 0, 5, fence);
+	glPopMatrix();
+
+	//fourth fence 
+	glPushMatrix();
+	glTranslated(275.5, 0.5, 267.5);
+	glRotated(90, 0, 1, 0);
+	render3DModel(0, 0, 0, 5, fence);
+	glPopMatrix();
+
+	//fifth fence 
+	glPushMatrix();
+	glTranslated(275.5, 0.5, 277.5);
+	glRotated(90, 0, 1, 0);
+	render3DModel(0, 0, 0, 5, fence);
+	glPopMatrix();
+
+	//----------------------------------------------third side---------------------------------------------------
+
+
+	//first fence 
+	render3DModel(266, 0.5, 227, 5, fence);
+
+	//second fence 
+	render3DModel(256, 0.5, 227, 5, fence);
+
+	//third fence 
+	render3DModel(234, 0.5, 227, 5, fence);
+
+	//fourth fence 
+	render3DModel(224, 0.5, 227, 5, fence);
+
+	//----------------------------------------------fourth side---------------------------------------------------
+
+
+	//first fence 
+	render3DModel(266, 0.5, 278, 5, fence);
+
+	//second fence 
+	render3DModel(256, 0.5, 278, 5, fence);
+
+	//third fence 
+	render3DModel(234, 0.5, 278, 5, fence);
+
+	//fourth fence 
+	render3DModel(224, 0.5, 278, 5, fence);
+
+	//----------------------------------------------------fourth grass----------------------------------------------------------------
+	//----------------------------------------------first side---------------------------------------------------
+
+	//first fence 
+	glPushMatrix();
+	glTranslated(144.5, 0.5, 237.5);
+	glRotated(90, 0, 1, 0);
+	render3DModel(0, 0, 0, 5, fence);
+	glPopMatrix();
+
+	//second fence 
+	glPushMatrix();
+	glTranslated(144.5, 0.5, 247.5);
+	glRotated(90, 0, 1, 0);
+	render3DModel(0, 0, 0, 5, fence);
+	glPopMatrix();
+
+	//third fence 
+	glPushMatrix();
+	glTranslated(144.5, 0.5, 257.5);
+	glRotated(90, 0, 1, 0);
+	render3DModel(0, 0, 0, 5, fence);
+	glPopMatrix();
+
+	//fourth fence 
+	glPushMatrix();
+	glTranslated(144.5, 0.5, 267.5);
+	glRotated(90, 0, 1, 0);
+	render3DModel(0, 0, 0, 5, fence);
+	glPopMatrix();
+
+	//fifth fence 
+	glPushMatrix();
+	glTranslated(144.5, 0.5, 277.5);
+	glRotated(90, 0, 1, 0);
+	render3DModel(0, 0, 0, 5, fence);
+	glPopMatrix();
+
+
+	//----------------------------------------------second side---------------------------------------------------
+
+	//first fence 
+	glPushMatrix();
+	glTranslated(195.5, 0.5, 237.5);
+	glRotated(90, 0, 1, 0);
+	render3DModel(0, 0, 0, 5, fence);
+	glPopMatrix();
+
+	//second fence 
+	glPushMatrix();
+	glTranslated(195.5, 0.5, 247.5);
+	glRotated(90, 0, 1, 0);
+	render3DModel(0, 0, 0, 5, fence);
+	glPopMatrix();
+
+	//third fence 
+	glPushMatrix();
+	glTranslated(195.5, 0.5, 257.5);
+	glRotated(90, 0, 1, 0);
+	render3DModel(0, 0, 0, 5, fence);
+	glPopMatrix();
+
+	//fourth fence 
+	glPushMatrix();
+	glTranslated(195.5, 0.5, 267.5);
+	glRotated(90, 0, 1, 0);
+	render3DModel(0, 0, 0, 5, fence);
+	glPopMatrix();
+
+	//fifth fence 
+	glPushMatrix();
+	glTranslated(195.5, 0.5, 277.5);
+	glRotated(90, 0, 1, 0);
+	render3DModel(0, 0, 0, 5, fence);
+	glPopMatrix();
+
+	//----------------------------------------------third side---------------------------------------------------
+
+
+	//first fence 
+	render3DModel(186, 0.5, 227, 5, fence);
+
+	//second fence 
+	render3DModel(176, 0.5, 227, 5, fence);
+
+	//third fence 
+	render3DModel(154, 0.5, 227, 5, fence);
+
+	//fourth fence 
+	render3DModel(144, 0.5, 227, 5, fence);
+
+	//----------------------------------------------fourth side---------------------------------------------------
+
+
+	//first fence 
+	render3DModel(186, 0.5, 278, 5, fence);
+
+	//second fence 
+	render3DModel(176, 0.5, 278, 5, fence);
+
+	//third fence 
+	render3DModel(154, 0.5, 278, 5, fence);
+
+	//fourth fence 
+	render3DModel(144, 0.5, 278, 5, fence);
+}
+void Outside::drawStreets() {
+	glColor3ub(255, 255, 255);
+	// side right street 
+	Cuboid(Point(315, -1, -62.5), 2, 815, 50).drawWithTexture(street3.textureID, 1, 7);
+	//first street
+	glPushMatrix();
+	glTranslated(105, -1, 185);
+	glRotated(90, 0, 1, 0);
+	Cuboid(Point(0, 0, 0), 2, 370, 50).drawWithTexture(street3.textureID, 1, 5);
+	glPopMatrix();
+
+	//second street
+	glPushMatrix();
+	glTranslated(105,-1,320);
+	glRotated(90, 0, 1, 0);
+	Cuboid(Point(0, 0, 0), 2, 370, 50).drawWithTexture(street3.textureID, 1, 5);
+	glPopMatrix();
+
+	//third street
+	Cuboid(Point(105, -1, 252.5), 2, 85, 50).drawWithTexture(street3.textureID, 1, 2);
+
+	//first sidewalk
+	Cuboid(Point(0, -1, 252.5), 2, 85, 160).drawWithTexture(sideWalk.textureID, 2, 2);
+	Cuboid(Point(210, -1, 252.5), 2, 85, 160).drawWithTexture(sideWalk.textureID, 2, 2);
+
+	//grass
+	Cuboid(Point(40, 0.5, 252.5), 1, 50, 50).drawWithTexture(grass.textureID,1,1);
+	Cuboid(Point(-40, 0.5, 252.5), 1, 50, 50).drawWithTexture(grass.textureID, 1, 1);
+	Cuboid(Point(250, 0.5, 252.5), 1, 50, 50).drawWithTexture(grass.textureID, 1, 1);
+	Cuboid(Point(170, 0.5, 252.5), 1, 50, 50).drawWithTexture(grass.textureID, 1, 1);
+
+	drawFencesOnSideWalk();
+
+}
 void Outside::drawStatic() {
 	drawLake();
 	glPushMatrix();
 	garage.draw();
 	glPopMatrix();
+	drawStreets();
 	Cuboid Ground(Point(105, 0, -155), 10, 320, 220);
 	Ground.drawWithTexture(ground.textureID, 2, 2);
 	Cuboid Platform(Point(105, -1, -155), 2, 630, 370);
-	Platform.drawWithTexture(platform.textureID, 6, 6);
-	Cuboid Street(Point(62.5, 1, -495), 0.5, 50, 285);
-	Street.drawWithTexture(garage_street.textureID, 5, 1);
-	Cuboid Main_Street(Point(-105, 1, -180), 0.5, 680, 50);
-	Main_Street.drawWithTexture(street.textureID, 1, 10);
+	Platform.drawWithTexture(platform.textureID, 9, 9);
+	glPushMatrix();
+	glTranslated(105, -1, -495);
+	glRotated(90, 0, 1, 0);
+	Cuboid Street(Point(0, 0, 0), 2, 470, 50);
+	Street.drawWithTexture(street3.textureID, 1, 7);
+	glPopMatrix();
+	
+	Cuboid Main_Street(Point(-105, -1, - 62.5), 2, 815, 50);
+	Main_Street.drawWithTexture(street3.textureID, 1, 7);
 	glPushMatrix();
 	glColor3f(0.5f, 0.5f, 0.5f);
 	Cuboid Top(Point(105, 113, -155), 0, 300, 200);
