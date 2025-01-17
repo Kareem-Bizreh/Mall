@@ -24,13 +24,8 @@ struct color3f
 //==================================================================================================================
 // Global variables
 Point center = Point(0, -3, 0);
-Cafe cafe = Cafe(center);
-FurnitureStore furnitureStore;
-ElectronicDepartment electronicDepartment;
 Texture texture;
 Outside outside(texture);
-Audio arrival_elevator,elevator_moving,open_door,close_door,Auto_door;
-GLUquadric* quadric = gluNewQuadric();
 int g_iWidth = 800;
 int g_iHeight = 600;
 const float g_fNear = 1;
@@ -72,6 +67,27 @@ M3DMatrix44f shadowMat;
 M3DVector4f vPlaneEquation;
 
 //==================================================================================================================
+
+/***********************
+ * Fountain Configuration
+ ***********************/
+const float DROP_SIZE = 2.5f;
+FInitializer initializers[] = {
+	FInitializer(15, 30, 30, DROP_SIZE, 90.0f, 100.0f, 0.2f, 0.05f),  // 1
+	FInitializer(4, 30, 8, DROP_SIZE, 80.0f, 90.0f, 0.2f, 0.08f),   // 2
+	FInitializer(2, 40, 10, DROP_SIZE, 50.0f, 90.0f, 1.5f, 0.13f),  // 3
+	FInitializer(3, 5, 100, DROP_SIZE, 75.0f, 90.0f, 0.4f, 0.07f),  // 4
+	FInitializer(3, 50, 35, DROP_SIZE, 30.0f, 90.0f, 0.2f, 0.15f),  // 5
+	FInitializer(1, 20, 60, DROP_SIZE, 50.0f, 60.0f, 5.0f, 0.13f),  // 6
+	FInitializer(6, 20, 30, DROP_SIZE, 90.0f, 90.0f, 1.0f, 0.12f),  // 7
+	FInitializer(2, 10, 60, DROP_SIZE, 73.0f, 85.0f, 6.0f, 0.08f)   // 8
+};
+
+const float WATER_COLOR[] = { 6.0 / 255.0f, 171 / 255.0f, 235 / 255.0f, 0.5f };
+const float TIME_DELTA = 0.2f;
+
+//==================================================================================================================
+
 //definition of all functions
 
 void display();
@@ -87,7 +103,7 @@ void timer(int value);
 void idle();
 void menucreate();
 void menufunction(int option);
-void loadAudios();
+
 //==================================================================================================================
 
 void setupLighting()
@@ -173,7 +189,7 @@ void display()
 
 	outside.drawDynamic();
 	glCallList(displayListID);
-
+	outside.drawFountain(WATER_COLOR);
 
 	glutSwapBuffers();
 }
@@ -262,6 +278,7 @@ void keyboard(unsigned char key, int x, int y)
 void timer(int value)
 {
 	g_camera.Doors = outside.Doors;
+	outside.fountain.update(TIME_DELTA);
 
 	if (g_fps_mode) {
 
@@ -291,30 +308,32 @@ void timer(int value)
 		{
 			if (outside.elevator.height > 0)
 			{
-				outside.elevator.height -= elevator_speed, g_camera.Fly(outside.elevator.in ? -elevator_speed : 0.0);
-				elevator_moving.playAudio();
+				outside.elevator.height -= elevator_speed;
+				g_camera.Fly(outside.elevator.in ? -elevator_speed : 0.0);
+				outside.elevator_moving.playAudio();
 			}
-			else
+			else if (!outside.elevator.elevatorDoor->open)
 			{
-				elevator_moving.stopAudio();		
-				arrival_elevator.playAudio();
+				outside.elevator_moving.stopAudio();
+				outside.arrival_elevator.playAudio();
 				outside.elevator.height = 0;
 				outside.elevator.elevatorDoor->open = true;
 				outside.elevator.elevatorDoorDown->open = true;
-				
+
 			}
 		}
 		if (outside.elevator.up)
 		{
 			if (outside.elevator.height < 50)
 			{
-				outside.elevator.height += elevator_speed, g_camera.Fly(outside.elevator.in ? elevator_speed : 0.0);
-				elevator_moving.playAudio();
+				outside.elevator.height += elevator_speed;
+				g_camera.Fly(outside.elevator.in ? elevator_speed : 0.0);
+				outside.elevator_moving.playAudio();
 			}
-			else
+			else if (!outside.elevator.elevatorDoor->open)
 			{
-				elevator_moving.stopAudio();
-				arrival_elevator.playAudio();
+				outside.elevator_moving.stopAudio();
+				outside.arrival_elevator.playAudio();
 				outside.elevator.height = 50;
 				outside.elevator.elevatorDoor->open = true;
 				outside.elevator.elevatorDoorUp->open = true;
@@ -322,20 +341,28 @@ void timer(int value)
 		}
 	}
 	for (Door* door : outside.Doors) {
+		bool flag = false;
 		if (door->open && door->OpenRate < 1)
 		{
 			door->OpenRate += door_speed;
-			open_door.playAudio();
-			close_door.stopAudio();
+			outside.open_door.playAudio();
+			outside.close_door.stopAudio();
+			flag = true;
 		}
 		if (!door->open && door->OpenRate > 0)
 		{
 			door->OpenRate -= door_speed;
-			close_door.playAudio();
-			open_door.stopAudio();
+			outside.close_door.playAudio();
+			outside.open_door.stopAudio();
+			flag = true;
 		}
 		door->OpenRate = max((double)0, door->OpenRate);
 		door->OpenRate = min((double)1, door->OpenRate);
+		if (flag && (door->OpenRate == 0 || door->OpenRate == 1))
+		{
+			outside.close_door.stopAudio();
+			outside.open_door.stopAudio();
+		}
 	}
 	for (Door* door : outside.elevatorDoors) {
 		if (door->open && door->OpenRate < 1)
@@ -353,22 +380,29 @@ void timer(int value)
 	Point playerPos = Point(x, y, z);
 	for (Door* door : outside.AutoDoors)
 	{
+		bool flag = false;
 		Point doorCenter = door->center;
 		double dist = sqrt((playerPos.x - doorCenter.x) * (playerPos.x - doorCenter.x) +
 			(playerPos.y - doorCenter.y) * (playerPos.y - doorCenter.y) +
 			(playerPos.z - doorCenter.z) * (playerPos.z - doorCenter.z));
 		if (dist <= 20 && door->OpenRate < 1)
 		{
+			flag = true;
 			door->OpenRate += auto_door_speed;
-			Auto_door.playAudio();
+			outside.Auto_door.playAudio();
 		}
 		if (dist > 20 && door->OpenRate > 0)
 		{
+			flag = true;
 			door->OpenRate -= auto_door_speed;
-			Auto_door.playAudio();
+			outside.Auto_door.playAudio();
 		}
 		door->OpenRate = max((double)0, door->OpenRate);
 		door->OpenRate = min((double)1, door->OpenRate);
+		if (flag && (door->OpenRate == 0 || door->OpenRate == 1))
+		{
+			outside.Auto_door.stopAudio();
+		}
 	}
 	glutTimerFunc(1000 / 30, timer, 0);	//call the timer again each 1 millisecond
 }
@@ -414,16 +448,18 @@ void init()
 	menucreate();
 
 	//load textures here 
-
 	outside.OutsideTextures();
-	loadAudios();
+	outside.loadAudios();
+
 	//display list
 	displayListID = glGenLists(1);
 	glNewList(displayListID, GL_COMPILE);
-
 	outside.drawStatic();
-
 	glEndList();
+
+	//fountain
+	outside.fountain.initialize(initializers[0]);
+	outside.fountain.center.set(105, 17, -100);
 
 	glClearColor(g_background.r, g_background.g, g_background.b, 1.0);
 	glClearDepth(1.0f);
@@ -567,12 +603,4 @@ void menufunction(int option)
 	else if (option == 7)	//exit of application
 		exit(0);
 	glutPostRedisplay();
-}
-void loadAudios()
-{
-	arrival_elevator.loadAudio("audios/elevator_arrival.wav");
-	elevator_moving.loadAudio("audios/elevator_moving.wav");
-	open_door.loadAudio("audios/open_door.wav");
-	close_door.loadAudio("audios/close_door.wav");
-	Auto_door.loadAudio("audios/automatic_door.wav");
 }

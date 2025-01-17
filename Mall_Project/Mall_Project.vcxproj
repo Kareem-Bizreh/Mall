@@ -136,6 +136,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Study\Study\Fountain.cpp" />
     <ClCompile Include="Audio.cpp" />
     <ClCompile Include="Cafe.cpp" />
     <ClCompile Include="Camera.cpp" />
@@ -163,6 +164,8 @@
     <ClCompile Include="Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Study\Study\Fountain.h" />
+    <ClInclude Include="..\..\Study\Study\Vector3.hpp" />
     <ClInclude Include="Audio.h" />
     <ClInclude Include="Cafe.h" />
     <ClInclude Include="Camera.h" />

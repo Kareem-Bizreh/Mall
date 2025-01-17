@@ -82,6 +82,14 @@ void Outside::OutsideTextures() {
 	elevator.loadTextures();
 }
 
+void Outside::loadAudios()
+{
+	arrival_elevator.loadAudio("audios/elevator_arrival.wav");
+	elevator_moving.loadAudio("audios/elevator_moving.wav");
+	open_door.loadAudio("audios/open_door.wav");
+	close_door.loadAudio("audios/close_door.wav");
+	Auto_door.loadAudio("audios/automatic_door.wav");
+}
 
 void Outside::render3DModel(float x, float y, float z, float scale, Model_3DS* model) {
 	if (!model) return;
@@ -354,8 +362,8 @@ void Outside::drawStreetLight(Point baseCenter, double poleHeight, double poleRa
 	gluCylinder(quad, poleRadius + 0.2, poleRadius + 0.2, poleHeight + 23, 32, 32);
 	glPopMatrix();
 
-	currentPosition.z += poleHeight - 15.5;
-	double angleStep = 5.0;
+	currentPosition.z += poleHeight - 15.1;
+	double angleStep = 2.0;
 
 	int curveDirection = isLeftSide ? -1 : 1;
 
@@ -363,8 +371,8 @@ void Outside::drawStreetLight(Point baseCenter, double poleHeight, double poleRa
 	{
 		glPushMatrix();
 		glTranslated(currentPosition.x, currentPosition.y + 40, currentPosition.z);
-		glRotated(curveDirection * angle, 0, 1, 0);
-		gluCylinder(quad, poleRadius + 0.4, poleRadius, angleStep / 360.0 * curveRadius * 2 * M_PI, 32, 32);
+		glRotated(-90, 1, 0, 0);
+		gluCylinder(quad, poleRadius + 0.2, poleRadius + 0.2, angleStep / 360.0 * curveRadius * 2 * M_PI + 0.25, 32, 32);
 		glPopMatrix();
 
 		double angleNext = angle + angleStep;
@@ -465,4 +473,13 @@ void Outside::drawFence() {
 	}
 
 	glColor3ub(255, 255, 255);
+}
+
+void Outside::drawFountain(const float WATER_COLOR[])
+{
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable(GL_BLEND);
+	glColor4fv(WATER_COLOR);
+	fountain.render();
+	glDisable(GL_BLEND);
 }
