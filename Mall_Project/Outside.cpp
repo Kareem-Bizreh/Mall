@@ -136,8 +136,8 @@ void Outside::drawStatic() {
 	Cuboid Entry(Point(105, 10.1, 0), 0, 10, 68);
 	Entry.drawWithTexture(entry.textureID, 1, 1);
 
-	Cuboid FloorB_left(Point(40, 61.21, -106), 0, 200, 70);
-	Cuboid FloorB_right(Point(165, 61.22, -106), 0, 200, 80);
+	Cuboid FloorB_left(Point(40, 61.21, -100), 0, 180, 70);
+	Cuboid FloorB_right(Point(165, 61.22, -100), 0, 180, 80);
 	Cuboid FloorB_front(Point(105, 61.23, -40), 0, 70, 200);
 	Cuboid FloorB_back(Point(105, 61.24, -165), 0, 80, 200);
 
@@ -146,15 +146,15 @@ void Outside::drawStatic() {
 	FloorB_front.drawWithTexture(mall_ground.textureID, 0, 0);
 	FloorB_back.drawWithTexture(mall_ground.textureID, 0, 0);
 
-	Cuboid FloorU_left(Point(40, 61.51, -106), 0, 200, 70);
-	Cuboid FloorU_right(Point(165, 61.52, -106), 0, 200, 80);
+	Cuboid FloorU_left(Point(40, 61.51, -100), 0, 180, 70);
+	Cuboid FloorU_right(Point(165, 61.52, -100), 0, 180, 80);
 	Cuboid FloorU_front(Point(105, 61.53, -40), 0, 70, 200);
 	Cuboid FloorU_back(Point(105, 61.54, -165), 0, 80, 200);
 
-	FloorU_left.drawWithTexture(mall_ground.textureID, 20, 20);
-	FloorU_right.drawWithTexture(mall_ground.textureID, 20, 20);
-	FloorU_front.drawWithTexture(mall_ground.textureID, 20, 20);
-	FloorU_back.drawWithTexture(mall_ground.textureID, 20, 20);
+	FloorU_left.drawWithTexture(mall_ground.textureID, 6, 22);
+	FloorU_right.drawWithTexture(mall_ground.textureID, 6, 22);
+	FloorU_front.drawWithTexture(mall_ground.textureID, 16, 10);
+	FloorU_back.drawWithTexture(mall_ground.textureID, 16, 10);
 	drawFence();
 	Cuboid Right(Point(205, 10, -155), 103, 300, 0);
 	Right.drawWithTexture(side.textureID, 1, 1);
@@ -239,8 +239,8 @@ void Outside::drawStatic() {
 	glColor3f(0.7, 0.7, 0.7);
 	Cuboid(Point(0, -2.1, 0), 2, 28, 34).drawWithTexture(mall_ground.textureID, 1, 1);
 	elevator.draw();
-	glTranslated(0, 47.75, 50);
-	Cuboid(Point(0, 1.6, -1), 0, 72, 28).drawWithTexture(mall_ground.textureID, 2, 8);
+	glTranslated(0, 47.9, 50);
+	Cuboid(Point(0, 1.6, -1.5), 0, 73, 28).drawWithTexture(mall_ground.textureID, 2, 8);
 	glColor3f(1, 1, 1);
 	glPopMatrix();
 
@@ -256,7 +256,7 @@ void Outside::drawStatic() {
 	// draw glass for elevator
 	glPushMatrix();
 	glTranslated(72, 12, -290);
-	glTranslated(0, 47.75, 50);
+	glTranslated(0, 47.9, 50);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_BLEND);
 	glColor4ub(163, 163, 163, 182);
@@ -272,7 +272,7 @@ void Outside::drawStatic() {
 	glPushMatrix();
 	glTranslated(57, 59.75, -227);
 	glRotated(-90, 0, 1, 0);
-	Cuboid(Point(22, 1.9, -0.5), 13.3, 2, 1).draw();
+	Cuboid(Point(21.5, 2, -0.4), 13.30, 4, 1).draw();
 	glPopMatrix();
 	glColor3f(1, 1, 1);
 	glDisable(GL_BLEND);

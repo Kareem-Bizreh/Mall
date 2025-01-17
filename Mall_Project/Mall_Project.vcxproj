@@ -136,7 +136,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Study\Study\Fountain.cpp" />
     <ClCompile Include="Audio.cpp" />
     <ClCompile Include="Cafe.cpp" />
     <ClCompile Include="Camera.cpp" />
@@ -146,6 +145,7 @@
     <ClCompile Include="ElectronicDepartment.cpp" />
     <ClCompile Include="Elevator.cpp" />
     <ClCompile Include="Flag.cpp" />
+    <ClCompile Include="Fountain.cpp" />
     <ClCompile Include="FurnitureStore.cpp" />
     <ClCompile Include="Garage.cpp" />
     <ClCompile Include="Lake.cpp" />
@@ -165,8 +165,6 @@
     <ClCompile Include="Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Study\Study\Fountain.h" />
-    <ClInclude Include="..\..\Study\Study\Vector3.hpp" />
     <ClInclude Include="Audio.h" />
     <ClInclude Include="Cafe.h" />
     <ClInclude Include="Camera.h" />
@@ -177,6 +175,7 @@
     <ClInclude Include="ElectronicDepartment.h" />
     <ClInclude Include="Elevator.h" />
     <ClInclude Include="Flag.h" />
+    <ClInclude Include="Fountain.h" />
     <ClInclude Include="FurnitureStore.h" />
     <ClInclude Include="Garage.h" />
     <ClInclude Include="Lake.h" />
@@ -193,6 +192,7 @@
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="SuperMarket.h" />
     <ClInclude Include="Texture.h" />
+    <ClInclude Include="Vector3.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
