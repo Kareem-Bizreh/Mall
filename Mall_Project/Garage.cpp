@@ -23,11 +23,11 @@ void Garage::draw() {
     floor.drawWithTexture(t.textureID, 1, 1);
     glPopMatrix();
 
-    Point barrierPosition(floorPosition.x, floorPosition.y + 35.5f, floorPosition.z + 40);
-    Cuboid barrier(barrierPosition, 0, 80.0f, floorLength - 20);
+    Point UmbrellaPosition(floorPosition.x, floorPosition.y + 35.5f, floorPosition.z + 40);
+    Cuboid Umbrella(UmbrellaPosition, 0, 80.0f, floorLength - 20);
     glPushMatrix();
     glColor3ub(255, 255, 255); 
-    barrier.drawWithTexture(a.textureID, 1, 1);
+    Umbrella.drawWithTexture(a.textureID, 1, 1);
     glPopMatrix();
 
 

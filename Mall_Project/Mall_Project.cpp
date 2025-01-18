@@ -190,7 +190,7 @@ void display()
 	//setupLighting();
 	//setupShadow();
 	glColor3ub(80, 80, 80);
-	skybox.Draw_Skybox(0, 249, 0, 800, 500, 1000);
+	skybox.Draw_Skybox(105, 149.5, - 60, 470, 300, 925);
 	glColor3ub(255, 255, 255);
 	outside.drawDynamic();
 	glCallList(displayListID);

@@ -83,6 +83,16 @@ void Outside::OutsideTextures() {
 	market_ad_o.loadTexture("textures/Outside/market_ad_O.jpeg");
 	sideWalk.loadTexture("textures/Outside/sidewalk.jpg");
 	grass.loadTexture("textures/Outside/grass.jpg");
+	building1 = new Model_3DS();
+	building1->Load((char*)"models/Outside/Building/Residential Buildings 005.3ds");
+	building2 = new Model_3DS();
+	building2->Load((char*)"models/Outside/Building/Residential Buildings 003.3ds");
+
+	building3 = new Model_3DS();
+	building3->Load((char*)"models/Outside/Building/Residential Buildings 004.3ds");
+
+	building4 = new Model_3DS();
+	building4->Load((char*)"models/Outside/Building/Residential Buildings 006.3ds");
 	lake.loadTextures();
 	elevator.loadTextures();
 }
@@ -577,12 +587,50 @@ void Outside::drawStreets() {
 	drawFencesOnSideWalk();
 
 }
+void Outside::drawBuilding() {
+
+	glPushMatrix();
+	glTranslated(-30, 1, 375);
+	glRotated(90, 0, 1, 0);
+	render3DModel(0, 0, 0, 3, building4);
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslated(70, 1, 375);
+	glRotated(90,0,1,0);
+	render3DModel(0,0,0, 3, building1);
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslated(170, 1, 375);
+	glRotated(90, 0, 1, 0);
+	render3DModel(0, 0, 0, 3, building2);
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslated(270, 1, 375);
+	glRotated(90, 0, 1, 0);
+	render3DModel(0, 0, 0, 3, building3);
+	glPopMatrix();
+}
 void Outside::drawStatic() {
+
 	drawLake();
 	glPushMatrix();
 	garage.draw();
 	glPopMatrix();
+
 	drawStreets();
+
+	//street of building
+	glPushMatrix();
+	glTranslated(105, -1, 370);
+	glRotated(90,0,1,0);
+	Cuboid(Point(0,0,0), 2, 470, 50).drawWithTexture(sideWalk.textureID, 1, 20);
+	glPopMatrix();
+
+	drawBuilding();
+
 	Cuboid Ground(Point(105, 0, -155), 10, 320, 220);
 	Ground.drawWithTexture(ground.textureID, 2, 2);
 	Cuboid Platform(Point(105, -1, -155), 2, 630, 370);
@@ -603,7 +651,7 @@ void Outside::drawStatic() {
 	glColor3ub(255, 255, 255);
 	glPopMatrix();
 
-	Cuboid stick(Point(85, 113.1, -20.0), 60, 5, 5);
+	Cuboid stick(Point(85, 113.1, -20.0), 60, 3, 1);
 	stick.drawWithTexture(mall_ground.textureID, 1, 1);
 	Cuboid Bottom(Point(105, 10.1, -155), 0, 300, 200);
 	Bottom.drawWithTexture(mall_ground.textureID, 20, 20);

@@ -34,6 +34,10 @@ private:
 	Model_3DS* tank;
 	Model_3DS* fence;
 	Model_3DS* parkFountain;
+	Model_3DS* building1;
+	Model_3DS* building2;
+	Model_3DS* building3;
+	Model_3DS* building4;
 	Door* doorMov = new Door{ Point(108 ,26 ,-15), 0.0, false };
 	void drawMarkets();
 	void drawLake();
@@ -70,6 +74,7 @@ public:
 	void drawStreetLight(Point baseCenter, double poleHeight, double poleRadius, double armLength, double verticalArmLength, double lampSize, bool isLeftSide);
 	void drawStatic();
 	void drawDynamic();
+	void drawBuilding();
 	void render3DModel(float x, float y, float z, float scale, Model_3DS* model);
 	void drawFence();
 	void drawFencesOnSideWalk();

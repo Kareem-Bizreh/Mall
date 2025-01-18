@@ -20,10 +20,6 @@ private:
     float spotWidth = 15.5;
     float spotHeight = 50.0;
     int numSpots = 4;
-    int g_iWidth = 800;
-    int g_iHeight = 600;
-    const float g_fNear = 0.01;
-    const float g_fFar = 100;
     float columnRadius = 0.1f;
     float columnHeight = 1.0f;
     float canopyWidth = (numSpots * (spotWidth + lineWidth)) - lineWidth;
