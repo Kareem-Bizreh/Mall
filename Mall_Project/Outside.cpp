@@ -291,11 +291,6 @@ void Outside::drawStatic() {
 
 void Outside::drawDynamic()
 {
-	glPushMatrix();
-	glTranslated(80, 11, -75);
-	lake.drawWater();
-	glPopMatrix();
-
 	Flag wavingFlag(Point(105, 163, -20.0), 20, 50, 40, 10, 30, flag, stick);
 	wavingFlag.setWaveProperties(0.1f, 2.0f, 1.0f);
 	glColor3ub(255, 255, 255);
@@ -482,4 +477,9 @@ void Outside::drawFountain(const float WATER_COLOR[])
 	glColor4fv(WATER_COLOR);
 	fountain.render();
 	glDisable(GL_BLEND);
+
+	glPushMatrix();
+	glTranslated(80, 11, -75);
+	lake.drawWater();
+	glPopMatrix();
 }
