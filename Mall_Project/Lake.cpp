@@ -42,8 +42,8 @@ void Lake::drawWater()
 	Cuboid water3(Point(11.5 + xOffset, yOffset - 1.5, -24 + zOffset), 8, 5.4, 19);
 	Cuboid water4(Point(37.5 + xOffset, yOffset - 1.5, -24 + zOffset), 8, 5.4, 19);
 
-	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	//glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable(GL_BLEND);
 	glColor4ub(255, 255, 255, 182);
 
 	//glDepthMask(GL_FALSE);
@@ -55,7 +55,7 @@ void Lake::drawWater()
 	water4.drawWithTexture(Water.textureID, 6, 2);*/
 
 	//glDepthMask(GL_TRUE);
-	//glDisable(GL_BLEND);
+	glDisable(GL_BLEND);
 }
 
 inline double toRadians(double degrees) {

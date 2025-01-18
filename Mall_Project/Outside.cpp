@@ -766,11 +766,6 @@ void Outside::drawStatic() {
 
 void Outside::drawDynamic()
 {
-	glPushMatrix();
-	glTranslated(80, 11, -75);
-	lake.drawWater();
-	glPopMatrix();
-
 	Flag wavingFlag(Point(105, 163, -20.0), 20, 50, 40, 10, 30, flag, stick);
 	wavingFlag.setWaveProperties(0.1f, 2.0f, 1.0f);
 	glColor3ub(255, 255, 255);
@@ -958,17 +953,22 @@ void Outside::drawFountain(const float WATER_COLOR[])
 	glColor4fv(WATER_COLOR);
 	fountain.render();
 	glDisable(GL_BLEND);
+
+	glPushMatrix();
+	glTranslated(80, 11, -75);
+	lake.drawWater();
+	glPopMatrix();
 }
 void Outside::setupShadows(Point baseCenter, double poleHeight, double poleRadius, double curveRadius, double curveAngle, double lampSize, bool isLeftSide) {
 	GLfloat groundHeight = 1.0f;
-	GLfloat groundPlane[4] = { 0.0f, 1.0f, 0.0f, -groundHeight };
+	GLfloat groundPlane[4] = { 0.001f, 1.0f, 0.0f, -groundHeight };
 
-	GLfloat rightWallPlane[4] = { -1.0f, 0.0f, 0.0f, 205.0f };
-	GLfloat leftWallPlane[4] = { 1.0f, 0.0f, 0.0f, -5.0f };
+	GLfloat rightWallPlane[4] = { -1.001f, 0.0f, 0.0f, 205.0f };
+	GLfloat leftWallPlane[4] = { 1.001f, 0.0f, 0.0f, -5.0f };
 
-	GLfloat offsetX = isLeftSide ? 150.0f : -150.0f;
+	GLfloat offsetX = isLeftSide ? 60.0f : -60.0f;
 	GLfloat offsetY = 130.0f, offsetZ = 20.0f;
-	GLfloat lightPosition[4] = { baseCenter.x + offsetX, baseCenter.y + poleHeight + offsetY, baseCenter.z + offsetZ, 1.0 };
+	GLfloat lightPosition[4] = { baseCenter.x + offsetX+1, baseCenter.y + poleHeight + offsetY+1, baseCenter.z + offsetZ, 1.0 };
 
 	GLfloat groundShadowMatrix[16];
 	GLfloat rightWallShadowMatrix[16];
@@ -976,8 +976,8 @@ void Outside::setupShadows(Point baseCenter, double poleHeight, double poleRadiu
 
 	computeShadowMatrix(groundShadowMatrix, groundPlane, lightPosition);
 	 
-	offsetX = isLeftSide ? 150.0f : -150.0f;
-	offsetY = 50.0f, offsetZ = 20.0f;
+	offsetX = isLeftSide ? 1100.0f : -1100.0f;
+	offsetY = -10.0f, offsetZ = 45.0f;
 	lightPosition[0]= baseCenter.x + offsetX;
 	lightPosition[1] = baseCenter.y + poleHeight + offsetY;
 	lightPosition[2] = baseCenter.z + offsetZ;
