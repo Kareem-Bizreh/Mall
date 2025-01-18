@@ -73,9 +73,9 @@ M3DVector4f vPlaneEquation;
 /***********************
  * Fountain Configuration
  ***********************/
-const float DROP_SIZE = 2.5f;
+const float DROP_SIZE = 4.0f;
 FInitializer initializers[] = {
-	FInitializer(15, 30, 30, DROP_SIZE, 90.0f, 100.0f, 0.2f, 0.05f),  // 1
+	FInitializer(4, 30, 30, DROP_SIZE, 75.0f, 90.0f, 0.2f, 0.10f),  // 1
 	FInitializer(4, 30, 8, DROP_SIZE, 80.0f, 90.0f, 0.2f, 0.08f),   // 2
 	FInitializer(2, 40, 10, DROP_SIZE, 50.0f, 90.0f, 1.5f, 0.13f),  // 3
 	FInitializer(3, 5, 100, DROP_SIZE, 75.0f, 90.0f, 0.4f, 0.07f),  // 4
@@ -85,8 +85,8 @@ FInitializer initializers[] = {
 	FInitializer(2, 10, 60, DROP_SIZE, 73.0f, 85.0f, 6.0f, 0.08f)   // 8
 };
 
-const float WATER_COLOR[] = { 6.0 / 255.0f, 171 / 255.0f, 235 / 255.0f, 0.5f };
-const float TIME_DELTA = 0.2f;
+const float WATER_COLOR[] = { 26.0 / 255.0f, 126 / 255.0f, 227 / 255.0f, 0.5f };
+const float TIME_DELTA = 0.1f;
 
 //==================================================================================================================
 
@@ -464,7 +464,7 @@ void init()
 
 	//fountain
 	outside.fountain.initialize(initializers[0]);
-	outside.fountain.center.set(105, 17, -100);
+	outside.fountain.center.set(105, 22, -100);
 
 	glClearColor(g_background.r, g_background.g, g_background.b, 1.0);
 	glClearDepth(1.0f);

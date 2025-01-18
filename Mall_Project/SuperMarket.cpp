@@ -163,7 +163,7 @@ void SuperMarket::draw()
 	logoCuboid.drawWithTextureNoTopBottom(logo.textureID, 1, 1);
 	/////////////////////////////////////////////////////
 	
-	//draw table 
+	//draw table and chair
 	glPushMatrix();
 	glTranslated(173, 0, -35); // point x = 173 , y = 0 , z = -35
 	glRotated(270, 0, 1, 0);

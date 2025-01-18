@@ -21,7 +21,7 @@
 class Outside {
 private:
 	Texture ground, mall_ground, side, right_door, left_door, mall_name, flag, stick, street, entry, platform, cafe_ad, market_ad, garage_street, sarot, cafe_ad_o, market_ad_o;
-	Texture sideWalk,grass,street3;
+	Texture sideWalk, grass, street3, floor;
 	Flag wavingFlag;
 	Lake lake;
 	SuperMarket superMarket;
