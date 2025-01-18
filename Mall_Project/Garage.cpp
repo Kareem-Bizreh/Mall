@@ -1,8 +1,8 @@
 #include "Garage.h"
 
 void Garage::loadTexturesAndModels() {
-    t.loadTexture("textures/garage/floor.png");
-    a.loadTexture("textures/garage/roof.jpg");
+    floor.loadTexture("textures/garage/floor.png");
+    roof.loadTexture("textures/garage/roof.jpg");
     tank = new Model_3DS();
     tank->Load((char*)"models/garage/Tank/tank.3DS");
     train = new Model_3DS();
@@ -17,17 +17,17 @@ void Garage::draw() {
     float floorHeight = 0.5f;
     Point floorPosition(105, 1, -395);
 
-    Cuboid floor(floorPosition, floorHeight, floorWidth, floorLength);
+    Cuboid Floor(floorPosition, floorHeight, floorWidth, floorLength);
     glPushMatrix();
     glColor3ub(255, 255, 255); 
-    floor.drawWithTexture(t.textureID, 1, 1);
+    Floor.drawWithTexture(floor.textureID, 1, 1);
     glPopMatrix();
 
     Point barrierPosition(floorPosition.x, floorPosition.y + 35.5f, floorPosition.z + 40);
     Cuboid barrier(barrierPosition, 0, 80.0f, floorLength - 20);
     glPushMatrix();
     glColor3ub(255, 255, 255); 
-    barrier.drawWithTexture(a.textureID, 1, 1);
+    barrier.drawWithTexture(roof.textureID, 1, 1);
     glPopMatrix();
 
 
@@ -59,10 +59,10 @@ void Garage::drawColumns(Point floorPosition, float floorLength, float floorWidt
 
         glColor3f(0.8f, 0.8f, 0.8f); 
         glBegin(GL_LINE_LOOP);
-        glVertex3f(x1, y, z1);
-        glVertex3f(x2, y, z1);
-        glVertex3f(x2, y, z2);
-        glVertex3f(x1, y, z2);
+        glVertex3f(x1, y+0.01, z1);
+        glVertex3f(x2, y+0.01, z1);
+        glVertex3f(x2, y+0.01, z2);
+        glVertex3f(x1, y+0.01, z2);
         glEnd();
     }
 

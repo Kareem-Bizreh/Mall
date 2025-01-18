@@ -7,9 +7,8 @@
 
 class Garage {
 private:
-    Texture t;
-    Texture b;
-    Texture a;
+    Texture floor;
+    Texture roof;
     Model_3DS* tank;
     Model_3DS* train;
     Model_3DS* motor;

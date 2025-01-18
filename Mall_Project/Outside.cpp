@@ -961,14 +961,14 @@ void Outside::drawFountain(const float WATER_COLOR[])
 }
 void Outside::setupShadows(Point baseCenter, double poleHeight, double poleRadius, double curveRadius, double curveAngle, double lampSize, bool isLeftSide) {
 	GLfloat groundHeight = 1.0f;
-	GLfloat groundPlane[4] = { 0.0f, 1.0f, 0.0f, -groundHeight };
+	GLfloat groundPlane[4] = { 0.001f, 1.0f, 0.0f, -groundHeight };
 
-	GLfloat rightWallPlane[4] = { -1.0f, 0.0f, 0.0f, 205.0f };
-	GLfloat leftWallPlane[4] = { 1.0f, 0.0f, 0.0f, -5.0f };
+	GLfloat rightWallPlane[4] = { -1.001f, 0.0f, 0.0f, 205.0f };
+	GLfloat leftWallPlane[4] = { 1.001f, 0.0f, 0.0f, -5.0f };
 
 	GLfloat offsetX = isLeftSide ? 60.0f : -60.0f;
 	GLfloat offsetY = 130.0f, offsetZ = 20.0f;
-	GLfloat lightPosition[4] = { baseCenter.x + offsetX, baseCenter.y + poleHeight + offsetY, baseCenter.z + offsetZ, 1.0 };
+	GLfloat lightPosition[4] = { baseCenter.x + offsetX+1, baseCenter.y + poleHeight + offsetY+1, baseCenter.z + offsetZ, 1.0 };
 
 	GLfloat groundShadowMatrix[16];
 	GLfloat rightWallShadowMatrix[16];
