@@ -34,17 +34,17 @@ void Lake::drawWater()
 	float waveFrequency = 2.0f;
 
 	float yOffset = waveAmplitude * sin(waveFrequency * time);
-	float xOffset = 0;// waveAmplitude* cos((waveFrequency - 1) * time);
-	float zOffset = 0;//waveAmplitude * sin(waveFrequency * time);
+	float xOffset =  waveAmplitude* cos((waveFrequency - 1) * time);
+	float zOffset = waveAmplitude * sin(waveFrequency * time);
 
-	Cuboid water(Point(25 + xOffset, yOffset - 0.2, -25 + zOffset), 8, 50, 50);
+	Cuboid water(Point(25 + xOffset, yOffset - 0.2 + 5, -25 + zOffset), 0.1, 50, 50);
 	Cuboid water2(Point(25 + xOffset, yOffset - 1.5, -36.5 + zOffset), 8, 19, 44);
 	Cuboid water3(Point(11.5 + xOffset, yOffset - 1.5, -24 + zOffset), 8, 5.4, 19);
 	Cuboid water4(Point(37.5 + xOffset, yOffset - 1.5, -24 + zOffset), 8, 5.4, 19);
 
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_BLEND);
-	glColor4ub(255, 255, 255, 182);
+	glColor4ub(255, 255, 255, 150);
 
 	//glDepthMask(GL_FALSE);
 
@@ -87,7 +87,7 @@ void Lake::drawLake()
 
 	Cuboid left(Point(0, 0, -25), 10, 45, 5), right(Point(50, 0, -25), 10, 45, 5);
 	Cuboid top(Point(25, 0, -50), 10, 5, 45), bottom(Point(25, 0, 0), 10, 5, 45);
-	Cuboid center(Point(25, 0, -25), 15, 5, 5), floor(Point(25, -0.2, -25), 0.2, 50, 50);
+	Cuboid center(Point(25, 0, -25), 15, 5, 5), floor(Point(25, 0, -25), 0.2, 50, 50);
 	Cuboid topOfCenter(Point(25, 15.1, -25), 0.2, 10, 10);
 
 	glColor3ub(255, 255, 255);

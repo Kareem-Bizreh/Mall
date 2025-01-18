@@ -85,7 +85,7 @@ FInitializer initializers[] = {
 	FInitializer(2, 10, 60, DROP_SIZE, 73.0f, 85.0f, 6.0f, 0.08f)   // 8
 };
 
-const float WATER_COLOR[] = { 6.0 / 255.0f, 171 / 255.0f, 235 / 255.0f, 0.5f };
+const float WATER_COLOR[] = { 26.0 / 255.0f, 126 / 255.0f, 227 / 255.0f, 0.5f };
 const float TIME_DELTA = 0.1f;
 
 //==================================================================================================================
