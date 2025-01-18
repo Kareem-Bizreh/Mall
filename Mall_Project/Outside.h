@@ -75,4 +75,8 @@ public:
 	void drawFencesOnSideWalk();
 	void drawStreets();
 	void drawFountain(const float WATER_COLOR[]);
+	void setupShadows(Point baseCenter, double poleHeight, double poleRadius, double curveRadius, double curveAngle, double lampSize, bool isLeftSide);
+	void computeShadowMatrix(GLfloat shadowMat[16], GLfloat plane[4], GLfloat lightPos[4]);
+	void setupLighting(Point lightPosition);
+	void drawStreetLightGeometry(Point baseCenter, double poleHeight, double poleRadius, double curveRadius, double curveAngle, double lampSize, bool isLeftSide);
 };

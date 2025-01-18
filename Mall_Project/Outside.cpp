@@ -111,6 +111,7 @@ void Outside::render3DModel(float x, float y, float z, float scale, Model_3DS* m
 	glPopMatrix();
 }
 
+
 void Outside::drawFencesOnSideWalk() {
 	//----------------------------------------------------first grass----------------------------------------------------------------
 	//----------------------------------------------first side---------------------------------------------------
@@ -678,35 +679,35 @@ void Outside::drawStatic() {
 	glPopMatrix();
 
 	render3DModel(105, 0, 150, 3.0, tank);
-	drawStreetLight(Point(Platform.center.x - 130, Platform.center.y, Platform.center.z), 15.0f, 0.5f, 10.0f, 20.0f, 2.0f, false);
+	drawStreetLight(Point(Platform.center.x - 130, Platform.center.y-1, Platform.center.z), 15.0f, 0.5f, 10.0f, 20.0f, 2.0f, false);
 	render3DModel(Platform.center.x - 130, Platform.center.y, Platform.center.z + 25, 4, tree);
 
-	drawStreetLight(Point(Platform.center.x - 130, Platform.center.y, Platform.center.z + 100), 15.0f, 0.5f, 10.0f, 20.0f, 2.0f, false);
+	drawStreetLight(Point(Platform.center.x - 130, Platform.center.y-1, Platform.center.z + 100), 15.0f, 0.5f, 10.0f, 20.0f, 2.0f, false);
 	render3DModel(Platform.center.x - 130, Platform.center.y, Platform.center.z + 75, 4, tree);
 
-	drawStreetLight(Point(Platform.center.x - 130, Platform.center.y, Platform.center.z + 50), 15.0f, 0.5f, 10.0f, 20.0f, 2.0f, false);
+	drawStreetLight(Point(Platform.center.x - 130, Platform.center.y-1, Platform.center.z + 50), 15.0f, 0.5f, 10.0f, 20.0f, 2.0f, false);
 	render3DModel(Platform.center.x - 130, Platform.center.y, Platform.center.z - 25, 4, tree);
 
 
-	drawStreetLight(Point(Platform.center.x - 130, Platform.center.y, Platform.center.z - 100), 15.0f, 0.5f, 10.0f, 20.0f, 2.0f, false);
+	drawStreetLight(Point(Platform.center.x - 130, Platform.center.y-1, Platform.center.z - 100), 15.0f, 0.5f, 10.0f, 20.0f, 2.0f, false);
 	render3DModel(Platform.center.x - 130, Platform.center.y, Platform.center.z - 75, 4, tree);
 
 	drawStreetLight(Point(Platform.center.x - 130, Platform.center.y, Platform.center.z - 50), 15.0f, 0.5f, 10.0f, 20.0f, 2.0f, false);
 
-	drawStreetLight(Point(Platform.center.x + 130, Platform.center.y, Platform.center.z), 15.0f, 0.5f, 10.0f, 20.0f, 2.0f, true);
+	drawStreetLight(Point(Platform.center.x + 130, Platform.center.y-1, Platform.center.z), 15.0f, 0.5f, 10.0f, 20.0f, 2.0f, true);
 	render3DModel(Platform.center.x + 130, Platform.center.y, Platform.center.z + 25, 4, tree);
 
-	drawStreetLight(Point(Platform.center.x + 130, Platform.center.y, Platform.center.z + 100), 15.0f, 0.5f, 10.0f, 20.0f, 2.0f, true);
+	drawStreetLight(Point(Platform.center.x + 130, Platform.center.y-1, Platform.center.z + 100), 15.0f, 0.5f, 10.0f, 20.0f, 2.0f, true);
 	render3DModel(Platform.center.x + 130, Platform.center.y, Platform.center.z + 75, 4, tree);
 
-	drawStreetLight(Point(Platform.center.x + 130, Platform.center.y, Platform.center.z + 50), 15.0f, 0.5f, 10.0f, 20.0f, 2.0f, true);
+	drawStreetLight(Point(Platform.center.x + 130, Platform.center.y-1, Platform.center.z + 50), 15.0f, 0.5f, 10.0f, 20.0f, 2.0f, true);
 	render3DModel(Platform.center.x + 130, Platform.center.y, Platform.center.z - 25, 4, tree);
 
 
-	drawStreetLight(Point(Platform.center.x + 130, Platform.center.y, Platform.center.z - 100), 15.0f, 0.5f, 10.0f, 20.0f, 2.0f, true);
+	drawStreetLight(Point(Platform.center.x + 130, Platform.center.y-1, Platform.center.z - 100), 15.0f, 0.5f, 10.0f, 20.0f, 2.0f, true);
 	render3DModel(Platform.center.x + 130, Platform.center.y, Platform.center.z - 75, 4, tree);
 
-	drawStreetLight(Point(Platform.center.x + 130, Platform.center.y, Platform.center.z - 50), 15.0f, 0.5f, 10.0f, 20.0f, 2.0f, true);
+	drawStreetLight(Point(Platform.center.x + 130, Platform.center.y-1, Platform.center.z - 50), 15.0f, 0.5f, 10.0f, 20.0f, 2.0f, true);
 
 	glPushMatrix();
 	glTranslated(72, 12, -290);
@@ -854,7 +855,8 @@ void Outside::drawStreetLight(Point baseCenter, double poleHeight, double poleRa
 		currentPosition.y += curveRadius * (sin(toRadians(angleNext)) - sin(toRadians(angle)));
 	}
 	Point lampPosition(currentPosition.x, currentPosition.y, currentPosition.z);
-
+	this->setupLighting(lampPosition);
+	this->setupShadows(baseCenter, poleHeight, poleRadius, curveRadius, curveAngle, lampSize, isLeftSide);
 	glPushMatrix();
 	glColor3ub(255, 255, 0);
 	glTranslated(lampPosition.x, lampPosition.y + 40, lampPosition.z);
@@ -956,4 +958,126 @@ void Outside::drawFountain(const float WATER_COLOR[])
 	glColor4fv(WATER_COLOR);
 	fountain.render();
 	glDisable(GL_BLEND);
+}
+void Outside::setupShadows(Point baseCenter, double poleHeight, double poleRadius, double curveRadius, double curveAngle, double lampSize, bool isLeftSide) {
+	GLfloat groundHeight = 1.0f;
+	GLfloat groundPlane[4] = { 0.0f, 1.0f, 0.0f, -groundHeight };
+
+	GLfloat rightWallPlane[4] = { -1.0f, 0.0f, 0.0f, 205.0f };
+	GLfloat leftWallPlane[4] = { 1.0f, 0.0f, 0.0f, -5.0f };
+
+	GLfloat offsetX = isLeftSide ? 150.0f : -150.0f;
+	GLfloat offsetY = 130.0f, offsetZ = 20.0f;
+	GLfloat lightPosition[4] = { baseCenter.x + offsetX, baseCenter.y + poleHeight + offsetY, baseCenter.z + offsetZ, 1.0 };
+
+	GLfloat groundShadowMatrix[16];
+	GLfloat rightWallShadowMatrix[16];
+	GLfloat leftWallShadowMatrix[16];
+
+	computeShadowMatrix(groundShadowMatrix, groundPlane, lightPosition);
+	 
+	offsetX = isLeftSide ? 150.0f : -150.0f;
+	offsetY = 50.0f, offsetZ = 20.0f;
+	lightPosition[0]= baseCenter.x + offsetX;
+	lightPosition[1] = baseCenter.y + poleHeight + offsetY;
+	lightPosition[2] = baseCenter.z + offsetZ;
+	lightPosition[3] = 1.0;
+	computeShadowMatrix(rightWallShadowMatrix, rightWallPlane, lightPosition);
+	computeShadowMatrix(leftWallShadowMatrix, leftWallPlane, lightPosition);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	glDisable(GL_LIGHTING);
+
+	glPushMatrix();
+	glMultMatrixf(groundShadowMatrix);
+	glColor4f(0.1f, 0.1f, 0.1f, 0.5f);
+	drawStreetLightGeometry(baseCenter, poleHeight, poleRadius, curveRadius, curveAngle, lampSize, isLeftSide);
+	glPopMatrix();
+
+	glPushMatrix();
+	glMultMatrixf(rightWallShadowMatrix);
+	glColor4f(0.1f, 0.1f, 0.1f, 0.5f);
+	drawStreetLightGeometry(baseCenter, poleHeight, poleRadius, curveRadius, curveAngle, lampSize, isLeftSide);
+	glPopMatrix();
+
+	glPushMatrix();
+	glMultMatrixf(leftWallShadowMatrix);
+	glColor4f(0.1f, 0.1f, 0.1f, 0.5f);
+	drawStreetLightGeometry(baseCenter, poleHeight, poleRadius, curveRadius, curveAngle, lampSize, isLeftSide);
+	glPopMatrix();
+
+	glEnable(GL_LIGHTING);
+	glDisable(GL_BLEND);
+}
+void Outside::computeShadowMatrix(GLfloat shadowMat[16], GLfloat plane[4], GLfloat lightPos[4]) {
+	GLfloat dot = plane[0] * lightPos[0] +
+		plane[1] * lightPos[1] +
+		plane[2] * lightPos[2] +
+		plane[3] * lightPos[3];
+
+	shadowMat[0] = dot - lightPos[0] * plane[0];
+	shadowMat[4] = -lightPos[0] * plane[1];
+	shadowMat[8] = -lightPos[0] * plane[2];
+	shadowMat[12] = -lightPos[0] * plane[3];
+
+	shadowMat[1] = -lightPos[1] * plane[0];
+	shadowMat[5] = dot - lightPos[1] * plane[1];
+	shadowMat[9] = -lightPos[1] * plane[2];
+	shadowMat[13] = -lightPos[1] * plane[3];
+
+	shadowMat[2] = -lightPos[2] * plane[0];
+	shadowMat[6] = -lightPos[2] * plane[1];
+	shadowMat[10] = dot - lightPos[2] * plane[2];
+	shadowMat[14] = -lightPos[2] * plane[3];
+
+	shadowMat[3] = -lightPos[3] * plane[0];
+	shadowMat[7] = -lightPos[3] * plane[1];
+	shadowMat[11] = -lightPos[3] * plane[2];
+	shadowMat[15] = dot - lightPos[3] * plane[3];
+}
+void Outside::drawStreetLightGeometry(Point baseCenter, double poleHeight, double poleRadius, double curveRadius, double curveAngle, double lampSize, bool isLeftSide)
+{
+	GLUquadric* quad = gluNewQuadric();
+
+	Point verticalArmStart(baseCenter.x, baseCenter.y + poleHeight - 12, baseCenter.z - 0.1);
+	glPushMatrix();
+	glTranslated(verticalArmStart.x, verticalArmStart.y, verticalArmStart.z);
+	glRotated(-90, 1, 0, 0);
+	gluCylinder(quad, poleRadius + 0.2, poleRadius + 0.2, poleHeight + 23, 32, 32);
+	glPopMatrix();
+
+	Point currentPosition = baseCenter;
+	currentPosition.z += poleHeight - 15.1;
+	double angleStep = 2.0;
+	int curveDirection = isLeftSide ? -1 : 1;
+
+	gluDeleteQuadric(quad); 
+}
+void Outside::setupLighting(Point lightPosition)
+{
+	GLfloat LightPos[] = { lightPosition.x, lightPosition.y, lightPosition.z, 1.0f };
+	GLfloat LightAmb[] = { 1.0f,1.0f,1.0f,1.0f };
+	GLfloat LightDiff[] = { 1.0f,1.0f,1.0f,1.0f };
+	GLfloat LightSpec[] = { 1.0f,1.0f,1.0f,1.0f };
+
+
+	GLfloat MatAmb[] = { 1.0f,1.0f,1.0f,1.0f };
+	GLfloat MatDif[] = { 0.8f,0.8f,0.8f,1.0f };
+	GLfloat MatSpec[] = { 0.5f,0.5f,0.5f,1.0f };
+
+	GLfloat MatShn[] = { 50.0f };
+
+	glEnable(GL_LIGHT1);
+	glLightfv(GL_LIGHT1, GL_POSITION, LightPos);
+	glLightfv(GL_LIGHT1, GL_AMBIENT, LightAmb);
+	glLightfv(GL_LIGHT1, GL_DIFFUSE, LightDiff);
+	glLightfv(GL_LIGHT1, GL_SPECULAR, LightSpec);
+
+	glEnable(GL_LIGHTING);
+	glMaterialfv(GL_FRONT, GL_AMBIENT, MatAmb);
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, MatDif);
+	glMaterialfv(GL_FRONT, GL_SPECULAR, MatSpec);
+	glMaterialfv(GL_FRONT, GL_SHININESS, MatShn);
+	glEnable(GL_COLOR_MATERIAL);
 }
