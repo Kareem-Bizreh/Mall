@@ -57,6 +57,21 @@ bool Camera::CheckDoorCollision(const Point& newPos) {
 		newPos.z > doorWalls[2].min.z && newPos.z < doorWalls[2].max.z && !Doors[2]->open) {
 		return true; // تصادم مع جدار
 	}
+	if (newPos.x > doorWalls[5].min.x && newPos.x < doorWalls[5].max.x &&
+		newPos.y > doorWalls[5].min.y && newPos.y < doorWalls[5].max.y &&
+		newPos.z > doorWalls[5].min.z && newPos.z < doorWalls[5].max.z && !Doors[9]->open) {
+		return true; // تصادم مع جدار
+	}
+	if (newPos.x > doorWalls[6].min.x && newPos.x < doorWalls[6].max.x &&
+		newPos.y > doorWalls[6].min.y && newPos.y < doorWalls[6].max.y &&
+		newPos.z > doorWalls[6].min.z && newPos.z < doorWalls[6].max.z && !Doors[8]->open) {
+		return true; // تصادم مع جدار
+	}
+	if (newPos.x > doorWalls[7].min.x && newPos.x < doorWalls[7].max.x &&
+		newPos.y > doorWalls[7].min.y && newPos.y < doorWalls[7].max.y &&
+		newPos.z > doorWalls[7].min.z && newPos.z < doorWalls[7].max.z && !Doors[7]->open) {
+		return true; // تصادم مع جدار
+	}
 	return false; // لا يوجد اصطدام
 }
 //to place a position of the camera
@@ -99,7 +114,7 @@ void Camera::Move(float incr) {
 		m_y = newPos.y;
 		m_z = newPos.z;
 	}
-	std::cout << "x = " << m_x << " " << " y = " << m_y << " " << " z = " << m_z << std::endl;
+	//std::cout << "x = " << m_x << " " << " y = " << m_y << " " << " z = " << m_z << std::endl;
 	Refresh();
 }
 
@@ -115,7 +130,7 @@ void Camera::Strafe(float incr) {
 		m_z = newZ;
 	}
 
-	std::cout << "x = " << m_x << " " << " y = " << m_y << " " << " z = " << m_z << std::endl;
+	//std::cout << "x = " << m_x << " " << " y = " << m_y << " " << " z = " << m_z << std::endl;
 
 
 	Refresh();
