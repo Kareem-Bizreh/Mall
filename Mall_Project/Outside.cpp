@@ -966,7 +966,7 @@ void Outside::setupShadows(Point baseCenter, double poleHeight, double poleRadiu
 	GLfloat rightWallPlane[4] = { -1.0f, 0.0f, 0.0f, 205.0f };
 	GLfloat leftWallPlane[4] = { 1.0f, 0.0f, 0.0f, -5.0f };
 
-	GLfloat offsetX = isLeftSide ? 150.0f : -150.0f;
+	GLfloat offsetX = isLeftSide ? 60.0f : -60.0f;
 	GLfloat offsetY = 130.0f, offsetZ = 20.0f;
 	GLfloat lightPosition[4] = { baseCenter.x + offsetX, baseCenter.y + poleHeight + offsetY, baseCenter.z + offsetZ, 1.0 };
 
@@ -976,8 +976,8 @@ void Outside::setupShadows(Point baseCenter, double poleHeight, double poleRadiu
 
 	computeShadowMatrix(groundShadowMatrix, groundPlane, lightPosition);
 	 
-	offsetX = isLeftSide ? 150.0f : -150.0f;
-	offsetY = 50.0f, offsetZ = 20.0f;
+	offsetX = isLeftSide ? 1100.0f : -1100.0f;
+	offsetY = -10.0f, offsetZ = 45.0f;
 	lightPosition[0]= baseCenter.x + offsetX;
 	lightPosition[1] = baseCenter.y + poleHeight + offsetY;
 	lightPosition[2] = baseCenter.z + offsetZ;
