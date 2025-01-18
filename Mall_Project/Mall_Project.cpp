@@ -5,6 +5,7 @@
 #include "stairsMall.h"
 #include "Texture.h"
 #include "Cuboid.h"
+#include "SkyBox.h"
 #include "FurnitureStore.h"
 #include "Pyramid.h"
 #include "Camera.h"
@@ -25,6 +26,7 @@ struct color3f
 // Global variables
 Point center = Point(0, -3, 0);
 Texture texture;
+SkyBox skybox;
 Outside outside(texture);
 int g_iWidth = 800;
 int g_iHeight = 600;
@@ -42,7 +44,7 @@ bool g_mouse_left_down = false;
 bool g_mouse_right_down = false;
 
 // Movement settings
-const float g_translation_speed = 2;
+const float g_translation_speed = 1.5;
 const float g_rotation_speed = M_PI / 180 * 0.1;
 const float elevator_speed = 0.7;
 const float elevator_door_speed = 0.05;
@@ -158,6 +160,7 @@ int main(int argc, char** argv)
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
 	glutInitWindowSize(g_iWidth, g_iHeight);
 	glutCreateWindow("ALO Mall");
+	glutFullScreen();
 	init();
 	glutDisplayFunc(display);
 	glutIdleFunc(idle);
@@ -186,7 +189,9 @@ void display()
 
 	//setupLighting();
 	//setupShadow();
-
+	glColor3ub(80, 80, 80);
+	skybox.Draw_Skybox(0, 249, 0, 800, 500, 1000);
+	glColor3ub(255, 255, 255);
 	outside.drawDynamic();
 	glCallList(displayListID);
 	outside.drawFountain(WATER_COLOR);
