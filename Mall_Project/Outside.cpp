@@ -912,7 +912,6 @@ void Outside::drawStreetLight(Point baseCenter, double poleHeight, double poleRa
 	glTranslated(lampPosition.x, lampPosition.y + 40, lampPosition.z);
 	glutSolidSphere(lampSize, 20, 20);
 	glPopMatrix();
-
 	glColor3ub(255, 255, 255);
 }
 

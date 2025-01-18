@@ -27,6 +27,7 @@ struct color3f
 Point center = Point(0, -3, 0);
 Texture texture;
 SkyBox skybox;
+Texture up, left, Right, down, front, back;
 Outside outside(texture);
 int g_iWidth = 800;
 int g_iHeight = 600;
@@ -189,9 +190,6 @@ void display()
 
 	//setupLighting();
 	//setupShadow();
-	glColor3ub(80, 80, 80);
-	skybox.Draw_Skybox(105, 149.5, - 60, 470, 300, 925);
-	glColor3ub(255, 255, 255);
 	outside.drawDynamic();
 	glCallList(displayListID);
 	outside.drawFountain(WATER_COLOR);
@@ -452,7 +450,14 @@ void init()
 	g_background.b = 255;
 	menucreate();
 
-	//load textures here 
+	//load textures here
+	up.loadTexture("textures//Outside//sky.jpg");
+	Right.loadTexture("textures//Outside//Dubai.jpg");
+	skybox.SKYUP = up.textureID;
+	skybox.SKYRIGHT = Right.textureID;
+	skybox.SKYBACK = Right.textureID;
+	skybox.SKYLEFT = Right.textureID;
+	skybox.SKYFRONT = Right.textureID;
 	outside.OutsideTextures();
 	outside.loadAudios();
 
@@ -460,7 +465,12 @@ void init()
 	displayListID = glGenLists(1);
 	glNewList(displayListID, GL_COMPILE);
 	outside.drawStatic();
+	//glColor3ub(80, 80, 80);
+	skybox.Draw_Skybox(105, 149.5, -60, 470, 300, 925);
 	glEndList();
+
+
+
 
 	//fountain
 	outside.fountain.initialize(initializers[0]);
