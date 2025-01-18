@@ -5,6 +5,7 @@
 #include "stairsMall.h"
 #include "Texture.h"
 #include "Cuboid.h"
+#include "SkyBox.h"
 #include "FurnitureStore.h"
 #include "Pyramid.h"
 #include "Camera.h"
@@ -25,6 +26,7 @@ struct color3f
 // Global variables
 Point center = Point(0, -3, 0);
 Texture texture;
+SkyBox skybox;
 Outside outside(texture);
 int g_iWidth = 800;
 int g_iHeight = 600;
@@ -42,7 +44,7 @@ bool g_mouse_left_down = false;
 bool g_mouse_right_down = false;
 
 // Movement settings
-const float g_translation_speed = 2;
+const float g_translation_speed = 1.5;
 const float g_rotation_speed = M_PI / 180 * 0.1;
 const float elevator_speed = 0.7;
 const float elevator_door_speed = 0.05;
@@ -71,9 +73,9 @@ M3DVector4f vPlaneEquation;
 /***********************
  * Fountain Configuration
  ***********************/
-const float DROP_SIZE = 2.5f;
+const float DROP_SIZE = 4.0f;
 FInitializer initializers[] = {
-	FInitializer(15, 30, 30, DROP_SIZE, 90.0f, 100.0f, 0.2f, 0.05f),  // 1
+	FInitializer(4, 30, 30, DROP_SIZE, 75.0f, 90.0f, 0.2f, 0.10f),  // 1
 	FInitializer(4, 30, 8, DROP_SIZE, 80.0f, 90.0f, 0.2f, 0.08f),   // 2
 	FInitializer(2, 40, 10, DROP_SIZE, 50.0f, 90.0f, 1.5f, 0.13f),  // 3
 	FInitializer(3, 5, 100, DROP_SIZE, 75.0f, 90.0f, 0.4f, 0.07f),  // 4
@@ -84,7 +86,7 @@ FInitializer initializers[] = {
 };
 
 const float WATER_COLOR[] = { 6.0 / 255.0f, 171 / 255.0f, 235 / 255.0f, 0.5f };
-const float TIME_DELTA = 0.2f;
+const float TIME_DELTA = 0.1f;
 
 //==================================================================================================================
 
@@ -158,6 +160,7 @@ int main(int argc, char** argv)
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
 	glutInitWindowSize(g_iWidth, g_iHeight);
 	glutCreateWindow("ALO Mall");
+	glutFullScreen();
 	init();
 	glutDisplayFunc(display);
 	glutIdleFunc(idle);
@@ -186,7 +189,9 @@ void display()
 
 	//setupLighting();
 	//setupShadow();
-
+	glColor3ub(80, 80, 80);
+	skybox.Draw_Skybox(0, 249, 0, 800, 500, 1000);
+	glColor3ub(255, 255, 255);
 	outside.drawDynamic();
 	glCallList(displayListID);
 	outside.drawFountain(WATER_COLOR);
@@ -459,7 +464,7 @@ void init()
 
 	//fountain
 	outside.fountain.initialize(initializers[0]);
-	outside.fountain.center.set(105, 17, -100);
+	outside.fountain.center.set(105, 22, -100);
 
 	glClearColor(g_background.r, g_background.g, g_background.b, 1.0);
 	glClearDepth(1.0f);
