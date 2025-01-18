@@ -953,6 +953,11 @@ void Outside::drawFountain(const float WATER_COLOR[])
 	glColor4fv(WATER_COLOR);
 	fountain.render();
 	glDisable(GL_BLEND);
+
+	glPushMatrix();
+	glTranslated(80, 11, -75);
+	lake.drawWater();
+	glPopMatrix();
 }
 void Outside::setupShadows(Point baseCenter, double poleHeight, double poleRadius, double curveRadius, double curveAngle, double lampSize, bool isLeftSide) {
 	GLfloat groundHeight = 1.0f;
