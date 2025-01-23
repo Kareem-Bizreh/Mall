@@ -2,7 +2,6 @@
 #include <bits/stdc++.h>
 #include "GL/glut.h"
 #include "Point.h"
-#include "Camera.h"
 
 //init values
 void Camera::Init()
